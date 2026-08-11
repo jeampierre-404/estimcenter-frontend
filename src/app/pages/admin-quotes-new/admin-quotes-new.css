@@ -1,0 +1,78 @@
+/* =========================================
+   ESTILOS BASE (ESCRITORIO)
+   ========================================= */
+
+.grid-cliente {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.flex-producto {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-end; /* Alinea el botón con los inputs */
+}
+
+.caja-input-prod { flex: 2; }
+.caja-input-cant { width: 120px; }
+.caja-btn-agregar { padding-top: 0; }
+
+.contenedor-totales {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.caja-totales {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 300px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.table-container {
+    overflow-x: auto; /* Permite scroll horizontal a la tabla en móviles */
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.w-100 { width: 100%; }
+
+/* =========================================
+   🔥 REGLA DE ORO PARA CELULARES 🔥
+   ========================================= */
+@media (max-width: 768px) {
+    /* El grid de 2 columnas se vuelve de 1 sola columna */
+    .grid-cliente {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* La fila de productos se apila verticalmente */
+    .flex-producto {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* Los inputs y botones toman el 100% del ancho */
+    .caja-input-prod, 
+    .caja-input-cant, 
+    .caja-btn-agregar {
+        width: 100%;
+    }
+
+    /* Centra la caja de totales y hace que ocupe todo el ancho */
+    .contenedor-totales {
+        justify-content: center;
+    }
+    .caja-totales {
+        width: 100%;
+    }
+}

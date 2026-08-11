@@ -1,4 +1,4 @@
-<section class="recent-activity" style="margin-top: 0; max-width: 1000px; margin: 0 auto;">
+<section class="recent-activity" style="margin-top: 0; max-width: 1000px; margin: 0 auto; padding: 0 15px;">
     
     <div class="section-header">
         <h2>📄 Nueva Cotización</h2>
@@ -7,7 +7,9 @@
     <form #cotizacionForm="ngForm">
         <div style="background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
             <h4 style="margin-bottom: 15px; color: #555;">Datos del Cliente</h4>
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+            
+            <!-- 🔥 CLASE RESPONSIVE: grid-cliente 🔥 -->
+            <div class="grid-cliente">
                 <div>
                     <label>Cliente (Busca por nombre o DNI) *</label>
                     <input type="text" list="listaClientes" name="cliente" [(ngModel)]="textoCliente" required #cliente="ngModel"
@@ -34,8 +36,9 @@
             </div>
         </div>
 
-        <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; gap: 15px; align-items: flex-start;">
-            <div style="flex: 2;">
+        <!-- 🔥 CLASE RESPONSIVE: flex-producto 🔥 -->
+        <div class="flex-producto">
+            <div class="caja-input-prod">
                 <label>Producto (Busca por nombre)</label>
                 <input type="text" list="listaProductos" name="producto" [(ngModel)]="textoProducto" 
                        placeholder="Escribe el producto..." 
@@ -44,13 +47,13 @@
                     <option *ngFor="let p of productos" [value]="p.nombre + ' - S/ ' + p.precio"></option>
                 </datalist>
             </div>
-            <div style="width: 120px;">
+            <div class="caja-input-cant">
                 <label>Cantidad</label>
                 <input type="number" name="cantidad" [(ngModel)]="cantidad" min="1" 
                        style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
             </div>
-            <div style="padding-top: 25px;">
-                <button type="button" class="btn-primary-admin" (click)="agregarAlCarrito()" style="height: 45px; padding: 0 25px;">
+            <div class="caja-btn-agregar">
+                <button type="button" class="btn-primary-admin w-100" (click)="agregarAlCarrito()" style="height: 45px; padding: 0 25px;">
                     <i class="fa-solid fa-plus"></i> Agregar
                 </button>
             </div>
@@ -92,8 +95,9 @@
             </table>
         </div>
 
-        <div style="margin-top: 30px; display: flex; justify-content: flex-end;">
-            <div style="background: white; padding: 20px; border-radius: 12px; width: 300px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+        <!-- 🔥 CLASE RESPONSIVE: contenedor-totales 🔥 -->
+        <div class="contenedor-totales">
+            <div class="caja-totales">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
                     <span>Subtotal:</span>
                     <strong>S/ {{ totalSubtotal | number:'1.2-2' }}</strong>
