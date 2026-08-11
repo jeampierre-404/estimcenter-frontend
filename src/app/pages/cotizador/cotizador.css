@@ -1,111 +1,35 @@
-/* 1. ESTILO DE LA LISTA DE PRODUCTOS (PEQUEÑAS Y ELEGANTES) */
-.producto-listado-item {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    padding: 8px;
-    margin-bottom: 8px;
-    cursor: pointer;
-    height: 85px; 
-    overflow: hidden;
-    transition: background 0.2s;
-}
-.producto-listado-item:hover {
-    background-color: #f2f7fb;
-    border-color: #122A51;
-}
-.thumb-lista-fix {
-    width: 60px !important;
-    height: 60px !important;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-right: 12px;
-    border: 1px solid #eee;
-    flex-shrink: 0;
-}
+/* =========================================
+   🔥 REGLA DE ORO PARA CELULARES 🔥
+   (Hace el chat y el layout 100% responsivos)
+   ========================================= */
+@media (max-width: 768px) {
+    /* Centrar la burbuja del chat en móviles */
+    .chat-box {
+        width: 90%; 
+        right: 0;
+        left: 0; 
+        margin: 0 auto; 
+        bottom: 90px; 
+    }
+    
+    /* Evitar que el catálogo y la tabla se rompan en celular */
+    .main-container {
+        width: 100% !important;
+        padding: 10px;
+    }
+    
+    .panel-body {
+        height: 400px !important; /* Más pequeño para que no ocupe toda la pantalla */
+    }
 
-/* 2. ESTILOS DEL CHAT (ASIMILADOS DEL HOME) */
-#chat-circle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #FF8C00;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    color: white;
-    cursor: pointer;
-    box-shadow: 0px 3px 16px 0px rgba(0, 0, 0, 0.6);
-    z-index: 9999;
-    text-align: center;
-    line-height: 60px; /* Centra el icono verticalmente */
-}
-
-.chat-box {
-    display: none;
-    position: fixed;
-    right: 30px;
-    bottom: 90px;
-    width: 350px;
-    background: white;
-    z-index: 9999;
-    box-shadow: 0px 5px 35px 9px rgba(0,0,0,0.1);
-    border-radius: 10px; /* Más redondeado como el home */
-    overflow: hidden;
-}
-
-.chat-box.chat-abierto {
-    display: block !important;
-    animation: subir 0.3s ease;
-}
-
-@keyframes subir {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* CABEZAL NARANJA IGUAL AL HOME */
-.chat-box-header {
-    background: linear-gradient(45deg, #FF8C00, #FFA500); /* Degradado naranja */
-    color: white;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-/* BOTONES DEL CHAT (OUTLINE NARANJA) */
-.btn-quick-reply {
-    display: block;
-    width: 100%;
-    margin-bottom: 8px;
-    background: transparent;
-    color: #FF8C00;
-    border: 1px solid #FF8C00;
-    padding: 8px;
-    border-radius: 20px; /* Estilo píldora como el home */
-    font-size: 13px;
-    font-weight: 600;
-    transition: all 0.3s;
-}
-
-.btn-quick-reply:hover {
-    background: #FF8C00;
-    color: white;
-}
-
-/* 3. ARREGLO VISUAL TOTAL Y OCULTAR EN FOTO */
-.total-final-tabla {
-    background-color: transparent !important;
-    color: #122A51 !important;
-    font-weight: 800 !important;
-    font-size: 1.8em !important;
-    text-align: right !important;
-}
-
-/* Solo se oculta cuando generamos el JPG */
-.ocultar-en-foto {
-    visibility: visible;
+    /* Ocultar la columna de la imagen en celular para ahorrar espacio */
+    .table > thead > tr > th:first-child,
+    .table > tbody > tr > td:first-child {
+        display: none;
+    }
+    
+    /* Hacer que los botones de acción se vean en pila */
+    .row.ocultar-en-foto > div {
+        margin-bottom: 10px;
+    }
 }
