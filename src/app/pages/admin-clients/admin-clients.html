@@ -1,41 +1,45 @@
 <section class="recent-activity" style="margin-top: 0;">
-    <div class="section-header">
-        <h2>👥 Cartera de Clientes</h2>
-        <button class="btn-primary-admin btn-nuevo-movil" routerLink="/admin/clientes/nuevo">
+    
+    <!-- 🔥 HEADER CON FLEXBOX EN LÍNEA 🔥 -->
+    <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+        <h2 style="margin: 0; font-size: 1.5em; color: #122A51;">👥 Cartera de Clientes</h2>
+        <button class="btn-primary-admin" routerLink="/admin/clientes/nuevo">
             <i class="fa-solid fa-plus"></i> Nuevo Cliente
         </button>
     </div>
 
-    <!-- 🔥 LA CAJA MÁGICA PARA EL SCROLL MÓVIL 🔥 -->
-    <div class="table-container">
-        <table class="human-table">
+    <!-- 🔥 LA CAJA MÁGICA PARA EL SCROLL MÓVIL EN LÍNEA 🔥 -->
+    <div class="table-container" style="overflow-x: auto; width: 100%; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); -webkit-overflow-scrolling: touch;">
+        
+        <!-- 🔥 TABLA CON ANCHO MÍNIMO 🔥 -->
+        <table class="human-table" style="min-width: 700px; width: 100%; border-collapse: collapse;">
             <thead>
                 <tr>
-                    <th>Nombre Completo</th>
-                    <th>Documento</th>
-                    <th>Contacto</th>
-                    <th>Acciones</th>
+                    <th style="padding: 15px; text-align: left; border-bottom: 1px solid #eee; background-color: #f8f9fa; color: #555; font-weight: 600;">Nombre Completo</th>
+                    <th style="padding: 15px; text-align: left; border-bottom: 1px solid #eee; background-color: #f8f9fa; color: #555; font-weight: 600;">Documento</th>
+                    <th style="padding: 15px; text-align: left; border-bottom: 1px solid #eee; background-color: #f8f9fa; color: #555; font-weight: 600;">Contacto</th>
+                    <th style="padding: 15px; text-align: left; border-bottom: 1px solid #eee; background-color: #f8f9fa; color: #555; font-weight: 600;">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let cli of clientes">
-                    <td>
+                    <td style="padding: 15px; border-bottom: 1px solid #eee;">
                         <div style="font-weight: 600;">{{ cli.nombreCompleto }}</div>
                         <small style="color: #888;">Registrado: {{ cli.fechaRegistro | date:'shortDate' }}</small>
                     </td>
-                    <td>
+                    <td style="padding: 15px; border-bottom: 1px solid #eee;">
                         <span class="status-badge" style="background: #e3f2fd; color: #0d47a1; padding: 4px 8px; border-radius: 4px; font-size: 0.85em;">
                             {{ cli.tipoDoc }}
                         </span>
                         <span style="margin-left: 8px; font-weight: 500;">{{ cli.numDoc }}</span>
                     </td>
-                    <td>
+                    <td style="padding: 15px; border-bottom: 1px solid #eee;">
                         <div style="font-size: 0.9em; line-height: 1.5;">
                             <i class="fa-solid fa-envelope" style="color:#aaa; width: 15px;"></i> {{ cli.email }} <br>
                             <i class="fa-solid fa-phone" style="color:#aaa; width: 15px;"></i> {{ cli.telefono }}
                         </div>
                     </td>
-                    <td>
+                    <td style="padding: 15px; border-bottom: 1px solid #eee;">
                         <div style="display: flex; gap: 10px;">
                             <button class="btn-icon" [routerLink]="['/admin/clientes/editar', cli.idCliente]" 
                                     style="color: #4a69bd; background: none; border: none; cursor: pointer; font-size: 1.2em;">
@@ -47,6 +51,9 @@
                             </button>
                         </div>
                     </td>
+                </tr>
+                <tr *ngIf="clientes.length === 0">
+                    <td colspan="4" style="text-align: center; padding: 20px; color: #999;">No hay clientes registrados en el sistema.</td>
                 </tr>
             </tbody>
         </table>
