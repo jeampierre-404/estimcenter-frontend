@@ -1,0 +1,42 @@
+<section class="recent-activity" style="margin-top: 0; max-width: 600px; margin-left: auto; margin-right: auto;">
+    <div class="section-header" style="margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <a routerLink="/admin/categorias" class="btn-icon" style="background: #eee; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none; color: #333;">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <h2>{{ esEdicion ? 'Editar Categoría' : 'Nueva Categoría' }}</h2>
+        </div>
+    </div>
+
+    <form (ngSubmit)="guardar()" #form="ngForm">
+        <div class="form-grid" style="display: flex; flex-direction: column; gap: 20px;">
+            
+            <div class="form-group">
+                <label>Nombre de la Categoría</label>
+                <input type="text" [(ngModel)]="categoria.nombre" name="nombre" required 
+                       style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+            </div>
+
+            <div class="form-group">
+                <label>Descripción</label>
+                <textarea [(ngModel)]="categoria.descripcion" name="descripcion" rows="3"
+                          style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;"></textarea>
+            </div>
+
+            <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                <input type="checkbox" [(ngModel)]="categoria.estado" name="estado" id="estadoCheck" style="transform: scale(1.2);">
+                <label for="estadoCheck" style="cursor: pointer;">Categoría Activa</label>
+            </div>
+
+            <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+                <button type="button" routerLink="/admin/categorias" 
+                        style="padding: 12px 25px; border: none; background: #eee; border-radius: 30px; cursor: pointer;">
+                    Cancelar
+                </button>
+                <button type="submit" [disabled]="!form.valid" class="btn-primary-admin">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </form>
+</section>

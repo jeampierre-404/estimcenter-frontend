@@ -1,0 +1,357 @@
+<header>
+  <div class="header-content">
+      <div style="display: inline-block; vertical-align: middle; margin-right: 15px;">
+        <img src="assets/imagenes/logo_empresa.png" alt="Logo" class="header-logo">
+      </div>
+      <div style="display: inline-block; vertical-align: middle; text-align: left;">
+          <h1 class="header-title">ESTIM CENTER FJ</h1>
+          <p class="header-subtitle">Expertos en Cerámicos, Porcelanatos y Acabados</p>
+      </div>
+  </div>
+  
+  <div id="carouselDecor" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselDecor" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselDecor" data-slide-to="1"></li>
+      <li data-target="#carouselDecor" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <img src="assets/imagenes/sala_moderna.jpg" alt="Sala Moderna" class="center-block carousel-img">
+      </div>
+      <div class="item">
+        <img src="assets/imagenes/bano.jpg" alt="Baño" class="center-block carousel-img">
+      </div>
+      <div class="item">
+        <img src="assets/imagenes/cocina.jpg" alt="Cocina" class="center-block carousel-img">
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="navbar navbar-default"> 
+   <div class="navbar-header">
+     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menuPrincipal"><span class="sr-only">Navegación</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+     <a class="navbar-brand" routerLink="/"><span class="glyphicon glyphicon-home"></span></a>
+   </div>
+  <div class="collapse navbar-collapse" id="menuPrincipal">
+    <ul class="nav navbar-nav"> 
+      <li><a routerLink="/"><b>INICIO</b></a></li>
+      
+      <li><a routerLink="/catalogo"><b><span class="glyphicon glyphicon-book"></span> Catálogo</b></a></li>
+      <li class="active"><a routerLink="/pedidos"><b><span class="glyphicon glyphicon-shopping-cart"></span> Mis Cotizaciones</b></a></li>
+      <li><a routerLink="/cotizar"><b><span class="glyphicon glyphicon-edit"></span> Cotizar</b></a></li>
+      
+      <li class="dropdown" style="float: right; border-left: 1px solid #e7e7e7;">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #FF8C00; font-weight: bold;">
+              <span class="glyphicon glyphicon-user"></span> 
+              <span>{{ clienteLogueado ? nombreCliente.split(' ')[0] : 'Cuenta' }}</span> 
+              <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+              <li *ngIf="!clienteLogueado"><a routerLink="/login">Iniciar Sesión</a></li>
+              <li *ngIf="clienteLogueado"><a style="cursor: pointer;" (click)="cerrarSesion()"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a></li>
+          </ul>
+      </li>
+
+      <!-- 🔥 NUEVO: BOTÓN DE CARRITO DE COMPRAS EN EL MENÚ 🔥 -->
+      <li style="float: right; border-left: 1px solid #e7e7e7; background-color: #fff8e1;">
+          <a routerLink="/cotizar" style="cursor: pointer; color: #FF8C00; font-weight: bold;">
+              <span class="glyphicon glyphicon-shopping-cart"></span> Mi Carrito 
+              <span class="badge" style="background-color: #122A51; margin-left: 5px;">{{ carritoCotizacion.length }}</span>
+          </a>
+      </li>
+
+      <!-- 🔥 BOTÓN PARA REABRIR EL BUSCADOR PREDICTIVO 🔥 -->
+      <li style="float: right; border-left: 1px solid #e7e7e7;">
+          <a (click)="abrirBuscadorPred()" style="cursor: pointer; color: #122A51; font-weight: bold; background-color: #f8f9fa;">
+              <span class="glyphicon glyphicon-search"></span> Búsqueda Rápida
+          </a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+
+<div class="container main-container" style="margin-top: 30px;"> 
+    <div class="row">
+        <div class="col-md-12">
+            <h2 style="color: #122A51; border-bottom: 2px solid #FF8C00; padding-bottom: 10px;">
+                <span class="glyphicon glyphicon-list-alt"></span> Historial de Cotizaciones
+            </h2>
+            <br>
+            
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="background-color: #122A51;">
+                    <h3 class="panel-title">Mis Cotizaciones Generadas</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" *ngIf="misPedidos.length > 0; else mensajeVacio">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID Pedido</th>
+                                    <th>Fecha y Hora</th>
+                                    <th>Total Cotizado</th>
+                                    <th>Estado</th>
+                                    <th class="text-center">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let p of misPedidos">
+                                    <td style="font-weight:bold; color:#122A51;">{{ p.id }}</td>
+                                    <td>{{ p.fecha }}</td>
+                                    <td style="color:#FF8C00; font-weight:bold;">{{ p.total }}</td>
+                                    <td>
+                                        <span class="label" [ngClass]="{'label-success': p.estado === 'Guardado', 'label-info': p.estado !== 'Guardado'}">
+                                            {{ p.estado || 'Guardado' }}
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <button class="btn btn-xs btn-info" (click)="verDetalle(p)">
+                                            <span class="glyphicon glyphicon-eye-open"></span> Ver
+                                        </button>
+                                        <button class="btn btn-xs btn-danger" (click)="borrarPedido(p.id)" style="margin-left:5px;">
+                                            <span class="glyphicon glyphicon-trash"></span> Borrar
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <ng-template #mensajeVacio>
+                        <div class="alert alert-info text-center">
+                            Aún no tienes pedidos registrados en esta cuenta.
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+            
+            <div class="text-right">
+                <a routerLink="/cotizar" class="btn btn-success btn-lg">
+                    <span class="glyphicon glyphicon-plus"></span> Nueva Cotización
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDetallePedido" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content" *ngIf="pedidoSeleccionado">
+      <div class="modal-header" style="background-color: #122A51; color: white;">
+        <button type="button" class="close" data-dismiss="modal"><span style="color: white;">&times;</span></button>
+        <h4 class="modal-title">Detalle: {{ pedidoSeleccionado.id }}</h4>
+      </div>
+      <div class="modal-body">
+          <p><strong>Fecha:</strong> {{ pedidoSeleccionado.fecha }}</p>
+          <hr>
+          <table class="table table-bordered">
+              <thead>
+                  <tr style="background:#f5f5f5;">
+                      <th>Descripción</th>
+                      <th>Cant.</th>
+                      <th>Total</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of pedidoSeleccionado.detalles">
+                      <td>{{ item.nombre }}</td>
+                      <td class="text-center">{{ item.cantidad }}</td>
+                      <td class="text-right">S/ {{ item.subtotal | number:'1.2-2' }}</td>
+                  </tr>
+              </tbody>
+              <tfoot>
+                  <tr>
+                      <td colspan="2" class="text-right"><strong>TOTAL:</strong></td>
+                      <td style="color: #FF8C00; font-weight:bold;">{{ pedidoSeleccionado.total }}</td>
+                  </tr>
+              </tfoot>
+          </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 🔥 MODAL DE BÚSQUEDA PREDICTIVA 🔥 -->
+<div class="modal fade" id="modalBienvenidaBuscador" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document" style="margin-top: 10vh;">
+    <div class="modal-content" style="border-radius: 12px; border: none; box-shadow: 0 15px 30px rgba(0,0,0,0.2);">
+      <div class="modal-header" style="background-color: #122A51; color: white; border-radius: 12px 12px 0 0; border-bottom: 3px solid #FF8C00;">
+        <button type="button" class="close" data-dismiss="modal" style="color: white; opacity: 1; text-shadow: none;">&times;</button>
+        <h4 class="modal-title" style="font-weight: bold; font-size: 1.5em; text-align: center;">
+            <span class="glyphicon glyphicon-search"></span> Búsqueda Rápida
+        </h4>
+      </div>
+      <div class="modal-body" style="background-color: #f9f9f9; padding: 25px;">
+          
+          <div class="form-group" style="position: relative; margin-bottom: 20px;">
+              <input type="text" [(ngModel)]="terminoBusqueda" (keyup)="buscarProductoPred()" name="busquedaPredictiva" class="form-control input-lg" placeholder="Ej: Porcelanato, Pegamento, Gris..." style="border-radius: 25px; padding-left: 20px; border: 2px solid #FF8C00; box-shadow: none;">
+              <span class="glyphicon glyphicon-search" style="position: absolute; right: 20px; top: 15px; font-size: 18px; color: #888;"></span>
+          </div>
+          
+          <div class="list-group" style="margin-bottom: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
+              
+              <a *ngFor="let p of productosBuscados" class="list-group-item" (click)="seleccionarBusquedaPred(p)" style="cursor: pointer; border-left: 4px solid #FF8C00; transition: background 0.2s;">
+                  <div style="display: flex; align-items: center;">
+                      <img [src]="getImagenUrl(p.imagen)" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; margin-right: 15px; border: 1px solid #eee;">
+                      <div style="flex-grow: 1;">
+                          <h5 style="margin: 0 0 5px 0; font-weight: bold; color: #122A51;">{{ p.nombre }}</h5>
+                          <p style="margin: 0; font-size: 0.85em; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;">{{ p.descripcion }}</p>
+                      </div>
+                      <div style="text-align: right;">
+                          <strong style="color: #FF8C00; font-size: 1.1em;">S/ {{ p.precio | number:'1.2-2' }}</strong>
+                          <br>
+                          <small style="color: #999;" *ngIf="!p.codigo?.includes('PEG')">Caja: {{ p.rendimientoCaja }} m²</small>
+                          <small style="color: #999;" *ngIf="p.codigo?.includes('PEG')">Saco: 25 kg</small>
+                      </div>
+                  </div>
+              </a>
+              
+              <div *ngIf="terminoBusqueda && productosBuscados.length === 0" class="text-center" style="padding: 20px; background: white; border: 1px solid #ddd; border-radius: 8px;">
+                  <span class="glyphicon glyphicon-info-sign" style="font-size: 24px; color: #ccc; display: block; margin-bottom: 10px;"></span>
+                  No encontramos productos con "<b>{{ terminoBusqueda }}</b>".
+              </div>
+          </div>
+
+      </div>   
+      <div class="modal-footer" style="text-align: center; border-top: none; background-color: #f9f9f9; padding-bottom: 20px;">
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 20px; padding: 8px 30px; font-weight: bold; color: #122A51;">Cerrar Buscador</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 🔥 CALCULADORA AL SELECCIONAR DESDE EL BUSCADOR 🔥 -->
+<div class="modal fade" id="calculadoraModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" *ngIf="prodSeleccionado">
+      <div class="modal-header" style="background-color: #000080; color: white;">
+        <button type="button" class="close" data-dismiss="modal"><span style="color: white;">&times;</span></button>
+        <h4 class="modal-title">Calculadora: {{ prodSeleccionado.nombre }}</h4>
+      </div>
+      <div class="modal-body">
+          <form>
+              <div class="form-group">
+                  <label style="font-size: 1.2em;">{{ lblPregunta }}</label>
+                  <div class="input-group">
+                      <input type="number" [(ngModel)]="metrosSolicitados" name="metros" class="form-control input-lg" placeholder="Ej: 15">
+                      <span class="input-group-addon" *ngIf="mostrarPiezas">m²</span>
+                      <span class="input-group-addon" *ngIf="!mostrarPiezas && !prodSeleccionado.codigo?.includes('PEG')">Und</span>
+                  </div>
+              </div>
+              <hr>
+              <div class="row">
+                  <div class="col-md-6 col-xs-6">
+                      <label>Precio Unitario:</label>
+                      <input type="text" class="form-control" [value]="'S/ ' + prodSeleccionado.precio" readonly>
+                  </div>
+                  <div class="col-md-6 col-xs-6">
+                      <label>{{ lblRendimiento }}</label>
+                      <input type="text" class="form-control" [value]="prodSeleccionado.rendimientoCaja" readonly>
+                  </div>
+              </div>
+              <br>
+              <div class="well" style="background-color: #f9f9f9; border: 1px solid #ddd;">
+                  <div class="row">
+                      <div class="col-md-6 col-xs-6">
+                          <label style="color:#FF8C00">COSTO TOTAL ESTIMADO:</label>
+                          <input type="text" class="form-control" [value]="costoTotal" readonly style="font-weight:bold; color:#FF8C00">
+                      </div>
+                      <div class="col-md-6 col-xs-6">
+                          <label style="color:#122A51">{{ lblResultadoEmpaque }}</label>
+                          <input type="text" class="form-control" [value]="cajasLlevar" readonly style="font-weight:bold; color:#122A51">
+                      </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                      <div class="col-md-12 text-center">
+                          <label style="color: #333;">DETALLE ADICIONAL:</label>
+                          <input type="text" class="form-control text-center" [value]="metrosReales" readonly style="font-weight: bold; color: #333; background-color: #e6e6e6;">
+                      </div>
+                  </div>
+              </div>
+          </form>
+      </div>   
+      
+      <div class="modal-footer" style="text-align: center; border-top: 1px solid #eee; padding: 15px;">
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 20px; padding: 8px 25px; margin-right: 10px;">Cerrar</button>
+        <button type="button" class="btn" style="background-color: #000080; color: white; padding: 8px 25px; border-radius: 20px; font-weight: bold;" (click)="calcularTotal()">¡Calcular Ahora!</button>
+        <button type="button" class="btn btn-success" *ngIf="costoTotal" (click)="agregarAlCarrito()" style="border-radius: 20px; padding: 8px 25px; font-weight: bold; margin-left: 10px;">
+            <span class="glyphicon glyphicon-shopping-cart"></span> Agregar al Carrito
+        </button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container-fluid footer-content">
+    <div class="col-md-4">
+      <h4>Contacto</h4>
+      <p>
+        <span class="glyphicon glyphicon-map-marker"></span> Visitanos en Av. Alfonso Ugarte 1244 - 1135<br>
+        <span class="glyphicon glyphicon-earphone"></span> (+51) 978-875-748<br>
+        <span class="glyphicon glyphicon-envelope"></span> estimcenterfj1005@gmail.com
+      </p>
+    </div>
+    <div class="col-md-4 text-center">
+      <p>&copy; 2026 ESTIM CENTER FJ <br> Todos los derechos reservados.</p>
+    </div>
+    <div class="col-md-4 text-right">
+      <p>Síguenos en Redes:</p>
+      <span class="glyphicon glyphicon-thumbs-up"></span> Facebook <br>
+      <span class="glyphicon glyphicon-camera" style="margin-top: 5px;"></span> Instagram <br>
+      <span class="glyphicon glyphicon-music" style="margin-top: 5px;"></span> TikTok
+    </div>
+  </div>
+</footer>
+
+<div id="chat-circle" class="btn btn-raised" (click)="toggleChat()">
+    <div id="chat-overlay"></div>
+    <span class="glyphicon glyphicon-comment" style="font-size: 24px; color: white; margin-top: 12px;"></span>
+</div>
+
+<div class="chat-box" [class.chat-abierto]="chatVisible">
+    <div class="chat-box-header">
+        <div class="chat-avatar">
+            <img src="assets/imagenes/logo_empresa.png" alt="Admin" style="background:white; padding:2px;">
+        </div>
+        <div class="chat-info">
+            <span class="chat-title">Soporte ESTIM CENTER FJ</span>
+            <span class="chat-status"><span class="status-dot"></span> En línea</span>
+        </div>
+        <span class="chat-box-toggle" (click)="toggleChat()"><span class="glyphicon glyphicon-remove"></span></span>
+    </div>
+    
+    <div class="chat-box-body" id="chat-box-body">
+        <div class="chat-logs">
+            <div class="chat-msg user">
+                <div class="cm-msg-text">
+                    ¡Hola! 👋 Bienvenido a ESTIM CENTER FJ<br>
+                    Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?
+                </div>
+            </div>
+            <div class="chat-msg user">
+                <div class="cm-msg-button-container">
+                    <button class="btn-quick-reply" (click)="enviarWhatsApp('Quiero cotizar porcelanatos')">Cotizar Porcelanatos</button>
+                    <button class="btn-quick-reply" (click)="enviarWhatsApp('¿Dónde están ubicados?')">Ubicación de tienda</button>
+                    <button class="btn-quick-reply" (click)="enviarWhatsApp('Quiero hablar con un asesor')">Hablar con un humano</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="chat-input">
+        <form (submit)="enviarMensajeEscrito($event)">
+            <input type="text" id="chat-input" placeholder="Escribe tu consulta aquí..." />
+            <button type="submit" class="chat-submit" id="chat-submit">
+                <span class="glyphicon glyphicon-send"></span>
+            </button>
+        </form>
+    </div>
+</div>

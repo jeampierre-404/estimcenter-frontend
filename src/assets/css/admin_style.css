@@ -1,0 +1,294 @@
+/* =========================================
+   1. VARIABLES Y BASE (Identidad CASA DECOR)
+   ========================================= */
+:root {
+    --color-primary: #122A51;     /* Tu Azul Marino */
+    --color-primary-dark: #0f2040;
+    --color-accent: #FF8C00;      /* Tu Naranja */
+    --color-bg: #f4f6f9;          /* Tu fondo gris claro */
+    --color-white: #ffffff;
+    --color-text: #333333;
+    --shadow-soft: 0 10px 30px rgba(18, 42, 81, 0.08);
+    --radius-card: 15px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+body {
+    background-color: var(--color-bg);
+    /* display: flex;  <-- BORRA ESTO TAMBIÉN, ya no es necesario con sidebar fixed */
+    min-height: 100vh; /* Cambiamos height por min-height */
+    
+    /* PERMITIMOS EL SCROLL VERTICAL, PERO NO EL HORIZONTAL */
+    overflow-y: auto; 
+    overflow-x: hidden; 
+}
+
+/* =========================================
+   2. SIDEBAR (Barra lateral elegante)
+   ========================================= */
+.sidebar {
+    width: 280px;
+    background: var(--color-primary);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+    z-index: 100;
+    
+    /* AGREGA ESTO PARA FIJARLO: */
+    position: fixed; 
+    top: 0;
+    left: 0;
+    height: 100vh; /* Ocupa toda la altura siempre */
+}
+
+/* Perfil de Usuario */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+.avatar-circle {
+    width: 45px; height: 45px;
+    background: var(--color-accent);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 1.1em;
+}
+.welcome-text { font-size: 0.8em; opacity: 0.8; margin-bottom: 2px; }
+.user-info h3 { font-size: 1em; font-weight: 600; }
+
+/* Menú de Navegación */
+.menu { display: flex; flex-direction: column; gap: 10px; flex-grow: 1; }
+.menu-item {
+    display: flex; align-items: center; gap: 15px;
+    padding: 12px 15px;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.3s;
+    font-size: 0.95em;
+}
+.menu-item:hover, .menu-item.active {
+    background: var(--color-accent);
+    color: white;
+    transform: translateX(5px);
+    font-weight: 600;
+}
+.menu-item i { width: 20px; text-align: center; }
+
+.divider { height: 1px; background: rgba(255,255,255,0.1); margin: 20px 0; }
+.logout:hover { background: #ff4757; } /* Rojo suave para salir */
+
+/* =========================================
+   3. ÁREA PRINCIPAL (CORREGIDO)
+   ========================================= */
+.main-content {
+    /* AGREGA/MODIFICA ESTO: */
+    margin-left: 280px; /* <--- IMPORTANTE: El mismo ancho que tu sidebar */
+    width: calc(100% - 280px); /* Asegura que ocupe el resto exacto */
+    
+    /* Mantén lo que ya tenías: */
+    padding: 30px 40px;
+    background-color: var(--color-bg); 
+    min-height: 100vh;
+}
+
+/* Header Superior */
+.top-header {
+    display: flex; justify-content: space-between; align-items: end;
+    margin-bottom: 40px;
+}
+.greeting-box h1 { color: var(--color-primary); font-weight: 700; font-size: 2em; }
+.greeting-box p { color: #777; font-size: 1em; margin-top: 5px; }
+
+.actions { display: flex; gap: 15px; }
+.btn-primary-admin {
+    background: var(--color-primary);
+    color: white;
+    border: none; padding: 12px 25px;
+    border-radius: 30px;
+    font-weight: 600; cursor: pointer;
+    box-shadow: 0 5px 15px rgba(18, 42, 81, 0.2);
+    transition: 0.3s;
+}
+.btn-primary-admin:hover { background: var(--color-accent); transform: translateY(-2px); }
+
+.btn-action {
+    background: white; border: none;
+    width: 45px; height: 45px;
+    border-radius: 50%;
+    color: var(--color-primary);
+    font-size: 1.2em; cursor: pointer;
+    position: relative;
+    box-shadow: var(--shadow-soft);
+}
+.badge {
+    position: absolute; top: 0; right: 0;
+    background: #ff4757; color: white;
+    font-size: 0.7em; width: 18px; height: 18px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+}
+
+/* =========================================
+   4. TARJETAS DE ESTADO (DASHBOARD)
+   ========================================= */
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.card-status {
+    background: white;
+    padding: 25px;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+.card-status:hover { transform: translateY(-5px); }
+
+/* Decoración de fondo */
+.icon-bg {
+    position: absolute; top: -10px; right: -10px;
+    font-size: 5em; opacity: 0.05; color: #000;
+}
+
+.card-status h3 { font-size: 1em; color: #888; margin-bottom: 10px; font-weight: 500; }
+.big-number { font-size: 2.2em; font-weight: 700; color: var(--color-primary); margin-bottom: 10px; }
+
+/* Bordes de color superior */
+.card-status.blue { border-top: 4px solid var(--color-primary); }
+.card-status.orange { border-top: 4px solid var(--color-accent); }
+.card-status.dark { border-top: 4px solid #333; }
+
+.trend { font-size: 0.85em; display: inline-flex; align-items: center; gap: 5px; font-weight: 600; }
+.trend.up { color: #2ecc71; }
+.trend.warning { color: var(--color-accent); }
+.trend.neutral { color: #95a5a6; }
+
+/* =========================================
+   5. TABLA HUMANIZADA
+   ========================================= */
+.recent-activity {
+    background: white;
+    padding: 30px;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+}
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+.section-header h2 { font-size: 1.3em; color: var(--color-primary); font-weight: 700; }
+.view-all { color: var(--color-accent); text-decoration: none; font-weight: 600; font-size: 0.9em; }
+
+.human-table { width: 100%; border-collapse: collapse; }
+.human-table th { text-align: left; padding: 15px; color: #888; font-weight: 500; font-size: 0.9em; border-bottom: 1px solid #eee; }
+.human-table td { padding: 15px; vertical-align: middle; border-bottom: 1px solid #f9f9f9; }
+
+.product-cell { display: flex; align-items: center; gap: 15px; }
+.p-icon {
+    width: 40px; height: 40px; background: #eef2f7; color: var(--color-primary);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+}
+.p-icon.warning { background: #fff5e6; color: var(--color-accent); }
+small { color: #999; }
+
+.status-badge {
+    padding: 5px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 600;
+}
+.status-badge.success { background: #e8f8f5; color: #2ecc71; }
+.status-badge.pending { background: #fff5e6; color: var(--color-accent); }
+
+.btn-icon {
+    background: none; border: none; color: #ccc; cursor: pointer; font-size: 1.1em; transition: 0.2s;
+}
+.btn-icon:hover { color: var(--color-primary); }
+
+/* Responsive móvil básico */
+@media (max-width: 768px) {
+    .sidebar { display: none; /* O convertir en menú hamburguesa */ }
+    .main-content { padding: 20px; }
+    .top-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+}
+
+/* =========================================
+   6. RESPONSIVE PROFESIONAL (Menú App)
+   ========================================= */
+
+/* --- 1. El Botón Hamburguesa (Invisible en PC) --- */
+.btn-menu-mobile {
+    display: none; /* Por defecto no se ve */
+    background: white;
+    border: none;
+    font-size: 1.4em;
+    color: var(--color-primary);
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: 0.2s;
+}
+.btn-menu-mobile:active { transform: scale(0.95); }
+
+/* --- 2. El Telón Oscuro (Overlay) --- */
+.menu-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100vh;
+    background: rgba(0,0,0,0.5); 
+    z-index: 900; /* Debajo del menú (1001), encima de todo lo demás */
+    display: none; 
+    backdrop-filter: blur(2px);
+}
+.menu-overlay.show { display: block; animation: fadeIn 0.3s; }
+
+/* --- 3. Reglas para Móviles y Tablets (< 1000px) --- */
+@media (max-width: 1000px) {
+
+    /* Mostramos el botón */
+    .btn-menu-mobile { display: block; }
+
+    /* Ajustamos el Header */
+    .top-header {
+        flex-direction: row; 
+        align-items: center;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+
+    /* SIDEBAR: Se esconde a la izquierda pero NO desaparece (display: flex) */
+    .sidebar {
+        display: flex; /* Aseguramos que sea visible para la animación */
+        position: fixed; 
+        top: 0; left: 0;
+        height: 100vh;
+        z-index: 1001 !important; /* Encima del Overlay */
+        transform: translateX(-100%); /* Escondido a la izquierda */
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 5px 0 25px rgba(0,0,0,0.3);
+    }
+
+    /* SIDEBAR ACTIVO: Entra a la pantalla */
+    .sidebar.active {
+        transform: translateX(0); /* ¡Aparece! */
+    }
+
+    /* CONTENIDO: Se expande siempre al 100% */
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 20px;
+    }
+}
+
+/* Animación simple */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

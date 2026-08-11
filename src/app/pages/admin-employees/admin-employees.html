@@ -1,0 +1,47 @@
+<div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h2>Gestión de Personal</h2>
+    <button class="btn-primary-admin" routerLink="/admin/empleados/nuevo">
+        <i class="fa-solid fa-user-plus"></i> Nuevo Empleado
+    </button>
+</div>
+
+<div class="table-container" style="overflow-x: auto; width: 100%; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <table class="human-table" style="min-width: 700px; width: 100%;">
+        <thead>
+            <tr>
+                <th>Nombre Completo</th>
+                <th>Correo Corporativo</th>
+                <th>Rol Asignado</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let emp of empleados">
+                <td><strong>{{ emp.nombre }} {{ emp.apellido }}</strong></td>
+                <td>{{ emp.email }}</td>
+                <td>
+                    <span class="status-badge" style="background: #eef2f7; color: #34495e;">
+                        {{ emp.rol?.nombre || 'Sin Rol' }}
+                    </span>
+                </td>
+                <td>
+                    <span class="status-badge" [ngClass]="emp.estado ? 'success' : 'pending'">
+                        {{ emp.estado ? 'Activo' : 'Inactivo' }}
+                    </span>
+                </td>
+                <td>
+                    <button class="btn-icon" [routerLink]="['/admin/empleados/editar', emp.idUsuario]" style="color: #3498db; margin-right: 10px;">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button class="btn-icon" (click)="eliminarEmpleado(emp.idUsuario)" style="color: #e74c3c;">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+            <tr *ngIf="empleados.length === 0">
+                <td colspan="5" style="text-align: center; padding: 20px; color: #999;">No hay personal registrado en el sistema.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

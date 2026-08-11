@@ -1,0 +1,49 @@
+<section class="recent-activity" style="margin-top: 0;">
+    <div class="section-header">
+        <h2>🏷️ Gestión de Categorías</h2>
+        <button class="btn-primary-admin" routerLink="/admin/categorias/nueva" style="padding: 8px 15px;">
+            + Nueva Categoría
+        </button>
+    </div>
+
+    <div class="table-container">
+        <table class="human-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cat of categorias">
+                    <td><strong>{{ cat.nombre }}</strong></td>
+                    <td>{{ cat.descripcion }}</td>
+                    <td>
+                        <span class="status-badge" [ngClass]="cat.estado ? 'success' : 'pending'">
+                            {{ cat.estado ? 'Activo' : 'Inactivo' }}
+                        </span>
+                    </td>
+                    <td>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn-icon" [routerLink]="['/admin/categorias/editar', cat.idCategoria]" 
+                                    style="color: #4a69bd;" title="Editar">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button class="btn-icon" (click)="eliminar(cat.idCategoria)" 
+                                    style="color: #ff4757;" title="Eliminar">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="categorias.length === 0">
+                    <td colspan="4" style="text-align: center; padding: 20px; color: #999;">
+                        No hay categorías registradas.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

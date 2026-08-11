@@ -1,0 +1,105 @@
+<section class="recent-activity" style="margin-top: 0;">
+    <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <h2>📦 Inventario de Productos</h2>
+        
+        <div style="flex-grow: 1; max-width: 400px; position: relative;">
+            <i class="fa-solid fa-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #888;"></i>
+            <input type="text" [(ngModel)]="busqueda" (keyup)="filtrar()" placeholder="Buscar por código o nombre..." 
+                   style="width: 100%; padding: 10px 15px 10px 40px; border-radius: 20px; border: 1px solid #ddd; outline: none; transition: border-color 0.3s;"
+                   onfocus="this.style.borderColor='#FF8C00'" onblur="this.style.borderColor='#ddd'">
+        </div>
+
+        <button class="btn-primary-admin" routerLink="/admin/productos/nuevo" style="padding: 8px 15px; font-size: 0.9em; white-space: nowrap;">
+            + Nuevo Producto
+        </button>
+    </div>
+
+    <div class="table-container table-responsive" style="border-radius: 8px; overflow-x: auto; margin-top: 20px;">
+        <table class="human-table" style="width: 100%; min-width: 800px;"> 
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Categoria</th>
+                    <th>Unidad</th>
+                    <th>Precio</th>
+                    <th>Stock Actual</th>
+                    <th>Estado</th> 
+                    <th style="text-align: center;">Acciones</th> 
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let prod of productosFiltrados" [class.row-inactive]="prod.estado === 'INACTIVO'">
+                    <td>
+                        <div class="product-cell">
+                            <div class="p-icon">
+                                <img *ngIf="prod.imagen" [src]="getImagenUrl(prod.imagen)" width="30" style="border-radius:4px; object-fit: cover;">
+                                <i *ngIf="!prod.imagen" class="fa-solid fa-box-open"></i>
+                            </div>
+                            <div>
+                                <strong>{{ prod.nombre }}</strong>
+                                <br><small style="color: #888;">{{ prod.codigo }}</small>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <span style="background: #e3f2fd; color: #1565c0; padding: 4px 10px; border-radius: 15px; font-size: 0.85em; font-weight: 600; white-space: nowrap;">
+                            {{ prod.categoria.nombre }}
+                        </span>
+                    </td>
+                    
+                    <td>{{ prod.unidadMedida }}</td>
+                    <td style="white-space: nowrap;">S/ {{ prod.precio }}</td>
+                    <td>{{ prod.stockActual }}</td>
+                    
+                    <td>
+                        <span *ngIf="prod.estado === 'INACTIVO'" 
+                              style="background: #ffebee; color: #c62828; padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 0.85em; border: 1px solid #ef9a9a; white-space: nowrap;">
+                            ⛔ INACTIVO
+                        </span>
+
+                        <ng-container *ngIf="prod.estado !== 'INACTIVO'">
+                            <span class="status-badge" 
+                                  [ngClass]="prod.stockActual <= prod.stockMinimo ? 'pending' : 'success'"
+                                  style="white-space: nowrap;">
+                                {{ prod.stockActual <= prod.stockMinimo ? '⚠️ Stock Bajo' : '✅ Disponible' }}
+                            </span>
+                        </ng-container>
+                    </td>
+                    
+                    <td style="min-width: 130px;">
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+                            
+                            <button *ngIf="prod.estado !== 'INACTIVO'" 
+                                    class="btn-icon" (click)="agregarStock(prod.idProducto, prod.nombre)" 
+                                    style="color: #27ae60; cursor: pointer; font-size: 1.2em; background: none; border: none;" 
+                                    title="Ingresar Stock">
+                                <i class="fa-solid fa-boxes-packing"></i>
+                            </button>
+
+                            <button class="btn-icon" [routerLink]="['/admin/productos/editar', prod.idProducto]" 
+                                    style="color: #4a69bd; cursor: pointer; font-size: 1.2em; background: none; border: none;" 
+                                    title="Editar / Reactivar">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+
+                            <button class="btn-icon" (click)="eliminar(prod.idProducto)" 
+                                    [style.color]="prod.estado === 'INACTIVO' ? '#800000' : '#ff4757'" 
+                                    style="cursor: pointer; font-size: 1.2em; background: none; border: none;" 
+                                    [title]="prod.estado === 'INACTIVO' ? 'Eliminar Definitivamente' : 'Desactivar'">
+                                <i [class]="prod.estado === 'INACTIVO' ? 'fa-solid fa-xmark' : 'fa-solid fa-trash'"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr *ngIf="productosFiltrados.length === 0">
+                    <td colspan="7" style="text-align: center; padding: 20px; color: #999;">
+                        <i class="fa-solid fa-box-open" style="font-size: 2em; margin-bottom: 10px; display: block; color: #ddd;"></i>
+                        No se encontraron productos con ese criterio.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

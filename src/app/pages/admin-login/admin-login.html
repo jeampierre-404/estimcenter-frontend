@@ -1,0 +1,35 @@
+<div class="admin-login-container">
+    <div class="login-card">
+        <div class="text-center logo-box">
+            <img src="assets/imagenes/logo_empresa.png" alt="ESTIM CENTER FJ" class="logo">
+            <h3 class="corporative-title">INTRANET CORPORATIVA</h3>
+        </div>
+
+        <form (submit)="iniciarSesion(); $event.preventDefault()">
+            <div class="form-group">
+                <label>Correo Electrónico</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fas fa-envelope"></i></span>
+                    <input type="email" class="form-control" placeholder="empleado@casadecorjs.com" name="email" [(ngModel)]="email">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Contraseña</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fas fa-lock"></i></span>
+                    <input type="password" class="form-control" placeholder="********" name="pass" [(ngModel)]="pass">
+                </div>
+            </div>
+
+            <div *ngIf="mensajeError" class="alert alert-danger text-center" style="padding: 5px; font-size: 13px;">
+                {{ mensajeError }}
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-admin" [disabled]="cargando">
+                <i class="fas" [ngClass]="cargando ? 'fa-spinner fa-spin' : 'fa-sign-in-alt'"></i> 
+                {{ cargando ? 'Verificando...' : 'ACCEDER AL PANEL' }}
+            </button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+<section class="recent-activity" style="margin-top: 0; max-width: 800px; margin-left: auto; margin-right: auto;">
+    <div class="section-header" style="margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <a routerLink="/admin/clientes" class="btn-icon" style="background: #eee; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none; color: #333;">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <h2>{{ esEdicion ? 'Editar Cliente' : 'Nuevo Cliente' }}</h2>
+        </div>
+    </div>
+
+    <form (ngSubmit)="guardar()" #formCliente="ngForm">
+        <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
+            <div class="form-group">
+                <label>Tipo de Documento <span style="color: #e74c3c;">*</span></label>
+                <select [(ngModel)]="cliente.tipoDoc" name="tipoDoc" 
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: white; outline: none;">
+                    <option value="DNI">DNI</option>
+                    <option value="RUC">RUC</option>
+                    <option value="PASAPORTE">Pasaporte</option>
+                    <option value="CE">Carnet Extranjería</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Número de Documento <span style="color: #e74c3c;">*</span></label>
+                <input type="text" [(ngModel)]="cliente.numDoc" name="numDoc" required #numDoc="ngModel"
+                       (keypress)="permitirSoloNumeros($event)"
+                       [ngStyle]="{'border-color': numDoc.invalid && numDoc.touched ? '#e74c3c' : '#ddd'}"
+                       style="width: 100%; padding: 10px; border: 1px solid; border-radius: 8px; outline: none;">
+                <small *ngIf="numDoc.invalid && numDoc.touched" style="color: #e74c3c; font-size: 0.85em; display: block; margin-top: 5px;">
+                    El número de documento es obligatorio.
+                </small>
+            </div>
+
+            <div class="form-group" style="grid-column: span 2;">
+                <label>Nombre Completo / Razón Social <span style="color: #e74c3c;">*</span></label>
+                <input type="text" [(ngModel)]="cliente.nombreCompleto" name="nombreCompleto" required minlength="3" #nombre="ngModel"
+                       [ngStyle]="{'border-color': nombre.invalid && nombre.touched ? '#e74c3c' : '#ddd'}"
+                       style="width: 100%; padding: 10px; border: 1px solid; border-radius: 8px; outline: none;">
+                <small *ngIf="nombre.errors?.['required'] && nombre.touched" style="color: #e74c3c; font-size: 0.85em; display: block; margin-top: 5px;">
+                    El nombre es obligatorio.
+                </small>
+                <small *ngIf="nombre.errors?.['minlength'] && nombre.touched" style="color: #e74c3c; font-size: 0.85em; display: block; margin-top: 5px;">
+                    Debe tener al menos 3 caracteres.
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label>Correo Electrónico</label>
+                <input type="email" [(ngModel)]="cliente.email" name="email" email #email="ngModel"
+                       [ngStyle]="{'border-color': email.invalid && email.touched ? '#e74c3c' : '#ddd'}"
+                       style="width: 100%; padding: 10px; border: 1px solid; border-radius: 8px; outline: none;">
+                <small *ngIf="email.invalid && email.touched" style="color: #e74c3c; font-size: 0.85em; display: block; margin-top: 5px;">
+                    Ingresa un correo válido (ej. juan@gmail.com).
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label>Teléfono / Celular</label>
+                <input type="text" [(ngModel)]="cliente.telefono" name="telefono" pattern="[0-9]*" maxlength="15" #telefono="ngModel"
+                       (keypress)="permitirSoloNumeros($event)"
+                       [ngStyle]="{'border-color': telefono.invalid && telefono.touched ? '#e74c3c' : '#ddd'}"
+                       style="width: 100%; padding: 10px; border: 1px solid; border-radius: 8px; outline: none;">
+                <small *ngIf="telefono.invalid && telefono.touched" style="color: #e74c3c; font-size: 0.85em; display: block; margin-top: 5px;">
+                    Solo se permiten números.
+                </small>
+            </div>
+
+        </div>
+
+        <div style="margin-top: 30px; display: flex; justify-content: flex-end; gap: 10px;">
+            <button type="button" routerLink="/admin/clientes" 
+                    style="padding: 12px 25px; border: none; background: #eee; border-radius: 30px; cursor: pointer; font-weight: 500;">
+                Cancelar
+            </button>
+            <button type="submit" [disabled]="!formCliente.valid" 
+                    [ngStyle]="{'opacity': formCliente.valid ? '1' : '0.6', 'cursor': formCliente.valid ? 'pointer' : 'not-allowed'}"
+                    class="btn-primary-admin">
+                <i class="fa-solid fa-floppy-disk" style="margin-right: 5px;"></i> Guardar Cliente
+            </button>
+        </div>
+    </form>
+</section>

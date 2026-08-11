@@ -1,0 +1,53 @@
+<section class="recent-activity" style="margin-top: 0;">
+    <div class="section-header">
+        <h2>👥 Cartera de Clientes</h2>
+        <button class="btn-primary-admin" routerLink="/admin/clientes/nuevo" style="padding: 8px 15px;">
+            + Nuevo Cliente
+        </button>
+    </div>
+
+    <div class="table-container">
+        <table class="human-table">
+            <thead>
+                <tr>
+                    <th>Nombre Completo</th>
+                    <th>Documento</th>
+                    <th>Contacto</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cli of clientes">
+                    <td>
+                        <div style="font-weight: 600;">{{ cli.nombreCompleto }}</div>
+                        <small style="color: #888;">Registrado: {{ cli.fechaRegistro | date:'shortDate' }}</small>
+                    </td>
+                    <td>
+                        <span class="status-badge" style="background: #e3f2fd; color: #0d47a1;">
+                            {{ cli.tipoDoc }}
+                        </span>
+                        <span style="margin-left: 8px; font-weight: 500;">{{ cli.numDoc }}</span>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.9em;">
+                            <i class="fa-solid fa-envelope" style="color:#aaa;"></i> {{ cli.email }} <br>
+                            <i class="fa-solid fa-phone" style="color:#aaa;"></i> {{ cli.telefono }}
+                        </div>
+                    </td>
+                    <td>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn-icon" [routerLink]="['/admin/clientes/editar', cli.idCliente]" 
+                                    style="color: #4a69bd;">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button class="btn-icon" (click)="eliminar(cli.idCliente)" 
+                                    style="color: #ff4757;">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

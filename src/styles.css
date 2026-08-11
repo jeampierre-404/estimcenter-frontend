@@ -1,0 +1,40 @@
+/* ==============================================
+   ESTILOS GLOBALES DE CASA DECOR
+   ============================================== */
+
+/* 1. Cargamos Bootstrap (El que arregla las columnas y el ancho) */
+@import './assets/css/bootstrap-3.3.4.css';
+
+/* 2. Cargamos tus Estilos Propios (Colores, fuentes, botones) */
+@import './assets/css/estilo_decor.css';
+
+/* 3. Cargamos los Iconos (FontAwesome) para el carrito y usuario */
+@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+
+/* ==============================================
+   CORRECCIONES DE CONFLICTOS
+   ============================================== */
+/* Esto asegura que tu página ocupe el ancho correcto */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* Forzamos que las columnas de Bootstrap 3 floten correctamente en Angular */
+.col-md-4 {
+    float: left;
+    width: 33.33333333%;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+/* Ajuste para móviles */
+@media (max-width: 992px) {
+    .col-md-4 {
+        width: 100%;
+        float: none;
+    }
+}

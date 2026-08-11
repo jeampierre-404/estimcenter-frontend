@@ -1,0 +1,79 @@
+<div class="form-container" style="max-width: 700px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <h2 style="margin-bottom: 25px; color: #122A51; font-size: 1.5em; display: flex; align-items: center; gap: 10px;">
+        <i class="fa-solid" [ngClass]="isEditMode ? 'fa-pen-to-square' : 'fa-user-tie'"></i>
+        {{ isEditMode ? 'Editar Perfil de Empleado' : 'Registrar Nuevo Empleado' }}
+    </h2>
+
+    <form #empleadoForm="ngForm" (submit)="guardar(); $event.preventDefault()">
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+            <div class="form-group">
+                <label style="font-weight: bold; font-size: 0.9em; color: #555;">Nombre *</label>
+                <input type="text" class="form-control" name="nombre" [(ngModel)]="empleado.nombre" placeholder="Ej: Carlos" required pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" #nombre="ngModel" [style.border-color]="nombre.invalid && (nombre.dirty || nombre.touched) ? '#e74c3c' : ''">
+                <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" style="color: #e74c3c; font-size: 0.85em; margin-top: 5px;">
+                    <span *ngIf="nombre.errors?.['required']">El nombre es obligatorio.</span>
+                    <span *ngIf="nombre.errors?.['pattern']">Solo se permiten letras.</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label style="font-weight: bold; font-size: 0.9em; color: #555;">Apellido</label>
+                <input type="text" class="form-control" name="apellido" [(ngModel)]="empleado.apellido" placeholder="Ej: Perez" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" #apellido="ngModel" [style.border-color]="apellido.invalid && (apellido.dirty || apellido.touched) ? '#e74c3c' : ''">
+                <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)" style="color: #e74c3c; font-size: 0.85em; margin-top: 5px;">
+                    <span *ngIf="apellido.errors?.['pattern']">Solo se permiten letras.</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+            <div class="form-group">
+                <label style="font-weight: bold; font-size: 0.9em; color: #555;">Correo Corporativo (Login) *</label>
+                <input type="email" class="form-control" name="email" [(ngModel)]="empleado.email" placeholder="carlos@casadecorjs.com" required email #correo="ngModel" [style.border-color]="correo.invalid && (correo.dirty || correo.touched) ? '#e74c3c' : ''">
+                <div *ngIf="correo.invalid && (correo.dirty || correo.touched)" style="color: #e74c3c; font-size: 0.85em; margin-top: 5px;">
+                    <span *ngIf="correo.errors?.['required']">El correo es obligatorio.</span>
+                    <span *ngIf="correo.errors?.['email']">Ingresa un formato válido.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label style="font-weight: bold; font-size: 0.9em; color: #555;">Contraseña de Acceso *</label>
+                <input type="text" class="form-control" name="password" [(ngModel)]="empleado.password" placeholder="Asigna una contraseña" required minlength="6" #pwd="ngModel" [style.border-color]="pwd.invalid && (pwd.dirty || pwd.touched) ? '#e74c3c' : ''">
+                <div *ngIf="pwd.invalid && (pwd.dirty || pwd.touched)" style="color: #e74c3c; font-size: 0.85em; margin-top: 5px;">
+                    <span *ngIf="pwd.errors?.['required']">La contraseña es obligatoria.</span>
+                    <span *ngIf="pwd.errors?.['minlength']">Mínimo 6 caracteres.</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; border-top: 1px solid #eee; padding-top: 20px;">
+            <div class="form-group">
+                <label style="font-weight: bold; font-size: 0.9em; color: #122A51;"><i class="fa-solid fa-id-badge"></i> Rol / Puesto *</label>
+                <select class="form-control" name="rol" [(ngModel)]="empleado.rol.idRol" style="cursor: pointer;" required #rolSelect="ngModel" [style.border-color]="rolSelect.invalid && (rolSelect.dirty || rolSelect.touched) ? '#e74c3c' : ''">
+                    <option value="" disabled>-- Selecciona un Rol --</option>
+                    <option *ngFor="let r of roles" [value]="r.idRol">{{ r.nombre }} ({{ r.descripcion }})</option>
+                </select>
+                <div *ngIf="rolSelect.invalid && (rolSelect.dirty || rolSelect.touched)" style="color: #e74c3c; font-size: 0.85em; margin-top: 5px;">
+                    Debes asignar un rol al empleado.
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label style="font-weight: bold; font-size: 0.9em; color: #122A51;"><i class="fa-solid fa-toggle-on"></i> Estado de la Cuenta</label>
+                <select class="form-control" name="estado" [(ngModel)]="empleado.estado" style="cursor: pointer;">
+                    <option [ngValue]="true">🟢 Activo (Permitir Acceso)</option>
+                    <option [ngValue]="false">🔴 Inactivo (Bloquear)</option>
+                </select>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 15px;">
+            <button type="submit" class="btn-primary-admin" style="flex: 2; font-size: 1.1em;" [disabled]="!empleadoForm.form.valid || cargando" [ngStyle]="{'opacity': (!empleadoForm.form.valid) ? '0.6' : '1', 'cursor': (!empleadoForm.form.valid) ? 'not-allowed' : 'pointer'}">
+                <i class="fas" [ngClass]="cargando ? 'fa-spinner fa-spin' : 'fa-save'"></i> 
+                {{ cargando ? 'Guardando...' : 'Guardar Empleado' }}
+            </button>
+            <button type="button" class="btn-action" style="flex: 1; background-color: #95a5a6; color: white;" routerLink="/admin/empleados">
+                <i class="fa-solid fa-arrow-left"></i> Regresar
+            </button>
+        </div>
+    </form>
+</div>

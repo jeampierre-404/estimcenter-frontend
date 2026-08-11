@@ -1,0 +1,293 @@
+<header>
+  <div class="header-content">
+      <div style="display: inline-block; vertical-align: middle; margin-right: 15px;">
+        <img src="assets/imagenes/logo_empresa.png" alt="Logo" class="header-logo">
+      </div>
+      <div style="display: inline-block; vertical-align: middle; text-align: left;">
+          <h1 class="header-title">ESTIM CENTER FJ</h1>
+          <p class="header-subtitle">Expertos en Cerámicos, Porcelanatos y Acabados</p>
+      </div>
+  </div>
+  
+  <div id="carouselDecor" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselDecor" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselDecor" data-slide-to="1"></li>
+      <li data-target="#carouselDecor" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <img src="assets/imagenes/sala_moderna.jpg" alt="Sala Moderna" class="center-block carousel-img">
+      </div>
+      <div class="item">
+        <img src="assets/imagenes/bano.jpg" alt="Baño" class="center-block carousel-img">
+      </div>
+      <div class="item">
+        <img src="assets/imagenes/cocina.jpg" alt="Cocina" class="center-block carousel-img">
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="navbar navbar-default"> 
+   <div class="navbar-header">
+     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menuPrincipal"><span class="sr-only">Navegación</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+     <a class="navbar-brand" routerLink="/"><span class="glyphicon glyphicon-home"></span></a>
+   </div>
+  <div class="collapse navbar-collapse" id="menuPrincipal">
+    <ul class="nav navbar-nav"> 
+      <li><a routerLink="/"><b>INICIO</b></a></li>
+      <li><a routerLink="/catalogo"><b><span class="glyphicon glyphicon-book"></span> Catálogo</b></a></li>
+      <li><a routerLink="/pedidos"><b><span class="glyphicon glyphicon-shopping-cart"></span> Mis Cotizaciones</b></a></li>
+      <li class="active"><a routerLink="/cotizar"><b><span class="glyphicon glyphicon-edit"></span> Cotizar</b></a></li>
+      
+      <li class="dropdown" style="float: right; border-left: 1px solid #e7e7e7;">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #FF8C00; font-weight: bold;">
+              <span class="glyphicon glyphicon-user"></span> 
+              <span>{{ clienteLogueado ? nombreCliente.split(' ')[0] : 'Cuenta' }}</span> 
+              <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+              <li *ngIf="!clienteLogueado"><a routerLink="/login">Iniciar Sesión</a></li>
+              <li *ngIf="clienteLogueado"><a style="cursor: pointer;" (click)="cerrarSesion()"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a></li>
+          </ul>
+      </li>
+
+      <!-- 🔥 INDICADOR DEL CARRITO (Conectado a la tabla de cotización) 🔥 -->
+      <li style="float: right; border-left: 1px solid #e7e7e7; background-color: #fff8e1;">
+          <a style="cursor: default; color: #FF8C00; font-weight: bold;">
+              <span class="glyphicon glyphicon-shopping-cart"></span> Mi Carrito 
+              <span class="badge" style="background-color: #122A51; margin-left: 5px;">{{ itemsCotizados.length }}</span>
+          </a>
+      </li>
+
+      <!-- 🔥 BOTÓN PARA REABRIR EL BUSCADOR PREDICTIVO 🔥 -->
+      <li style="float: right; border-left: 1px solid #e7e7e7;">
+          <a (click)="abrirBuscadorPred()" style="cursor: pointer; color: #122A51; font-weight: bold; background-color: #f8f9fa;">
+              <span class="glyphicon glyphicon-search"></span> Búsqueda Rápida
+          </a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+
+<div class="container main-container" style="margin-top: 30px; width: 95%; max-width: 1600px; margin-bottom: 50px;"> 
+  <div class="row">
+    <!-- PANEL IZQUIERDO: CATÁLOGO -->
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading" style="background-color: #122A51;">
+                <h3 class="panel-title"><span class="glyphicon glyphicon-search"></span> Catálogo de Productos</h3>
+            </div>
+            <div class="panel-body" style="height: 600px; overflow-y: auto;">
+                <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="busqueda" (keyup)="filtrar()">
+                <hr>
+                <div *ngFor="let p of productosFiltrados" class="producto-listado-item" (click)="seleccionarProducto(p)">
+                    <img [src]="getImagenUrl(p.imagen)" class="thumb-lista-fix"> 
+                    <div class="info-producto-box">
+                        <h5>{{ p.nombre }}</h5>
+                        <small>Precio: S/ {{ p.precio | number:'1.2-2' }} x {{ p.unidadMedida }}</small>
+                    </div>
+                    <span class="glyphicon glyphicon-plus-sign" style="color:#122A51; font-size: 1.5em;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANEL DERECHO: PROFORMA -->
+    <div class="col-md-8" id="areaProforma" style="background: white; padding: 20px; border-radius: 5px; border: 1px solid #ddd;">
+        <div class="factura-header">
+             <div class="row">
+                  <div class="col-xs-8">
+                      <div style="display: flex; align-items: center;">
+                          <img src="assets/imagenes/logo_empresa.png" style="height: 70px; margin-right: 15px;">
+                          <div>
+                              <h3 style="margin:0; font-weight:bold; color:#122A51;">ESTIM CENTER FJ</h3>
+                              <p style="font-size: 12px; margin: 0;">RUC: 20615127362 | Tel: (+51) 978-875-748</p>
+                              <p *ngIf="clienteLogueado" style="font-size: 12px; font-weight: bold; color: #555; margin-top: 5px;">
+                                Cliente: {{ nombreCliente }} | DNI: {{ dniCliente }}
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xs-4 text-right">
+                      <div style="border: 2px solid #122A51; padding: 5px; border-radius: 5px;">
+                          <h4 style="margin:0; font-weight:bold;">PROFORMA</h4>
+                          <span style="color: #FF8C00; font-weight:bold;"># 000452</span>
+                      </div>
+                      <p>Fecha: {{ fecha }}</p>
+                  </div>
+             </div>
+        </div>
+        <hr>
+
+        <table class="table table-striped">
+            <thead>
+                <tr style="border-bottom:2px solid #eee;">
+                    <th>IMG</th>
+                    <th width="35%">DESCRIPCIÓN</th>
+                    <th>CANT.</th>
+                    <th>METRAJE</th>
+                    <th class="text-right">TOTAL</th>
+                    <th class="ocultar-en-foto"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let it of itemsCotizados; let i = index">
+                    <td><img [src]="getImagenUrl(it.img)" style="height:40px; border-radius: 4px; object-fit: cover;"></td>
+                    <td>{{ it.nombre }}</td>
+                    <td>{{ it.cantidad }}</td>
+                    <td>{{ it.metraje }} {{ it.metraje !== '-' ? 'm²' : '' }}</td>
+                    <td class="text-right">S/ {{ it.subtotal | number:'1.2-2' }}</td>
+                    <td class="ocultar-en-foto"><button class="btn btn-xs btn-danger" (click)="eliminarFila(i)">x</button></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr style="border-top: 2px solid #122A51;">
+                    <td colspan="4" style="text-align: right; font-weight: bold; font-size: 1.2em; vertical-align: middle;">TOTAL A PAGAR:</td>
+                    <td class="text-right" style="font-weight: bold; font-size: 1.4em; color: #122A51; vertical-align: middle;">S/ {{ total | number:'1.2-2' }}</td>
+                    <td class="ocultar-en-foto"></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="row ocultar-en-foto" style="margin-top: 30px; border-top: 1px solid #ddd; padding-top: 20px;">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-danger btn-block btn-lg" (click)="itemsCotizados = []; total = 0" style="padding: 10px 5px; font-size: 14px;">
+                    <span class="glyphicon glyphicon-trash"></span> Limpiar
+                </button>
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-info btn-block btn-lg" (click)="soloGuardar()" style="padding: 10px 5px; font-size: 14px;">
+                    <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+                </button>
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-success btn-block btn-lg" (click)="enviarWhatsapp()" style="padding: 10px 5px; font-size: 14px;">
+                    <span class="fa-brands fa-whatsapp"></span> WhatsApp
+                </button>
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary btn-block btn-lg" (click)="comprarPedido()" style="padding: 10px 5px; font-size: 14px; background-color: #122A51; border-color: #122A51;">
+                    <span class="glyphicon glyphicon-shopping-cart"></span> Comprar
+                </button>
+            </div>
+        </div>
+    </div>
+  </div> 
+</div>
+
+<!-- 🔥 MODAL DE BÚSQUEDA PREDICTIVA (EMERGENTE) 🔥 -->
+<div class="modal fade" id="modalBienvenidaBuscador" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document" style="margin-top: 10vh;">
+    <div class="modal-content" style="border-radius: 12px; border: none; box-shadow: 0 15px 30px rgba(0,0,0,0.2);">
+      <div class="modal-header" style="background-color: #122A51; color: white; border-radius: 12px 12px 0 0; border-bottom: 3px solid #FF8C00;">
+        <button type="button" class="close" data-dismiss="modal" style="color: white; opacity: 1; text-shadow: none;">&times;</button>
+        <h4 class="modal-title" style="font-weight: bold; font-size: 1.5em; text-align: center;">
+            <span class="glyphicon glyphicon-search"></span> Búsqueda Rápida
+        </h4>
+      </div>
+      <div class="modal-body" style="background-color: #f9f9f9; padding: 25px;">
+          <div class="form-group" style="position: relative; margin-bottom: 20px;">
+              <input type="text" [(ngModel)]="terminoBusqueda" (keyup)="buscarProductoPred()" name="busquedaPredictiva" class="form-control input-lg" placeholder="Ej: Porcelanato, Pegamento, Gris..." style="border-radius: 25px; padding-left: 20px; border: 2px solid #FF8C00; box-shadow: none;">
+              <span class="glyphicon glyphicon-search" style="position: absolute; right: 20px; top: 15px; font-size: 18px; color: #888;"></span>
+          </div>
+          
+          <div class="list-group" style="margin-bottom: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
+              <a *ngFor="let p of productosBuscados" class="list-group-item" (click)="seleccionarBusquedaPred(p)" style="cursor: pointer; border-left: 4px solid #FF8C00; transition: background 0.2s;">
+                  <div style="display: flex; align-items: center;">
+                      <img [src]="getImagenUrl(p.imagen)" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; margin-right: 15px; border: 1px solid #eee;">
+                      <div style="flex-grow: 1;">
+                          <h5 style="margin: 0 0 5px 0; font-weight: bold; color: #122A51;">{{ p.nombre }}</h5>
+                          <p style="margin: 0; font-size: 0.85em; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;">{{ p.descripcion }}</p>
+                      </div>
+                      <div style="text-align: right;">
+                          <strong style="color: #FF8C00; font-size: 1.1em;">S/ {{ p.precio | number:'1.2-2' }}</strong>
+                          <br>
+                          <small style="color: #999;" *ngIf="p.codigo && !p.codigo.includes('PEG')">Caja: {{ p.rendimientoCaja }} m²</small>
+                          <small style="color: #999;" *ngIf="p.codigo && p.codigo.includes('PEG')">Saco: 25 kg</small>
+                      </div>
+                  </div>
+              </a>
+              <div *ngIf="terminoBusqueda && productosBuscados.length === 0" class="text-center" style="padding: 20px; background: white; border: 1px solid #ddd; border-radius: 8px;">
+                  <span class="glyphicon glyphicon-info-sign" style="font-size: 24px; color: #ccc; display: block; margin-bottom: 10px;"></span>
+                  No encontramos productos con "<b>{{ terminoBusqueda }}</b>".
+              </div>
+          </div>
+      </div>   
+      <div class="modal-footer" style="text-align: center; border-top: none; background-color: #f9f9f9; padding-bottom: 20px;">
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 20px; padding: 8px 30px; font-weight: bold; color: #122A51;">Cerrar Buscador</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE SELECCIÓN ORIGINAL -->
+<div class="modal fade" id="modalSeleccion" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content" *ngIf="prodSeleccionado">
+      <div class="modal-header" style="background-color: #122A51; color: white;">
+        <button type="button" class="close" data-dismiss="modal"><span style="color: white;">&times;</span></button>
+        <h4 class="modal-title">Agregar Producto</h4>
+      </div>
+      <div class="modal-body text-center">
+          <img [src]="getImagenUrl(prodSeleccionado.imagen)" style="max-height: 150px; border-radius: 8px; margin-bottom: 10px; object-fit: contain;">
+          <h4 style="color: #122A51; font-weight:bold;">{{ prodSeleccionado.nombre }}</h4>
+          <hr>
+          <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                  <label *ngIf="prodSeleccionado.unidadMedida === 'caja'">Cantidad ({{ modoCalculo === 'cajas' ? 'Cajas' : 'm²' }}):</label>
+                  <label *ngIf="prodSeleccionado.unidadMedida !== 'caja'">Cantidad ({{ prodSeleccionado.unidadMedida }}):</label>
+                  
+                  <button *ngIf="prodSeleccionado.unidadMedida === 'caja'" type="button" class="btn btn-xs btn-info" (click)="alternarModo()">
+                      <span class="glyphicon glyphicon-refresh"></span> Cambiar a {{ modoCalculo === 'cajas' ? 'm²' : 'Cajas' }}
+                  </button>
+              </div>
+              <input type="number" [(ngModel)]="cantidadInput" (input)="calcularResumenModal()" class="form-control input-lg text-center" min="1">
+              <small style="color: #666;" *ngIf="prodSeleccionado.unidadMedida === 'caja'">El sistema calculará automáticamente.</small>
+          </div>
+          <div style="background-color: #f0f0f0; padding: 10px; border-radius: 5px; margin-top: 15px;">
+              <div class="row">
+                  <div class="col-xs-6">
+                      <small>Te llevarás:</small><br>
+                      <strong style="color: #122A51;">{{ cajasReales }} {{ prodSeleccionado.unidadMedida === 'caja' ? 'Cajas' : prodSeleccionado.unidadMedida }}</strong>
+                  </div>
+                  <div class="col-xs-6">
+                      <small>Total:</small><br>
+                      <strong style="color: #FF8C00; font-size: 1.2em;">S/ {{ subtotalModal | number:'1.2-2' }}</strong>
+                  </div>
+              </div>
+              <div style="border-top: 1px solid #ccc; margin-top: 5px; padding-top: 5px;" *ngIf="prodSeleccionado.unidadMedida === 'caja'">
+                  <small>Metraje Real: <b>{{ metrajeReal }} m²</b></small>
+              </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success btn-block btn-lg" (click)="agregarAProforma()">+ AGREGAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container-fluid footer-content">
+    <div class="col-md-4">
+      <h4>Contacto</h4>
+      <p>
+        <span class="glyphicon glyphicon-map-marker"></span> Visitanos en Av. Alfonso Ugarte 1244 - 1135<br>
+        <span class="glyphicon glyphicon-earphone"></span> (+51) 978-875-748<br>
+        <span class="glyphicon glyphicon-envelope"></span> estimcenterfj1005@gmail.com
+      </p>
+    </div>
+    <div class="col-md-4 text-center">
+      <p>&copy; 2026 ESTIM CENTER FJ <br> Todos los derechos reservados.</p>
+    </div>
+    <div class="col-md-4 text-right">
+      <p>Síguenos en Redes:</p>
+      <span class="glyphicon glyphicon-thumbs-up"></span> Facebook <br>
+      <span class="glyphicon glyphicon-camera" style="margin-top: 5px;"></span> Instagram <br>
+      <span class="glyphicon glyphicon-music" style="margin-top: 5px;"></span> TikTok
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,68 @@
+/* =========================================
+   ESTILOS OBLIGATORIOS PARA ANGULAR
+   (Chat y Hotspots)
+   ========================================= */
+
+/* 1. CHAT FLOTANTE */
+.chat-box {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    right: 85px;
+    bottom: 90px;
+    width: 350px;
+    background: white;
+    z-index: 9999;
+    box-shadow: 0px 5px 35px 9px rgba(0,0,0,0.1);
+    border-radius: 5px;
+}
+
+/* Esta clase la activa Angular al dar click */
+.chat-box.chat-abierto {
+    display: block !important;
+    animation: subir 0.3s ease;
+}
+
+@keyframes subir {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 2. HOTSPOTS (Puntos en las fotos) */
+/* Aseguramos que el contenedor sea relativo para que los puntos se posicionen bien */
+.shop-look-container {
+    position: relative;
+    display: block;
+}
+
+.hotspot {
+    position: absolute;
+    cursor: pointer;
+    background: white;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    color: #FF8C00;
+    font-weight: bold;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    z-index: 10;
+    transition: transform 0.2s;
+}
+
+.hotspot:hover {
+    transform: scale(1.2);
+}
+
+.hotspot-card {
+    position: absolute;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    width: 150px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 20;
+    text-align: center;
+    /* Angular controla el display, pero por si acaso: */
+    display: none; 
+}

@@ -1,0 +1,61 @@
+<section class="recent-activity" style="margin-top: 0;">
+    <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <h2>📦 Kardex - Historial de Movimientos</h2>
+        
+        <div style="flex-grow: 1; max-width: 400px; position: relative;">
+            <i class="fa-solid fa-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #888;"></i>
+            <input type="text" [(ngModel)]="busqueda" (keyup)="filtrar()" placeholder="Buscar por producto, motivo o tipo..." 
+                   style="width: 100%; padding: 10px 15px 10px 40px; border-radius: 20px; border: 1px solid #ddd; outline: none; transition: border-color 0.3s;"
+                   onfocus="this.style.borderColor='#FF8C00'" onblur="this.style.borderColor='#ddd'">
+        </div>
+    </div>
+
+    <div class="table-container" style="overflow-x: auto; width: 100%; border-radius: 8px; margin-top: 20px;">
+        <table class="human-table" style="width: 100%; min-width: 850px;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Producto</th>
+                    <th>Tipo</th>
+                    <th>Cantidad</th>
+                    <th>Motivo / Usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let m of movimientosFiltrados">
+                    <td style="white-space: nowrap;"><strong>#{{ m.idMovimiento | number:'3.0' }}</strong></td>
+                    <td style="white-space: nowrap;">{{ m.fecha | date:'short' }}</td>
+                    <td>
+                        <strong>{{ m.producto?.nombre }}</strong>
+                        <br><small style="color: #888;">Cód: {{ m.producto?.codigo }}</small>
+                    </td>
+                    <td style="white-space: nowrap;">
+                        <span class="status-badge" 
+                              [ngClass]="{
+                                'success': m.tipo === 'ENTRADA', 
+                                'pending': m.tipo === 'AJUSTE',
+                                'warning': m.tipo === 'SALIDA'
+                              }">
+                            {{ m.tipo }}
+                        </span>
+                    </td>
+                    <td style="font-weight: bold; font-size: 1.1em; white-space: nowrap;"
+                        [ngStyle]="{'color': m.tipo === 'ENTRADA' ? '#27ae60' : (m.tipo === 'SALIDA' ? '#e74c3c' : '#f39c12')}">
+                        {{ m.tipo === 'ENTRADA' ? '+' : (m.tipo === 'SALIDA' ? '-' : '') }}{{ m.cantidad | number:'1.0-2' }}
+                    </td>
+                    <td>
+                        {{ m.motivo }}
+                        <br><small style="color: #888;"><i class="fa-solid fa-user"></i> {{ m.usuario?.nombre }} {{ m.usuario?.apellido }}</small>
+                    </td>
+                </tr>
+                <tr *ngIf="movimientosFiltrados.length === 0">
+                    <td colspan="6" style="text-align: center; padding: 30px; color: #999;">
+                        <i class="fa-solid fa-clipboard-list" style="font-size: 2em; margin-bottom: 10px; display: block; color: #ddd;"></i>
+                        No hay movimientos registrados.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

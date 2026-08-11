@@ -1,0 +1,107 @@
+<section class="status-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px;">
+    
+    <div class="card-status blue">
+        <div class="icon-bg"><i class="fa-solid fa-wallet"></i></div>
+        <h3>Ingresos Reales</h3>
+        <p class="big-number">S/ {{ totalVentas | number:'1.2-2' }}</p>
+        <span class="trend success"><i class="fa-solid fa-check-circle"></i> Dinero en caja</span>
+    </div>
+
+    <div class="card-status" style="background: white; border-left: 4px solid #f1c40f; padding: 20px; border-radius: 12px; position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <div class="icon-bg" style="color: #f1c40f; background: #fffbe6;"><i class="fa-solid fa-clock"></i></div>
+        <h3>Por Cobrar</h3>
+        <p class="big-number" style="color: #f1c40f;">S/ {{ montoPendiente | number:'1.2-2' }}</p>
+        <span class="trend warning" style="color: #f39c12; font-size: 0.85em; display: block; margin-top: 5px;">
+            <i class="fa-solid fa-file-invoice"></i> Cotizaciones abiertas
+        </span>
+    </div>
+    
+    <div class="card-status orange">
+        <div class="icon-bg"><i class="fa-solid fa-boxes-stacked"></i></div>
+        <h3>Inventario Bajo</h3>
+        <p class="big-number">{{ productosBajos }} Items</p>
+        <span class="trend warning" *ngIf="productosBajos > 0">¡Reponer stock urgente!</span>
+        <span class="trend success" *ngIf="productosBajos === 0">Todo en orden</span>
+    </div>
+
+    <div class="card-status dark">
+        <div class="icon-bg"><i class="fa-solid fa-users-line"></i></div>
+        <h3>Total Clientes</h3>
+        <p class="big-number">{{ totalClientes }}</p>
+        <span class="trend neutral">Cartera actual</span>
+    </div>
+</section>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+
+    <section class="recent-activity" style="margin-top: 0; display: flex; flex-direction: column;">
+        <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h2>Actividad Reciente</h2>
+            <button class="btn-primary-admin" routerLink="/admin/cotizaciones/nueva" style="padding: 6px 15px; font-size: 0.8em;">
+                + Nueva
+            </button>
+        </div>
+        <div class="table-container" style="overflow-x: auto; width: 100%;">
+            <table class="human-table" style="min-width: 500px; width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Cliente</th>
+                        <th>Estado</th>
+                        <th>Monto</th>
+                        <th>Ver</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cot of ultimasCotizaciones">
+                        <td><strong>{{ cot.codigo }}</strong></td>
+                        <td>{{ cot.cliente.nombreCompleto }}</td>
+                        <td>
+                            <span class="status-badge" [ngClass]="cot.estado === 'PENDIENTE' ? 'pending' : 'success'">
+                                {{ cot.estado }}
+                            </span>
+                        </td>
+                        <td style="font-weight: 500;">S/ {{ cot.total | number:'1.2-2' }}</td>
+                        <td>
+                            <button class="btn-icon" [routerLink]="['/admin/cotizaciones/detalle', cot.idCotizacion]">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="ultimasCotizaciones.length === 0">
+                        <td colspan="5" style="text-align: center; padding: 20px; color: #999;">Sin movimientos recientes.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="recent-activity" style="margin-top: 0;">
+        <div class="section-header">
+            <h2 style="font-size: 1.1em;">🏆 Más Vendidos</h2>
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+            <li *ngFor="let top of topProductos; let i = index" 
+                style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0;">
+                
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <span *ngIf="i===0">🥇</span>
+                    <span *ngIf="i===1">🥈</span>
+                    <span *ngIf="i===2">🥉</span>
+                    <span *ngIf="i>2" style="font-weight: bold; color: #999; width: 20px; text-align: center;">{{ i+1 }}</span>
+                    
+                    <span style="font-weight: 500; color: #34495e; font-size: 0.95em;">{{ top.nombre }}</span>
+                </div>
+                
+                <span style="font-weight: bold; color: #27ae60; font-size: 0.9em;">
+                    {{ top.cantidadTotal | number:'1.0-2' }} cjs.
+                </span>
+            </li>
+            
+            <li *ngIf="topProductos.length === 0" style="padding: 20px; text-align: center; color: #999; font-size: 0.9em;">
+                Aún no hay suficientes ventas para generar el ranking.
+            </li>
+        </ul>
+    </section>
+
+</div>

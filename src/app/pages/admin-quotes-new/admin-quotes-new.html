@@ -1,0 +1,119 @@
+<section class="recent-activity" style="margin-top: 0; max-width: 1000px; margin: 0 auto;">
+    
+    <div class="section-header">
+        <h2>📄 Nueva Cotización</h2>
+    </div>
+
+    <form #cotizacionForm="ngForm">
+        <div style="background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <h4 style="margin-bottom: 15px; color: #555;">Datos del Cliente</h4>
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                <div>
+                    <label>Cliente (Busca por nombre o DNI) *</label>
+                    <input type="text" list="listaClientes" name="cliente" [(ngModel)]="textoCliente" required #cliente="ngModel"
+                           placeholder="Escribe para buscar..." 
+                           [style.border-color]="cliente.invalid && (cliente.dirty || cliente.touched) ? '#e74c3c' : '#ddd'"
+                           style="width: 100%; padding: 12px; border: 1px solid; border-radius: 8px;">
+                    <div *ngIf="cliente.invalid && (cliente.dirty || cliente.touched)" style="color: #e74c3c; font-size: 0.85em; margin-top: 5px;">
+                        Debes seleccionar un cliente.
+                    </div>
+                    <datalist id="listaClientes">
+                        <option *ngFor="let c of clientes" [value]="c.nombreCompleto + ' (DNI: ' + c.numDoc + ')'"></option>
+                    </datalist>
+                </div>
+                <div>
+                    <label>Fecha Vencimiento *</label>
+                    <input type="date" name="fechaVencimiento" [(ngModel)]="fechaVencimiento" required #fecha="ngModel"
+                           [min]="fechaMinima"
+                           [style.border-color]="fecha.invalid && (fecha.dirty || fecha.touched) ? '#e74c3c' : '#ddd'"
+                           style="width: 100%; padding: 12px; border: 1px solid; border-radius: 8px;">
+                    <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched) || fechaVencimiento < fechaMinima" style="color: #e74c3c; font-size: 0.85em; margin-top: 5px;">
+                        La fecha no puede ser menor a hoy.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; gap: 15px; align-items: flex-start;">
+            <div style="flex: 2;">
+                <label>Producto (Busca por nombre)</label>
+                <input type="text" list="listaProductos" name="producto" [(ngModel)]="textoProducto" 
+                       placeholder="Escribe el producto..." 
+                       style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                <datalist id="listaProductos">
+                    <option *ngFor="let p of productos" [value]="p.nombre + ' - S/ ' + p.precio"></option>
+                </datalist>
+            </div>
+            <div style="width: 120px;">
+                <label>Cantidad</label>
+                <input type="number" name="cantidad" [(ngModel)]="cantidad" min="1" 
+                       style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+            </div>
+            <div style="padding-top: 25px;">
+                <button type="button" class="btn-primary-admin" (click)="agregarAlCarrito()" style="height: 45px; padding: 0 25px;">
+                    <i class="fa-solid fa-plus"></i> Agregar
+                </button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="human-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio Unit.</th>
+                        <th>Cant.</th>
+                        <th>Importe</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of carrito; let i = index">
+                        <td>
+                            <strong>{{ item.producto.nombre }}</strong>
+                            <br><small>{{ item.producto.codigo }}</small>
+                        </td>
+                        <td>S/ {{ item.precioHistorico }}</td>
+                        <td>{{ item.cantidad }}</td>
+                        <td style="color: #27ae60; font-weight: bold;">S/ {{ item.importe | number:'1.2-2' }}</td>
+                        <td>
+                            <button type="button" (click)="eliminarDelCarrito(i)" style="color: #ff4757; background: none; border: none; cursor: pointer;">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="carrito.length === 0">
+                        <td colspan="5" style="text-align: center; padding: 30px; color: #999;">
+                            <i class="fa-solid fa-cart-shopping" style="font-size: 2em; margin-bottom: 10px;"></i>
+                            <p>No hay productos en la cotización aún.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top: 30px; display: flex; justify-content: flex-end;">
+            <div style="background: white; padding: 20px; border-radius: 12px; width: 300px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span>Subtotal:</span>
+                    <strong>S/ {{ totalSubtotal | number:'1.2-2' }}</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 15px;">
+                    <span>IGV (18%):</span>
+                    <strong>S/ {{ totalIgv | number:'1.2-2' }}</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 1.3em; color: #2c3e50; margin-bottom: 20px;">
+                    <span>Total:</span>
+                    <strong>S/ {{ totalFinal | number:'1.2-2' }}</strong>
+                </div>
+
+                <button type="button" class="btn-primary-admin" (click)="guardarCotizacion()" 
+                        [disabled]="!cotizacionForm.form.valid || carrito.length === 0"
+                        [ngStyle]="{'opacity': (!cotizacionForm.form.valid || carrito.length === 0) ? '0.6' : '1', 'cursor': (!cotizacionForm.form.valid || carrito.length === 0) ? 'not-allowed' : 'pointer'}"
+                        style="width: 100%; justify-content: center; font-size: 1.1em;">
+                    <i class="fa-solid fa-save"></i> Generar Cotizacion
+                </button>
+            </div>
+        </div>
+    </form>
+</section>

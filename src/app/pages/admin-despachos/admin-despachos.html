@@ -1,0 +1,76 @@
+<section class="recent-activity" style="margin-top: 0;">
+    <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <h2>🚚 Control de Despachos</h2>
+        
+        <div style="flex-grow: 1; max-width: 400px; position: relative;">
+            <i class="fa-solid fa-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #888;"></i>
+            <input type="text" [(ngModel)]="busqueda" (keyup)="filtrar()" placeholder="Buscar por Orden, Cliente o Comprobante..." 
+                   style="width: 100%; padding: 10px 15px 10px 40px; border-radius: 20px; border: 1px solid #ddd; outline: none; transition: border-color 0.3s;"
+                   onfocus="this.style.borderColor='#FF8C00'" onblur="this.style.borderColor='#ddd'">
+        </div>
+    </div>
+
+    <div class="table-container" style="overflow-x: auto; width: 100%; border-radius: 8px; margin-top: 20px;">
+        <table class="human-table" style="width: 100%; min-width: 850px;">
+            <thead>
+                <tr>
+                    <th>N° Orden</th>
+                    <th>Cliente / Correo Electronico</th>
+                    <th>Comprobante</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let d of despachosFiltrados">
+                    <td style="white-space: nowrap;">
+                        <strong>DSP-{{ d.idDespacho | number:'3.0' }}</strong>
+                    </td>
+                    <td>
+                        {{ d.venta?.cotizacion?.cliente?.nombreCompleto }}
+                        <br><small style="color: #888;">{{ d.venta?.cotizacion?.cliente?.email || 'Sin correo' }}</small>
+                    </td>
+                    <td style="white-space: nowrap;">
+                        {{ d.venta?.serieCorrelativo }}
+                        <br><small style="font-weight: bold; color: #2c3e50;">S/ {{ d.venta?.cotizacion?.total | number:'1.2-2' }}</small>
+                    </td>
+                    <td style="white-space: nowrap;">
+                        <span class="status-badge" 
+                              [ngClass]="{
+                                'pending': d.estado === 'PENDIENTE', 
+                                'warning': d.estado === 'EN_RUTA',
+                                'success': d.estado === 'ENTREGADO'
+                              }">
+                            {{ d.estado }}
+                        </span>
+                    </td>
+                    <td style="white-space: nowrap;">
+                        <div style="display: flex; gap: 10px; justify-content: center;">
+                            <button *ngIf="d.estado === 'PENDIENTE'" 
+                                    (click)="cambiarEstado(d.idDespacho, 'EN_RUTA')" 
+                                    class="btn-primary-admin" style="font-size: 0.8em; padding: 5px 10px; background-color: #f39c12;">
+                                <i class="fa-solid fa-truck"></i> Enviar
+                            </button>
+
+                            <button *ngIf="d.estado === 'EN_RUTA'" 
+                                    (click)="cambiarEstado(d.idDespacho, 'ENTREGADO')" 
+                                    class="btn-primary-admin" style="font-size: 0.8em; padding: 5px 10px; background-color: #27ae60;">
+                                <i class="fa-solid fa-check"></i> Entregar
+                            </button>
+
+                            <span *ngIf="d.estado === 'ENTREGADO'" style="color: #27ae60; font-weight: bold; font-size: 0.9em;">
+                                <i class="fa-solid fa-lock"></i> Finalizado
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="despachosFiltrados.length === 0">
+                    <td colspan="5" style="text-align: center; padding: 30px; color: #999;">
+                        <i class="fa-solid fa-box-open" style="font-size: 2em; margin-bottom: 10px; display: block; color: #ddd;"></i>
+                        No se encontraron despachos con ese criterio.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

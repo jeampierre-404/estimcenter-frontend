@@ -1,0 +1,93 @@
+<aside class="sidebar" [class.active]="menuAbierto">
+    <div class="brand-box">
+        <i class="fa-solid fa-house-chimney icon-logo"></i>
+        <h2>ESTIM CENTER <span class="accent">FJ</span></h2>
+    </div>
+
+    <div class="user-profile">
+        <div class="avatar-circle">{{ adminIniciales }}</div>
+        <div class="user-info">
+            <p class="welcome-text">{{ adminRol }}</p>
+            <h3>{{ adminNombre }}</h3>
+        </div>
+    </div>
+
+    <nav class="menu" style="overflow-y: auto; padding-bottom: 20px;">
+        
+        <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="menu-item">
+            <i class="fa-solid fa-gauge-high"></i> <span>Mi Oficina</span>
+        </a>
+
+        <a *ngIf="adminRol === 'ADMIN' || adminRol === 'ALMACEN'" routerLink="/admin/productos" routerLinkActive="active" class="menu-item">
+            <i class="fa-solid fa-box-open"></i> <span>Mis Productos</span>
+        </a>
+
+        <a *ngIf="adminRol === 'ADMIN' || adminRol === 'ALMACEN'" routerLink="/admin/categorias" routerLinkActive="active" class="menu-item">
+            <i class="fa-solid fa-tags"></i> <span>Categorías</span>
+        </a>
+
+        <a *ngIf="adminRol === 'ADMIN' || adminRol === 'ALMACEN'" routerLink="/admin/movimientos" routerLinkActive="active" class="menu-item">
+            <i class="fa-solid fa-clipboard-list"></i> <span>Movimientos</span>
+        </a>
+
+        <a *ngIf="adminRol === 'ADMIN' || adminRol === 'ALMACEN'" routerLink="/admin/despachos" routerLinkActive="active" class="menu-item">
+            <i class="fa-solid fa-truck"></i> <span>Despachos</span>
+        </a>
+
+        <a *ngIf="adminRol === 'ADMIN'" routerLink="/admin/empleados" routerLinkActive="active" class="menu-item">
+            <i class="fa-solid fa-id-badge"></i> <span>Personal</span>
+        </a>
+
+        <a *ngIf="adminRol === 'ADMIN' || adminRol === 'VENTAS'" routerLink="/admin/clientes" routerLinkActive="active" class="menu-item">
+            <i class="fa-solid fa-users"></i> <span>Clientes Fieles</span>
+        </a>
+
+        <a *ngIf="adminRol === 'ADMIN' || adminRol === 'VENTAS'" routerLink="/admin/cotizaciones" routerLinkActive="active" 
+        [routerLinkActiveOptions]="{exact: true}" class="menu-item">
+            <i class="fa-solid fa-file-invoice-dollar"></i> <span>Cotizaciones</span>
+        </a>
+
+        <a *ngIf="adminRol === 'ADMIN' || adminRol === 'VENTAS'" routerLink="/admin/cotizaciones/nueva" routerLinkActive="active" class="menu-item">
+            <i class="fa-solid fa-plus-circle"></i> <span>Nueva Cotización</span>
+        </a>
+
+        <div class="divider"></div>
+
+        <a style="cursor: pointer;" class="menu-item logout" (click)="cerrarSesion()">
+            <i class="fa-solid fa-power-off"></i> <span>Descansar por hoy</span>
+        </a>
+    </nav>
+</aside>
+
+<div class="menu-overlay" [class.show]="menuAbierto" (click)="toggleMenu()"></div>
+
+<main class="main-content">
+    
+    <header class="top-header">
+    
+        <div class="header-left" style="display: flex; align-items: center; gap: 15px;">
+            <button class="btn-menu-mobile" (click)="toggleMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="greeting-box">
+                <h1 id="greeting">{{ saludo }}</h1>
+                <p>Aquí tienes el resumen de ESTIM CENTER FJ hoy.</p>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn-action">
+                <i class="fa-solid fa-bell"></i> 
+                <span class="badge">3</span>
+            </button>
+            <button class="btn-primary-admin" routerLink="/admin/productos/nuevo">+ Nuevo Producto</button>
+        </div>
+
+    </header>
+
+    <div class="content-wrapper">
+        <router-outlet></router-outlet>
+    </div>
+
+</main>

@@ -1,0 +1,71 @@
+<section class="recent-activity" style="margin-top: 0;">
+    <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <h2>📂 Historial de Cotizaciones</h2>
+        
+        <div style="flex-grow: 1; max-width: 400px; position: relative;">
+            <i class="fa-solid fa-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #888;"></i>
+            <input type="text" [(ngModel)]="busqueda" (keyup)="filtrar()" placeholder="Buscar por Código o Cliente..." 
+                   style="width: 100%; padding: 10px 15px 10px 40px; border-radius: 20px; border: 1px solid #ddd; outline: none; transition: border-color 0.3s;"
+                   onfocus="this.style.borderColor='#FF8C00'" onblur="this.style.borderColor='#ddd'">
+        </div>
+
+        <button class="btn-primary-admin" routerLink="/admin/cotizaciones/nueva" style="padding: 8px 15px; white-space: nowrap;">
+            + Nueva Cotización
+        </button>
+    </div>
+
+    <div class="table-container" style="overflow-x: auto; width: 100%; border-radius: 8px; margin-top: 20px;">
+        <table class="human-table" style="width: 100%; min-width: 800px;">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cot of cotizacionesFiltradas">
+                    <td style="white-space: nowrap;">
+                        <strong>{{ cot.codigo }}</strong>
+                    </td>
+                    <td>
+                        {{ cot.cliente.nombreCompleto }}
+                        <br><small style="color: #888;">{{ cot.cliente.tipoDoc }}: {{ cot.cliente.numDoc }}</small>
+                    </td>
+                    <td style="white-space: nowrap;">{{ cot.fechaEmision | date:'shortDate' }}</td>
+                    <td style="font-weight: bold; color: #2c3e50; white-space: nowrap;">
+                        S/ {{ cot.total | number:'1.2-2' }}
+                    </td>
+                    <td>
+                        <span class="status-badge" 
+                              [ngClass]="{'pending': cot.estado === 'PENDIENTE', 'success': cot.estado === 'FACTURADO'}">
+                            {{ cot.estado }}
+                        </span>
+                    </td>
+                    <td style="white-space: nowrap;">
+                        <div style="display: flex; gap: 15px; justify-content: center;">
+                            <button class="btn-icon" [routerLink]="['/admin/cotizaciones/detalle', cot.idCotizacion]" 
+                                    style="color: #4a69bd; cursor: pointer; background: none; border: none;" title="Ver Detalle">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                            
+                            <button *ngIf="cot.estado === 'PENDIENTE'" 
+                                    class="btn-icon" (click)="eliminarCotizacion(cot.idCotizacion)" 
+                                    style="color: #e74c3c; cursor: pointer; background: none; border: none;" title="Eliminar Cotización">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="cotizacionesFiltradas.length === 0">
+                    <td colspan="6" style="text-align: center; padding: 30px; color: #999;">
+                        No se encontraron cotizaciones.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

@@ -1,0 +1,143 @@
+<section class="recent-activity" style="margin-top: 0; max-width: 800px; margin-left: auto; margin-right: auto;">
+    
+    <div class="section-header" style="margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <a routerLink="/admin/productos" class="btn-icon" style="background: #eee; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none; color: #333;">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <h2>{{ esEdicion ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
+        </div>
+    </div>
+
+    <form (ngSubmit)="guardar()" #form="ngForm">
+        <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">Código *</label>
+                <input type="text" [(ngModel)]="producto.codigo" name="codigo" required #codigo="ngModel" 
+                       [style.border-color]="codigo.invalid && (codigo.dirty || codigo.touched) ? '#e74c3c' : '#ddd'"
+                       style="width: 100%; padding: 10px; border: 1px solid; border-radius: 8px;"
+                       placeholder="Ej: P-001">
+                <div *ngIf="codigo.invalid && (codigo.dirty || codigo.touched)" style="color: #e74c3c; font-size: 0.85em; margin-top: 5px;">El código es obligatorio.</div>
+            </div>
+
+            <div class="form-group">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">Nombre del Producto *</label>
+                <input type="text" [(ngModel)]="producto.nombre" name="nombre" required #nombre="ngModel" 
+                       [style.border-color]="nombre.invalid && (nombre.dirty || nombre.touched) ? '#e74c3c' : '#ddd'"
+                       style="width: 100%; padding: 10px; border: 1px solid; border-radius: 8px;"
+                       placeholder="Ej: Porcelanato Gris">
+                <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" style="color: #e74c3c; font-size: 0.85em; margin-top: 5px;">El nombre es obligatorio.</div>
+            </div>
+
+            <div class="form-group">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">Categoría *</label>
+                <select [(ngModel)]="producto.categoria.idCategoria" name="categoria" required #categoria="ngModel" 
+                        [style.border-color]="categoria.invalid && (categoria.dirty || categoria.touched) ? '#e74c3c' : '#ddd'"
+                        style="width: 100%; padding: 10px; border: 1px solid; border-radius: 8px; background: white;">
+                    <option value="" disabled selected>-- Seleccione una --</option>
+                    <option *ngFor="let cat of categorias" [value]="cat.idCategoria">{{ cat.nombre }}</option>
+                </select>
+                <div *ngIf="categoria.invalid && (categoria.dirty || categoria.touched)" style="color: #e74c3c; font-size: 0.85em; margin-top: 5px;">Selecciona una categoría.</div>
+            </div>
+
+            <div class="form-group">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">Precio (S/) *</label>
+                <input type="number" [(ngModel)]="producto.precio" name="precio" required min="0.1" step="0.01" #precio="ngModel" 
+                       [style.border-color]="precio.invalid && (precio.dirty || precio.touched) ? '#e74c3c' : '#ddd'"
+                       style="width: 100%; padding: 10px; border: 1px solid; border-radius: 8px;">
+                <div *ngIf="precio.invalid && (precio.dirty || precio.touched)" style="color: #e74c3c; font-size: 0.85em; margin-top: 5px;">Ingresa un precio mayor a 0.</div>
+            </div>
+
+            <div class="form-group">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">Stock Actual *</label>
+                <input type="number" [(ngModel)]="producto.stockActual" name="stockActual" required min="0" #stockActual="ngModel" 
+                       [style.border-color]="stockActual.invalid && (stockActual.dirty || stockActual.touched) ? '#e74c3c' : '#ddd'"
+                       style="width: 100%; padding: 10px; border: 1px solid; border-radius: 8px;">
+                <div *ngIf="stockActual.invalid && (stockActual.dirty || stockActual.touched)" style="color: #e74c3c; font-size: 0.85em; margin-top: 5px;">Obligatorio. No puede ser negativo.</div>
+            </div>
+
+            <div class="form-group">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">Unidad de Medida *</label>
+                <select [(ngModel)]="producto.unidadMedida" name="unidadMedida" 
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: white;">
+                    <option value="unid">Unidad (unid)</option>
+                    <option value="m2">Metros Cuadrados (m2)</option>
+                    <option value="caja">Caja</option>
+                    <option value="bolsa">Bolsa / Saco</option>
+                </select>
+            </div>
+
+            <div class="form-group" *ngIf="producto.unidadMedida === 'caja' || producto.unidadMedida === 'bolsa'">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">Rendimiento por {{ producto.unidadMedida === 'caja' ? 'Caja' : 'Bolsa' }} (m²) *</label>
+                <input type="number" [(ngModel)]="producto.rendimientoCaja" name="rendimientoCaja" required min="0.01" step="0.01" #rendimiento="ngModel" 
+                       [style.border-color]="rendimiento.invalid && (rendimiento.dirty || rendimiento.touched) ? '#e74c3c' : '#ddd'"
+                       style="width: 100%; padding: 10px; border: 1px solid; border-radius: 8px;"
+                       placeholder="Ej: 1.44">
+                <div *ngIf="rendimiento.invalid && (rendimiento.dirty || rendimiento.touched)" style="color: #e74c3c; font-size: 0.85em; margin-top: 5px;">Debe ser mayor a 0.</div>
+            </div>
+
+            <div class="form-group">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">Stock Mínimo (Alerta) *</label>
+                <input type="number" [(ngModel)]="producto.stockMinimo" name="stockMinimo" required min="0" #stockMinimo="ngModel" 
+                       [style.border-color]="stockMinimo.invalid && (stockMinimo.dirty || stockMinimo.touched) ? '#e74c3c' : '#ddd'"
+                       style="width: 100%; padding: 10px; border: 1px solid; border-radius: 8px;">
+                <div *ngIf="stockMinimo.invalid && (stockMinimo.dirty || stockMinimo.touched)" style="color: #e74c3c; font-size: 0.85em; margin-top: 5px;">Obligatorio. No puede ser negativo.</div>
+            </div>
+
+            <div class="form-group">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">Estado (Disponibilidad) *</label>
+                <select [(ngModel)]="producto.estado" name="estado" required 
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: white; font-weight: bold;">
+                    <option value="ACTIVO" style="color: green;">✅ ACTIVO (Visible)</option>
+                    <option value="INACTIVO" style="color: red;">⛔ INACTIVO (Oculto / Eliminado)</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="grid-column: span 2;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">Descripción</label>
+                <textarea [(ngModel)]="producto.descripcion" name="descripcion" rows="3"
+                          style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit;"></textarea>
+            </div>
+
+             <div class="form-group" style="grid-column: span 2;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">Imagen del Producto</label>
+                <input type="file" (change)="onFileSelected($event, 'principal')" accept="image/*"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: white;">
+                <div *ngIf="producto.imagen" style="margin-top: 15px; text-align: center;">
+                    <p style="font-size: 0.9em; color: #888; margin-bottom: 5px;">Vista Previa Principal:</p>
+                    <!-- 🔥 CORRECCIÓN AQUÍ 🔥 -->
+                    <img [src]="(producto.imagen.startsWith('http') || producto.imagen.startsWith('data:image')) ? producto.imagen : 'assets/' + producto.imagen" style="max-height: 200px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                </div>
+            </div>
+
+            <div class="form-group" style="grid-column: span 2;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #122A51;">
+                    <i class="fa-solid fa-eye"></i> Imagen de Sala Instalada (Opcional)
+                </label>
+                <input type="file" (change)="onFileSelected($event, 'sala')" accept="image/*"
+                    style="width: 100%; padding: 10px; border: 1px solid #122A51; border-radius: 8px; background: #f4f6f9;">
+                <div *ngIf="producto.imagenSala" style="margin-top: 15px; text-align: center;">
+                    <p style="font-size: 0.9em; color: #122A51; margin-bottom: 5px;">Vista Previa Sala:</p>
+                    <!-- 🔥 CORRECCIÓN AQUÍ 🔥 -->
+                    <img [src]="(producto.imagenSala.startsWith('http') || producto.imagenSala.startsWith('data:image')) ? producto.imagenSala : 'assets/' + producto.imagenSala" style="max-height: 200px; border-radius: 10px; border: 2px solid #122A51;">
+                </div>
+            </div>
+
+        </div>
+
+        <div style="margin-top: 30px; display: flex; justify-content: flex-end; gap: 10px;">
+            <button type="button" routerLink="/admin/productos" 
+                    style="padding: 12px 25px; border: none; background: #eee; color: #333; border-radius: 30px; cursor: pointer; font-weight: 600;">
+                Cancelar
+            </button>
+            <button type="submit" [disabled]="!form.valid || cargando"
+                    class="btn-primary-admin" 
+                    [ngStyle]="{'opacity': (!form.valid) ? '0.6' : '1', 'cursor': (!form.valid) ? 'not-allowed' : 'pointer'}"
+                    style="padding: 12px 30px; font-size: 1em;">
+                <i class="fas" [ngClass]="cargando ? 'fa-spinner fa-spin' : 'fa-save'"></i> 
+                {{ esEdicion ? 'Actualizar' : 'Guardar Producto' }}
+            </button>
+        </div>
+
+    </form>
+</section>

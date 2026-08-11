@@ -1,0 +1,582 @@
+<header>
+  <div class="header-content">
+      <div style="display: inline-block; vertical-align: middle; margin-right: 15px;">
+        <img src="assets/imagenes/logo_empresa.png" alt="Logo" class="header-logo">
+      </div>
+      <div style="display: inline-block; vertical-align: middle; text-align: left;">
+          <h1 class="header-title">ESTIM CENTER FJ</h1>
+          <p class="header-subtitle">Expertos en Cerámicos, Porcelanatos y Acabados</p>
+      </div>
+  </div>
+  
+  <div id="carouselDecor" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselDecor" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselDecor" data-slide-to="1"></li>
+      <li data-target="#carouselDecor" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+      <div class="item active"><img src="assets/imagenes/sala_moderna.jpg" alt="Sala Moderna" class="center-block carousel-img"></div>
+      <div class="item"><img src="assets/imagenes/bano.jpg" alt="Baño" class="center-block carousel-img"></div>
+      <div class="item"><img src="assets/imagenes/cocina.jpg" alt="Cocina" class="center-block carousel-img"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="navbar navbar-default"> 
+   <div class="navbar-header">
+     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menuPrincipal"><span class="sr-only">Navegación</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+     <a class="navbar-brand" routerLink="/"><span class="glyphicon glyphicon-home"></span></a>
+   </div>
+  <div class="collapse navbar-collapse" id="menuPrincipal">
+    <ul class="nav navbar-nav"> 
+      <li><a routerLink="/"><b>INICIO</b></a></li>
+      <li class="active"><a routerLink="/catalogo"><b><span class="glyphicon glyphicon-book"></span> Catálogo</b></a></li>
+      <li><a routerLink="/pedidos"><b><span class="glyphicon glyphicon-shopping-cart"></span> Mis Cotizaciones</b></a></li>
+      <li><a routerLink="/cotizar"><b><span class="glyphicon glyphicon-edit"></span> Cotizar</b></a></li>
+      
+      <li class="dropdown" style="float: right; border-left: 1px solid #e7e7e7;">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #FF8C00; font-weight: bold;">
+              <span class="glyphicon glyphicon-user"></span> 
+              <span>{{ nombreCliente || 'Cuenta' }}</span> 
+              <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+              <li *ngIf="!clienteLogueado"><a routerLink="/login">Iniciar Sesión</a></li>
+              <li *ngIf="clienteLogueado"><a style="cursor: pointer;" (click)="cerrarSesion()"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a></li>
+          </ul>
+      </li>
+
+      <li style="float: right; border-left: 1px solid #e7e7e7; background-color: #fff8e1;">
+          <a routerLink="/cotizar" style="cursor: pointer; color: #FF8C00; font-weight: bold;">
+              <span class="glyphicon glyphicon-shopping-cart"></span> Mi Carrito 
+              <span class="badge" style="background-color: #122A51; margin-left: 5px;">{{ carritoCotizacion.length }}</span>
+          </a>
+      </li>
+
+      <li style="float: right; border-left: 1px solid #e7e7e7;">
+          <a (click)="abrirBuscador()" style="cursor: pointer; color: #122A51; font-weight: bold; background-color: #f8f9fa;">
+              <span class="glyphicon glyphicon-search"></span> Búsqueda Rápida
+          </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container main-container"> 
+
+  <!-- 1. DECORADOS -->
+  <div class="row" style="margin-top: 30px;"> 
+    <div class="col-md-12">
+      <section>
+        <div class="text-center">
+            <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Catálogo de Decorados</h2>
+            <p>Detalles que marcan la diferencia en tus ambientes.</p>
+        </div>
+        <hr class="divider-style" style="margin-bottom: 30px;">
+        <div class="row fila-productos">
+            <div *ngIf="decorados.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
+            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of decorados" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
+                    <div class="clearfix"></div>
+                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                    <div class="caption text-center">
+                        <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
+                        <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
+                        <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }}</h3>
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+      </section>
+    </div>
+  </div> 
+
+  <!-- 2. DECORADOS ESPAÑOLES -->
+  <div class="row" style="margin-top: 50px;"> 
+    <div class="col-md-12">
+      <section>
+        <div class="text-center">
+            <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Decorados Españoles</h2>
+            <p>Exclusividad y elegancia con estilo europeo.</p>
+        </div>
+        <hr class="divider-style" style="margin-bottom: 30px;">
+        <div class="row fila-productos">
+            <div *ngIf="decoradosEspanoles.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
+            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of decoradosEspanoles" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
+                    <div class="clearfix"></div>
+                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                    <div class="caption text-center">
+                        <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
+                        <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
+                        <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }}</h3>
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+      </section>
+    </div>
+  </div>
+
+  <!-- 3. PAREDES 30 X 60 -->
+  <div class="row" style="margin-top: 50px;"> 
+    <div class="col-md-12">
+      <section>
+        <div class="text-center">
+            <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Paredes 30 x 60</h2>
+            <p>Revestimientos perfectos para baños y cocinas.</p>
+        </div>
+        <hr class="divider-style" style="margin-bottom: 30px;">
+        <div class="row fila-productos">
+            <div *ngIf="paredes.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
+            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of paredes" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
+                    <div class="clearfix"></div>
+                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                    <div class="caption text-center">
+                        <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
+                        <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
+                        <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }}</h3>
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+      </section>
+    </div>
+  </div>
+
+  <!-- 4. FACHALETAS -->
+  <div class="row" style="margin-top: 50px;"> 
+    <div class="col-md-12">
+      <section>
+        <div class="text-center">
+            <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Fachaletas</h2>
+            <p>Dale un toque rústico y moderno a tus exteriores e interiores.</p>
+        </div>
+        <hr class="divider-style" style="margin-bottom: 30px;">
+        <div class="row fila-productos">
+            <div *ngIf="fachaletas.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
+            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of fachaletas" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
+                    <div class="clearfix"></div>
+                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                    <div class="caption text-center">
+                        <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
+                        <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
+                        <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }}</h3>
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+      </section>
+    </div>
+  </div>
+
+  <!-- 5. PORCELANATOS 60 X 60 -->
+  <div class="row" style="margin-top: 50px;"> 
+    <div class="col-md-12">
+      <section>
+        <div class="text-center">
+            <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Porcelanatos 60 x 60</h2>
+            <p>Elegancia, brillo y durabilidad superior.</p>
+        </div>
+        <hr class="divider-style" style="margin-bottom: 30px;">
+        <div class="row fila-productos">
+            <div *ngIf="porcelanatos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
+            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of porcelanatos" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
+                    <div class="clearfix"></div>
+                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                    <div class="caption text-center">
+                        <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
+                        <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
+                        <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }}</h3>
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+      </section>
+    </div>
+  </div> 
+
+  <!-- 6. PLANCHAS 120 X 60 -->
+  <div class="row" style="margin-top: 50px;"> 
+    <div class="col-md-12">
+      <section>
+        <div class="text-center">
+            <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Planchas 120 x 60</h2>
+            <p>Formatos grandes para una sensación de mayor amplitud y lujo.</p>
+        </div>
+        <hr class="divider-style" style="margin-bottom: 30px;">
+        <div class="row fila-productos">
+            <div *ngIf="planchas.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
+            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of planchas" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
+                    <div class="clearfix"></div>
+                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                    <div class="caption text-center">
+                        <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
+                        <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
+                        <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }}</h3>
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+      </section>
+    </div>
+  </div>
+
+  <!-- 7. CERÁMICOS 46 X 46 & 60 X 60 -->
+  <div class="row" style="margin-top: 50px;"> 
+    <div class="col-md-12">
+      <section>
+        <div class="text-center">
+            <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Cerámicos 46x46 & 60x60</h2>
+            <p>Alta resistencia y diseños modernos para tu hogar.</p>
+        </div>
+        <hr class="divider-style" style="margin-bottom: 30px;">
+        <div class="row fila-productos">
+            <div *ngIf="ceramicos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
+            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of ceramicos" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
+                    <div class="clearfix"></div>
+                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                    <div class="caption text-center">
+                        <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
+                        <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
+                        <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }}</h3>
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+      </section>
+    </div>
+  </div> 
+
+  <!-- 8. LÁPICES -->
+  <div class="row" style="margin-top: 50px;"> 
+    <div class="col-md-12">
+      <section>
+        <div class="text-center">
+            <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Lápices</h2>
+            <p>Acabados finos para rematar tus diseños de pared.</p>
+        </div>
+        <hr class="divider-style" style="margin-bottom: 30px;">
+        <div class="row fila-productos">
+            <div *ngIf="lapices.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
+            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of lapices" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
+                    <div class="clearfix"></div>
+                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                    <div class="caption text-center">
+                        <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
+                        <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
+                        <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }}</h3>
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+      </section>
+    </div>
+  </div>
+
+  <!-- 9. BAÑOS & OVALINES -->
+  <div class="row" style="margin-top: 50px;"> 
+    <div class="col-md-12">
+      <section>
+        <div class="text-center">
+            <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Baños & Ovalines</h2>
+            <p>Sanitarios y lavatorios modernos para tu confort.</p>
+        </div>
+        <hr class="divider-style" style="margin-bottom: 30px;">
+        <div class="row fila-productos">
+            <div *ngIf="banos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
+            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of banos" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
+                    <div class="clearfix"></div>
+                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                    <div class="caption text-center">
+                        <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
+                        <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
+                        <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }}</h3>
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+      </section>
+    </div>
+  </div>
+
+  <!-- 10. PEGAMENTOS -->
+  <div class="row" style="margin-top: 50px;"> 
+    <div class="col-md-12">
+      <section>
+        <div class="text-center">
+            <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Catálogo de Pegamentos</h2>
+            <p>Asegura tu inversión con la mejor adherencia. <br><strong>Precios por saco de 25kg.</strong></p>
+        </div>
+        <hr class="divider-style">
+        
+        <div class="row" style="margin-bottom: 30px;">
+          <div class="col-md-12">
+            <div class="panel panel-primary" style="border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+              <div class="panel-heading" style="background-color: #FF8C00; border-color: #FF8C00;">
+                  <h3 class="panel-title"><span class="glyphicon glyphicon-list-alt"></span> Guía de Elección de Pegamentos</h3>
+              </div>
+              <div class="table-responsive">
+                  <table class="table table-bordered table-striped" style="text-align: center;">
+                      <thead>
+                          <tr style="background-color: #122A51; color: white;">
+                              <th>Característica</th><th>Gris Interiores</th><th>Blanco Flexible</th><th>Extra Fuerte (Ext)</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr><td style="text-align: left; font-weight: bold;">Cerámicos (Pisos/Pared)</td><td style="color: green; font-weight: bold;">✔ Recomendado</td><td style="color: green; font-weight: bold;">✔ Sí</td><td style="color: green; font-weight: bold;">✔ Sí</td></tr>
+                          <tr><td style="text-align: left; font-weight: bold;">Porcelanatos</td><td style="color: red; font-weight: bold;">✘ No</td><td style="color: green; font-weight: bold;">✔ Ideal</td><td style="color: green; font-weight: bold;">✔ Sí</td></tr>
+                          <tr><td style="text-align: left; font-weight: bold;">Exteriores / Fachadas</td><td style="color: red; font-weight: bold;">✘ No</td><td style="color: #d4a017; font-weight: bold;">⚠ Solo bajo techo</td><td style="color: green; font-weight: bold;">✔ Excelente</td></tr>
+                          <tr><td style="text-align: left; font-weight: bold;">Sobre piso existente</td><td style="color: red; font-weight: bold;">✘ No</td><td style="color: green; font-weight: bold;">✔ Sí</td><td style="color: green; font-weight: bold;">✔ Sí</td></tr>
+                          <tr><td style="text-align: left; font-weight: bold;">Piscinas / Humedad</td><td style="color: red; font-weight: bold;">✘ No</td><td style="color: red; font-weight: bold;">✘ No</td><td style="color: green; font-weight: bold;">✔ Impermeable</td></tr>
+                      </tbody>
+                  </table>
+              </div>
+              <div class="panel-footer text-center text-muted">
+                  * El rendimiento aproximado por saco es de 3 a 4 m² dependiendo de la nivelación del piso.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row fila-productos">
+            <div *ngIf="pegamentos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
+            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of pegamentos; let i = index" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 220px; object-fit: contain; width: 100%;">
+                    <div class="caption text-center">
+                        <h4 style="font-weight: bold; color: #555; height: 30px; overflow: hidden;">{{ prod.nombre }}</h4>
+                        <p><span class="label" [ngClass]="{'label-default': i===0, 'label-primary': i===1, 'label-danger': i===2}">{{ i === 0 ? 'Para Interiores' : i === 1 ? 'Para Porcelanatos' : 'Exteriores / Piscinas' }}</span></p>
+                        <p style="color: #666; height: 35px; overflow: hidden; font-size: 0.9em; margin-top: 10px;">{{ prod.descripcion }}</p>
+                        <h3 style="color: #122A51; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }}</h3>
+                        <button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)" style="font-weight: bold;">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Calcular Sacos
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+      </section>
+    </div>
+  </div>
+
+  <hr class="divider-style" style="margin: 40px 0; border-top: 2px solid #eee;">
+  <section id="info-bottom">
+      <h3 class="text-center" style="color: #FF8C00; text-transform: uppercase;">Ofertas Relámpago</h3>
+      <div class="row">
+          <div class="col-md-4"><img src="assets/imagenes/oferta1.png" class="img-responsive center-block"></div>
+          <div class="col-md-4"><img src="assets/imagenes/oferta2.png" class="img-responsive center-block"></div>
+          <div class="col-md-4"><img src="assets/imagenes/oferta3.png" class="img-responsive center-block"></div>
+      </div>
+  </section>
+</div>
+
+<!-- MODAL DE BÚSQUEDA PREDICTIVA -->
+<div class="modal fade" id="modalBienvenidaBuscador" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document" style="margin-top: 10vh;">
+    <div class="modal-content" style="border-radius: 12px; border: none; box-shadow: 0 15px 30px rgba(0,0,0,0.2);">
+      <div class="modal-header" style="background-color: #122A51; color: white; border-radius: 12px 12px 0 0; border-bottom: 3px solid #FF8C00;">
+        <button type="button" class="close" data-dismiss="modal" style="color: white; opacity: 1; text-shadow: none;">&times;</button>
+        <h4 class="modal-title" style="font-weight: bold; font-size: 1.5em; text-align: center;">
+            <span class="glyphicon glyphicon-search"></span> ¿Qué estás buscando hoy?
+        </h4>
+      </div>
+      <div class="modal-body" style="background-color: #f9f9f9; padding: 25px;">
+          
+          <div class="form-group" style="position: relative; margin-bottom: 20px;">
+              <input type="text" [(ngModel)]="terminoBusqueda" (keyup)="buscarProducto()" name="busquedaPredictiva" class="form-control input-lg" placeholder="Ej: Porcelanato, Pegamento, Gris..." style="border-radius: 25px; padding-left: 20px; border: 2px solid #FF8C00; box-shadow: none;">
+              <span class="glyphicon glyphicon-search" style="position: absolute; right: 20px; top: 15px; font-size: 18px; color: #888;"></span>
+          </div>
+          
+          <div class="list-group" style="margin-bottom: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
+              <a *ngFor="let p of productosBuscados" class="list-group-item" (click)="seleccionarBusqueda(p)" style="cursor: pointer; border-left: 4px solid #FF8C00; transition: background 0.2s;">
+                  <div style="display: flex; align-items: center;">
+                      <img [src]="getImagenUrl(p.imagen)" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; margin-right: 15px; border: 1px solid #eee;">
+                      <div style="flex-grow: 1;">
+                          <h5 style="margin: 0 0 5px 0; font-weight: bold; color: #122A51;">{{ p.nombre }}</h5>
+                          <p style="margin: 0; font-size: 0.85em; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;">{{ p.descripcion }}</p>
+                      </div>
+                      <div style="text-align: right;">
+                          <strong style="color: #FF8C00; font-size: 1.1em;">S/ {{ p.precio | number:'1.2-2' }}</strong>
+                      </div>
+                  </div>
+              </a>
+              <div *ngIf="terminoBusqueda && productosBuscados.length === 0" class="text-center" style="padding: 20px; background: white; border: 1px solid #ddd; border-radius: 8px;">
+                  <span class="glyphicon glyphicon-info-sign" style="font-size: 24px; color: #ccc; display: block; margin-bottom: 10px;"></span>
+                  No encontramos productos con "<b>{{ terminoBusqueda }}</b>".
+              </div>
+          </div>
+      </div>   
+      <div class="modal-footer" style="text-align: center; border-top: none; background-color: #f9f9f9; padding-bottom: 20px;">
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 20px; padding: 8px 30px; font-weight: bold; color: #122A51;">Explorar Catálogo Manualmente</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 🔥 CALCULADORA INTELIGENTE ACTUALIZADA 🔥 -->
+<div class="modal fade" id="calculadoraModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" *ngIf="prodSeleccionado">
+      <div class="modal-header" style="background-color: #122A51; color: white;">
+        <button type="button" class="close" data-dismiss="modal"><span style="color: white;">&times;</span></button>
+        <h4 class="modal-title">Calculadora: {{ prodSeleccionado.nombre }}</h4>
+      </div>
+      <div class="modal-body">
+          <form>
+              <div class="form-group">
+                  <label style="font-size: 1.2em;">{{ lblPregunta }}</label>
+                  <div class="input-group">
+                      <input type="number" [(ngModel)]="metrosSolicitados" name="metros" class="form-control input-lg" placeholder="Ej: 15">
+                      <span class="input-group-addon" *ngIf="mostrarPiezas">m²</span>
+                      <span class="input-group-addon" *ngIf="!mostrarPiezas && !(prodSeleccionado.codigo?.includes('PEG'))">Und</span>
+                  </div>
+              </div>
+              <hr>
+              <div class="row">
+                  <div class="col-md-6 col-xs-6">
+                      <label>Precio Unitario:</label>
+                      <input type="text" class="form-control" [value]="'S/ ' + prodSeleccionado.precio" readonly>
+                  </div>
+                  <div class="col-md-6 col-xs-6">
+                      <label>{{ lblRendimiento }}</label>
+                      <input type="text" class="form-control" [value]="prodSeleccionado.rendimientoCaja ? (prodSeleccionado.rendimientoCaja + ' m²') : '-'" readonly>
+                  </div>
+              </div>
+              <br>
+              <div class="well" style="background-color: #f9f9f9; border: 1px solid #ddd;">
+                  <div class="row">
+                      <div class="col-md-6 col-xs-6">
+                          <label style="color:#FF8C00">COSTO TOTAL ESTIMADO:</label>
+                          <input type="text" class="form-control" [value]="costoTotal" readonly style="font-weight:bold; color:#FF8C00">
+                      </div>
+                      <div class="col-md-6 col-xs-6">
+                          <label style="color:#122A51">{{ lblResultadoEmpaque }}</label>
+                          <input type="text" class="form-control" [value]="cajasLlevar" readonly style="font-weight:bold; color:#122A51">
+                      </div>
+                  </div>
+                  <br>
+                  <div class="row" *ngIf="metrosReales !== '-'">
+                      <div class="col-md-6 col-xs-6">
+                          <label style="color: #333;">METRAJE TOTAL:</label>
+                          <input type="text" class="form-control" [value]="metrosReales" readonly style="font-weight: bold; color: #333; background-color: #e6e6e6;">
+                      </div>
+                      <div class="col-md-6 col-xs-6" *ngIf="mostrarPiezas">
+                          <label style="color: #333;">UNIDADES TOTALES:</label>
+                          <input type="text" class="form-control" [value]="unidadesTotales" readonly style="font-weight: bold; color: #333;">
+                      </div>
+                  </div>
+                  <p class="help-block text-center" style="margin-top: 15px; font-size: 0.9em; color: #555;" *ngIf="mostrarPiezas || prodSeleccionado.codigo?.includes('PEG')">
+                      *El cálculo se redondea al empaque superior para asegurar cobertura.
+                  </p>
+              </div>
+          </form>
+      </div>   
+      
+      <div class="modal-footer" style="text-align: center;">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="calcularTotal()">¡Calcular Ahora!</button>
+        <button type="button" class="btn btn-success" *ngIf="costoTotal" (click)="agregarAlCarrito()" style="font-weight: bold;">
+            <span class="glyphicon glyphicon-shopping-cart"></span> Agregar al Carrito
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalSala" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content"><div class="modal-body" style="padding: 0;"><img [src]="imagenSala" style="width: 100%; height: auto; border-radius:8px;"></div></div>
+  </div>
+</div>
+
+<footer>
+  <div class="container-fluid footer-content">
+    <div class="col-md-4">
+      <h4>Contacto</h4>
+      <p>
+        <span class="glyphicon glyphicon-map-marker"></span> Visitanos en Av. Alfonso Ugarte 1244 - 1135<br>
+        <span class="glyphicon glyphicon-earphone"></span> (+51) 978-875-748<br>
+        <span class="glyphicon glyphicon-envelope"></span> estimcenterfj1005@gmail.com
+      </p>
+    </div>
+    <div class="col-md-4 text-center">
+      <p>&copy; 2026 ESTIM CENTER <br> Todos los derechos reservados.</p>
+    </div>
+    <div class="col-md-4 text-right">
+      <p>Síguenos en Redes:</p>
+      <span class="glyphicon glyphicon-thumbs-up"></span> Facebook <br>
+      <span class="glyphicon glyphicon-camera" style="margin-top: 5px;"></span> Instagram <br>
+      <span class="glyphicon glyphicon-music" style="margin-top: 5px;"></span> TikTok
+    </div>
+  </div>
+</footer>
+
+<div id="chat-circle" class="btn btn-raised" (click)="toggleChat()">
+    <div id="chat-overlay"></div>
+    <span class="glyphicon glyphicon-comment" style="font-size: 24px; color: white; margin-top: 12px;"></span>
+</div>
+
+<div class="chat-box" [class.chat-abierto]="chatVisible">
+    <div class="chat-box-header">
+        <div class="chat-avatar">
+            <img src="assets/imagenes/logo.jpg" alt="Admin" style="background:white; padding:2px;">
+        </div>
+        <div class="chat-info">
+            <span class="chat-title">Soporte ESTIM CENTER</span>
+            <span class="chat-status"><span class="status-dot"></span> En línea</span>
+        </div>
+        <span class="chat-box-toggle" (click)="toggleChat()"><span class="glyphicon glyphicon-remove"></span></span>
+    </div>
+    <div class="chat-box-body" id="chat-box-body">
+        <div class="chat-logs">
+            <div class="chat-msg user">
+                <div class="cm-msg-text">
+                    ¡Hola! 👋 Bienvenido a ESTIM CENTER FJ<br>
+                    Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?
+                </div>
+            </div>
+            <div class="chat-msg user">
+                <div class="cm-msg-button-container">
+                    <button class="btn-quick-reply" (click)="enviarWhatsApp('Quiero cotizar porcelanatos')">Cotizar Porcelanatos</button>
+                    <button class="btn-quick-reply" (click)="enviarWhatsApp('¿Dónde están ubicados?')">Ubicación de tienda</button>
+                    <button class="btn-quick-reply" (click)="enviarWhatsApp('Quiero hablar con un asesor')">Hablar con un humano</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chat-input">
+        <form (submit)="enviarMensajeEscrito($event)">
+            <input type="text" id="chat-input" placeholder="Escribe tu consulta aquí..." />
+            <button type="submit" class="chat-submit" id="chat-submit">
+                <span class="glyphicon glyphicon-send"></span>
+            </button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+.admin-login-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f6f9; /* Gris corporativo claro */
+}
+
+.login-card {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    border-top: 5px solid #122A51; /* Azul corporativo */
+}
+
+.logo-box {
+    margin-bottom: 30px;
+}
+
+.logo {
+    width: 120px;
+    margin-bottom: 15px;
+}
+
+.corporative-title {
+    color: #122A51;
+    font-weight: 800;
+    margin: 0;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+.btn-admin {
+    background-color: #FF8C00;
+    border: none;
+    font-weight: bold;
+    padding: 10px;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.btn-admin:hover {
+    background-color: #e67e00;
+}
