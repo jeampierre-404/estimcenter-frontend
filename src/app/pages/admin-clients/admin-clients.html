@@ -1,11 +1,12 @@
 <section class="recent-activity" style="margin-top: 0;">
     <div class="section-header">
         <h2>👥 Cartera de Clientes</h2>
-        <button class="btn-primary-admin" routerLink="/admin/clientes/nuevo" style="padding: 8px 15px;">
-            + Nuevo Cliente
+        <button class="btn-primary-admin btn-nuevo-movil" routerLink="/admin/clientes/nuevo">
+            <i class="fa-solid fa-plus"></i> Nuevo Cliente
         </button>
     </div>
 
+    <!-- 🔥 LA CAJA MÁGICA PARA EL SCROLL MÓVIL 🔥 -->
     <div class="table-container">
         <table class="human-table">
             <thead>
@@ -23,25 +24,25 @@
                         <small style="color: #888;">Registrado: {{ cli.fechaRegistro | date:'shortDate' }}</small>
                     </td>
                     <td>
-                        <span class="status-badge" style="background: #e3f2fd; color: #0d47a1;">
+                        <span class="status-badge" style="background: #e3f2fd; color: #0d47a1; padding: 4px 8px; border-radius: 4px; font-size: 0.85em;">
                             {{ cli.tipoDoc }}
                         </span>
                         <span style="margin-left: 8px; font-weight: 500;">{{ cli.numDoc }}</span>
                     </td>
                     <td>
-                        <div style="font-size: 0.9em;">
-                            <i class="fa-solid fa-envelope" style="color:#aaa;"></i> {{ cli.email }} <br>
-                            <i class="fa-solid fa-phone" style="color:#aaa;"></i> {{ cli.telefono }}
+                        <div style="font-size: 0.9em; line-height: 1.5;">
+                            <i class="fa-solid fa-envelope" style="color:#aaa; width: 15px;"></i> {{ cli.email }} <br>
+                            <i class="fa-solid fa-phone" style="color:#aaa; width: 15px;"></i> {{ cli.telefono }}
                         </div>
                     </td>
                     <td>
                         <div style="display: flex; gap: 10px;">
                             <button class="btn-icon" [routerLink]="['/admin/clientes/editar', cli.idCliente]" 
-                                    style="color: #4a69bd;">
+                                    style="color: #4a69bd; background: none; border: none; cursor: pointer; font-size: 1.2em;">
                                 <i class="fa-solid fa-pen"></i>
                             </button>
                             <button class="btn-icon" (click)="eliminar(cli.idCliente)" 
-                                    style="color: #ff4757;">
+                                    style="color: #ff4757; background: none; border: none; cursor: pointer; font-size: 1.2em;">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </div>

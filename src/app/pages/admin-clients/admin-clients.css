@@ -1,0 +1,73 @@
+/* =========================================
+   ESTILOS BASE (ESCRITORIO)
+   ========================================= */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Permite que los elementos bajen si no caben */
+    gap: 15px;
+}
+
+.section-header h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #122A51;
+}
+
+.btn-nuevo-movil {
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+/* LA CAJA QUE EVITA QUE LA TABLA ROMPA LA PANTALLA */
+.table-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    overflow-x: auto; /* Magia pura: crea un scroll horizontal solo si es necesario */
+    -webkit-overflow-scrolling: touch; /* Scroll suave en iPhones */
+}
+
+.human-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px; /* Obliga a la tabla a mantener un buen tamaño para no aplastar el texto */
+}
+
+.human-table th, 
+.human-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.human-table th {
+    background-color: #f8f9fa;
+    color: #555;
+    font-weight: 600;
+}
+
+/* =========================================
+   🔥 REGLA DE ORO PARA CELULARES 🔥
+   ========================================= */
+@media (max-width: 768px) {
+    /* El header cambia para que el botón se ponga debajo del título */
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    /* El botón ocupa el 100% de la pantalla para que sea fácil darle con el dedo */
+    .btn-nuevo-movil {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Pequeño ajuste al padding interno en celulares */
+    .human-table th, 
+    .human-table td {
+        padding: 12px 10px;
+    }
+}
