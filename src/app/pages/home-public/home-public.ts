@@ -281,7 +281,7 @@ export class HomePublicComponent implements OnInit {
   toggleChat() { this.chatVisible = !this.chatVisible; }
   
   enviarWhatsApp(mensaje: string) {
-    const url = `https://wa.me/51936662357?text=${encodeURIComponent(mensaje)}`;
+    const url = `https://wa.me/51978875748?text=${encodeURIComponent(mensaje)}`;
     window.open(url, '_blank');
   }
   

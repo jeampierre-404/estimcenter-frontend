@@ -27,6 +27,18 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* 🔥 REGLA DE ORO PARA EL CHAT EN CELULARES 🔥 */
+@media (max-width: 768px) {
+    .chat-box {
+        width: 90%; /* Ocupará el 90% de la pantalla del celu */
+        right: 0;
+        left: 0; /* Al poner left y right en 0... */
+        margin: 0 auto; /* ...este margin auto lo centra a la perfección */
+        bottom: 80px; /* Un poquito más abajo para que se vea cómodo */
+    }
+}
+
+
 /* 2. HOTSPOTS (Puntos en las fotos) */
 /* Aseguramos que el contenedor sea relativo para que los puntos se posicionen bien */
 .shop-look-container {

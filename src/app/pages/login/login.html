@@ -3,35 +3,23 @@
     
     <div class="dual-layout">
         
-        <!-- 🔥 EL CÍRCULO ESTÁ DE VUELTA 🔥 -->
-        <div class="camera-circle active-cam">
-            <!-- Usamos el círculo para mostrar el Logo elegantemente -->
-            <div style="width: 150px; height: 150px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
-                <img src="assets/imagenes/logo_empresa.png" style="width: 100px;">
-            </div>
-            
-            <h2 style="font-size: 1.8em; margin-bottom: 5px;">ESTIM CENTER FJ</h2>
-            <p style="font-size: 12px; color: #aaa;">Expertos en Acabados</p>
-            
-            <div class="status-ia ready-ia" style="margin-top: 20px;">Acceso Seguro</div>
-            
-            <p class="info-text" style="margin-top: 15px;">
-                Inicia sesión para guardar tus cotizaciones y solicitar envíos rápidos.
-            </p>
-        </div>
-
+        <!-- 🔥 EL ÚNICO Y ELEGANTE ÓVALO GIRATORIO 🔥 -->
         <div class="flip-container" id="card" [class.rotate]="isFlipped">
             <div class="flipper">
                 
                 <!-- 🔥 CARA FRONTAL: LOGIN 🔥 -->
                 <div class="front">
-                    <h2>BIENVENIDO</h2>
-                    <p style="font-size: 12px; color: #666; margin-top:-5px; margin-bottom: 20px;">Inicia sesión en tu cuenta</p>
+                    <!-- Logo centrado y elegante arriba del Login -->
+                    <div style="width: 80px; height: 80px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px auto; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                        <img src="assets/imagenes/logo_empresa.png" style="width: 55px;">
+                    </div>
+                    
+                    <h2 style="font-size: 1.6em; margin-bottom: 2px;">BIENVENIDO</h2>
+                    <p style="font-size: 11px; color: #666; margin-top:0px; margin-bottom: 15px;">Inicia sesión en tu cuenta</p>
                     
                     <form style="width: 85%;">
                         <div class="form-group" style="position: relative; margin-bottom: 15px;">
                             <span class="glyphicon glyphicon-user" style="position: absolute; left: 15px; top: 12px; color: #FF8C00;"></span>
-                            <!-- 🔥 BLOQUEO ESTRICTO DE TECLAS (SOLO NÚMEROS) 🔥 -->
                             <input type="text" class="form-control" placeholder="Ingresa tu DNI" name="loginDni" [(ngModel)]="loginDni" maxlength="8" (input)="soloNumerosLogin($event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="padding-left: 40px; border-radius: 25px; height: 40px;">
                         </div>
                         
@@ -40,7 +28,7 @@
                             <input type="password" class="form-control" placeholder="Contraseña" name="loginPass" [(ngModel)]="loginPass" maxlength="20" style="padding-left: 40px; border-radius: 25px; height: 40px;">
                         </div>
 
-                        <button type="button" class="btn btn-action" style="background: #122A51; color: white; width: 100%; border-radius: 25px; height: 40px; font-weight: bold; margin-top: 10px;" (click)="loginManual()">
+                        <button type="button" class="btn btn-action" style="background: #122A51; color: white; width: 100%; border-radius: 25px; height: 40px; font-weight: bold; margin-top: 5px;" (click)="loginManual()">
                             INGRESAR
                         </button>
                     </form>
@@ -49,7 +37,7 @@
                         ¿Olvidaste tu contraseña? Contáctanos
                     </a>
         
-                    <p class="toggle-link" (click)="girarPanel()" style="margin-top: 20px; font-weight: bold; color: #FF8C00;">¿Nuevo? Regístrate aquí</p>
+                    <p class="toggle-link" (click)="girarPanel()" style="margin-top: 15px; font-weight: bold; color: #FF8C00;">¿Nuevo? Regístrate aquí</p>
                     <a routerLink="/" style="font-size: 11px; color: #aaa; margin-top: 5px; text-decoration: none;"><span class="glyphicon glyphicon-arrow-left"></span> Volver a la Tienda</a>
                 </div>
         
@@ -61,7 +49,6 @@
                     <form style="width: 85%;">
                         
                         <div class="input-group" style="margin-bottom: 10px;">
-                            <!-- 🔥 BLOQUEO ESTRICTO DE TECLAS (SOLO NÚMEROS) 🔥 -->
                             <input type="text" class="form-control" placeholder="DNI (Tu usuario)" name="regDni" [(ngModel)]="regDni" maxlength="8" (input)="soloNumerosRegDni($event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="border-radius: 20px 0 0 20px; height: 35px; font-size: 13px;">
                             <span class="input-group-btn">
                                 <button id="btnSearchDni" class="btn btn-primary" type="button" style="border-radius: 0 20px 20px 0; height: 35px; background-color:#122A51; border:none;" (click)="consultarAPI()" title="Autocompletar Nombre">
@@ -70,10 +57,8 @@
                             </span>
                         </div>
 
-                        <!-- Bloqueo para que no acepte números en el nombre -->
                         <input type="text" class="form-control" placeholder="Tu Nombre Completo" name="regNombre" [(ngModel)]="regNombre" maxlength="50" (input)="soloLetrasNombre($event)" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode === 32 || event.charCode === 209 || event.charCode === 241" style="margin-bottom: 10px; border-radius: 20px; height: 35px; font-size: 13px;">
                         
-                        <!-- 🔥 BLOQUEO ESTRICTO DE TECLAS (SOLO NÚMEROS) 🔥 -->
                         <input type="tel" class="form-control" placeholder="Celular (Para WhatsApp)" name="regTelefono" [(ngModel)]="regTelefono" maxlength="9" (input)="soloNumerosRegCel($event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="margin-bottom: 10px; border-radius: 20px; height: 35px; font-size: 13px;">
                         
                         <input type="password" class="form-control" placeholder="Crea una Contraseña (Min 6 caract.)" name="regPass" [(ngModel)]="regPass" maxlength="20" style="margin-bottom: 15px; border-radius: 20px; height: 35px; font-size: 13px;">
