@@ -36,7 +36,7 @@ export class AdminEmployeesComponent implements OnInit {
   eliminarEmpleado(id: number) {
     if (confirm('¿Estás seguro de eliminar a este empleado?')) {
       // 🔥 Le decimos a Angular que espere un texto como respuesta, no un JSON
-      this.http.delete(`[https://estimcenter.onrender.com/rest](https://estimcenter.onrender.com/rest)/usuario/borrar/${id}`, { responseType: 'text' }).subscribe({
+      this.http.delete(`https://estimcenter.onrender.com/rest//usuario/borrar/${id}`, { responseType: 'text' }).subscribe({
         next: (respuesta) => {
           if (respuesta === 'eliminado') {
             alert('🗑️ El empleado fue eliminado definitivamente del sistema.');

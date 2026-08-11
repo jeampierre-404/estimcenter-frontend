@@ -55,7 +55,7 @@ export class AdminEmployeeFormComponent implements OnInit {
   }
 
   cargarEmpleado(id: string) {
-    this.http.get<any>(`[https://estimcenter.onrender.com/rest](https://estimcenter.onrender.com/rest)/usuario/buscar/${id}`).subscribe({
+    this.http.get<any>(`https://estimcenter.onrender.com/rest/usuario/buscar/${id}`).subscribe({
       next: (data) => {
         this.empleado = data;
         if (!this.empleado.rol) {
@@ -89,7 +89,7 @@ export class AdminEmployeeFormComponent implements OnInit {
     this.cdr.detectChanges();
 
     if (this.isEditMode) {
-      this.http.put(`[https://estimcenter.onrender.com/rest](https://estimcenter.onrender.com/rest)/usuario/editar/${this.empleado.idUsuario}`, this.empleado).subscribe({
+      this.http.put(`https://estimcenter.onrender.com/rest/usuario/editar/${this.empleado.idUsuario}`, this.empleado).subscribe({
         next: () => {
           alert("Empleado actualizado con éxito.");
           this.router.navigate(['/admin/empleados']);
@@ -101,7 +101,7 @@ export class AdminEmployeeFormComponent implements OnInit {
         }
       });
     } else {
-      this.http.post('[https://estimcenter.onrender.com/rest](https://estimcenter.onrender.com/rest)/usuario/agregar', this.empleado).subscribe({
+      this.http.post('https://estimcenter.onrender.com/rest/usuario/agregar', this.empleado).subscribe({
         next: () => {
           alert("Empleado registrado con éxito.");
           this.router.navigate(['/admin/empleados']);

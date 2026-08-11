@@ -38,6 +38,6 @@ export class QuoteService {
   }
 
   obtenerVenta(idCotizacion: number): Observable<any> {
-    return this.http.get(`[https://estimcenter.onrender.com/rest](https://estimcenter.onrender.com/rest)/venta/por-cotizacion/${idCotizacion}`);
+    return this.http.get(`https://estimcenter.onrender.com/rest/venta/por-cotizacion/${idCotizacion}`);
   }
 }

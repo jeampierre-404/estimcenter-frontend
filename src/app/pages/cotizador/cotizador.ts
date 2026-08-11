@@ -291,7 +291,7 @@ export class CotizadorComponent implements OnInit {
                 detalles: detallesDTO
             };
 
-            this.http.post('[https://estimcenter.onrender.com/rest](https://estimcenter.onrender.com/rest)/cotizacion/generar', cotizacionDTO, {responseType: 'text'}).subscribe({
+            this.http.post('https://estimcenter.onrender.com/rest/cotizacion/generar', cotizacionDTO, {responseType: 'text'}).subscribe({
                 next: () => {
                     this.guardarEnHistorial('ENVIADO'); 
                     alert("✅ ¡Éxito! Tu pedido fue enviado a la Base de Datos del Administrador.");

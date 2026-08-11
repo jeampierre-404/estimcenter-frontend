@@ -159,7 +159,7 @@ export class LoginComponent {
 
     const credenciales = { numDoc: dni, password: pass };
 
-    this.http.post<any>('[https://estimcenter.onrender.com/rest](https://estimcenter.onrender.com/rest)/cliente/login-manual', credenciales).subscribe({
+    this.http.post<any>('https://estimcenter.onrender.com/rest/cliente/login-manual', credenciales).subscribe({
       next: (clienteBD) => {
         this.iniciarSesion(clienteBD.nombreCompleto, clienteBD.numDoc);
       },
