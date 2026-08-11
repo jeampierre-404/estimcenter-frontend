@@ -1,0 +1,71 @@
+/* =========================================
+   ESTILOS DEL HEADER (ESCRITORIO)
+   ========================================= */
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.greeting-box h1 {
+    margin: 0;
+    font-size: 1.4em;
+    color: #122A51;
+    font-weight: 700;
+}
+
+.subtitle-header {
+    margin: 0;
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Botón Nuevo Producto más pequeño y elegante */
+.btn-sm-header {
+    padding: 8px 18px !important; /* Forza un padding más pequeño */
+    font-size: 0.9em !important;
+    border-radius: 20px !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: auto !important;
+}
+
+/* =========================================
+   🔥 REGLA DE ORO PARA CELULARES 🔥
+   ========================================= */
+@media (max-width: 768px) {
+    .top-header {
+        padding: 12px 15px;
+    }
+    
+    .greeting-box h1 {
+        font-size: 1.1em;
+    }
+    
+    /* Ocultamos el subtítulo para ganar espacio */
+    .subtitle-header {
+        display: none; 
+    }
+    
+    /* Ocultamos la palabra 'Nuevo Producto' y dejamos solo el '+' */
+    .text-btn {
+        display: none; 
+    }
+    
+    /* El botón se convierte en un círculo perfecto */
+    .btn-sm-header {
+        padding: 10px 12px !important;
+        border-radius: 50% !important; 
+    }
+    
+    .btn-sm-header i {
+        margin: 0;
+        font-size: 1.2em;
+    }
+}

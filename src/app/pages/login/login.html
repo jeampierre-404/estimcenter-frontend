@@ -48,14 +48,8 @@
         
                     <form style="width: 85%;">
                         
-                        <div class="input-group" style="margin-bottom: 10px;">
-                            <input type="text" class="form-control" placeholder="DNI (Tu usuario)" name="regDni" [(ngModel)]="regDni" maxlength="8" (input)="soloNumerosRegDni($event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="border-radius: 20px 0 0 20px; height: 35px; font-size: 13px;">
-                            <span class="input-group-btn">
-                                <button id="btnSearchDni" class="btn btn-primary" type="button" style="border-radius: 0 20px 20px 0; height: 35px; background-color:#122A51; border:none;" (click)="consultarAPI()" title="Autocompletar Nombre">
-                                    <i class="fas fa-search"></i> Buscar
-                                </button>
-                            </span>
-                        </div>
+                        <!-- 🔥 DNI LIMPIO (Sin botón de SUNAT y con bordes redondos) 🔥 -->
+                        <input type="text" class="form-control" placeholder="DNI (Tu usuario)" name="regDni" [(ngModel)]="regDni" maxlength="8" (input)="soloNumerosRegDni($event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="margin-bottom: 10px; border-radius: 20px; height: 35px; font-size: 13px;">
 
                         <input type="text" class="form-control" placeholder="Tu Nombre Completo" name="regNombre" [(ngModel)]="regNombre" maxlength="50" (input)="soloLetrasNombre($event)" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode === 32 || event.charCode === 209 || event.charCode === 241" style="margin-bottom: 10px; border-radius: 20px; height: 35px; font-size: 13px;">
                         

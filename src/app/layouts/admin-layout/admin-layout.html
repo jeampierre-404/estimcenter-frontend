@@ -72,16 +72,15 @@
 
             <div class="greeting-box">
                 <h1 id="greeting">{{ saludo }}</h1>
-                <p>Aquí tienes el resumen de ESTIM CENTER FJ hoy.</p>
+                <p class="subtitle-header">Aquí tienes el resumen de ESTIM CENTER FJ hoy.</p>
             </div>
         </div>
 
         <div class="actions">
-            <button class="btn-action">
-                <i class="fa-solid fa-bell"></i> 
-                <span class="badge">3</span>
+            <!-- 🔥 BOTÓN REDUCIDO Y RESPONSIVE 🔥 -->
+            <button class="btn-primary-admin btn-sm-header" routerLink="/admin/productos/nuevo">
+                <i class="fa-solid fa-plus"></i> <span class="text-btn">Nuevo Producto</span>
             </button>
-            <button class="btn-primary-admin" routerLink="/admin/productos/nuevo">+ Nuevo Producto</button>
         </div>
 
     </header>
