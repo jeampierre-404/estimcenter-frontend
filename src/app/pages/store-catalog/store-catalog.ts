@@ -14,6 +14,7 @@ import { Producto } from '../../models/product.model';
 })
 export class StoreCatalogComponent implements OnInit {
   
+  // Categorías
   decorados: Producto[] = [];
   decoradosEspanoles: Producto[] = [];
   paredes: Producto[] = [];
@@ -25,28 +26,33 @@ export class StoreCatalogComponent implements OnInit {
   banos: Producto[] = [];
   pegamentos: Producto[] = [];
   
+  // Variables de Calculadora
   prodSeleccionado: any = null;
   metrosSolicitados: number | null = null;
   costoTotal: string = '';
   cajasLlevar: string = '';
   metrosReales: string = '';
   unidadesTotales: string = '';
+  
+  // Variable para Vista en Ambiente
   imagenSala: string = '';
 
+  // Etiquetas de UI
   lblPregunta: string = '¿Cuántos metros cuadrados (m²) necesitas?';
   lblRendimiento: string = 'Rendimiento:';
   lblResultadoEmpaque: string = 'CAJAS A LLEVAR:';
   mostrarPiezas: boolean = true;
 
+  // Usuario y Chat
   nombreCliente: string = '';
   clienteLogueado: boolean = false;
   chatVisible: boolean = false;
 
+  // Búsqueda y Carrito
   todosLosProductos: Producto[] = [];
   productosBuscados: Producto[] = [];
   terminoBusqueda: string = '';
   modalBuscadorVisto: boolean = false;
-
   carritoCotizacion: any[] = [];
 
   private cdr = inject(ChangeDetectorRef);
@@ -95,6 +101,7 @@ export class StoreCatalogComponent implements OnInit {
         const activos = data.filter(p => p.estado !== 'INACTIVO');
         this.todosLosProductos = activos;
 
+        // Filtro por Códigos
         this.decorados = activos.filter(p => p.codigo && p.codigo.includes('DEC') && !p.codigo.includes('ESPDEC'));
         this.decoradosEspanoles = activos.filter(p => p.codigo && p.codigo.includes('ESPDEC'));
         this.paredes = activos.filter(p => p.codigo && p.codigo.includes('PAR'));
@@ -128,8 +135,8 @@ export class StoreCatalogComponent implements OnInit {
                         }, 2500);
                     }
                 }
-                localStorage.removeItem('producto_a_enfocar'); // Limpiamos la memoria
-            }, 600); // 600ms para asegurar que el HTML se haya dibujado por completo
+                localStorage.removeItem('producto_a_enfocar'); 
+            }, 600); 
         } else if (!this.modalBuscadorVisto) {
             setTimeout(() => {
                 this.abrirBuscador();
@@ -159,7 +166,6 @@ export class StoreCatalogComponent implements OnInit {
     ).slice(0, 6);
   }
 
-  // Si busca un producto estando ya dentro del catálogo, no necesita redirigir, solo scrollear
   seleccionarBusqueda(prod: any) {
     (window as any).$('#modalBienvenidaBuscador').modal('hide');
     setTimeout(() => {
@@ -188,6 +194,7 @@ export class StoreCatalogComponent implements OnInit {
       return 'assets/' + imagen; 
   }
 
+  // 🔥 LÓGICA VISTA EN AMBIENTE 🔥
   verEnSala(prod: any) {
     const rutaBase = prod.imagenSala ? prod.imagenSala : prod.imagen;
     this.imagenSala = this.getImagenUrl(rutaBase);

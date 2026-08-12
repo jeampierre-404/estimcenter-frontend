@@ -5,7 +5,7 @@
 
 /* 1. CHAT FLOTANTE */
 .chat-box {
-    display: none; /* Oculto por defecto */
+    display: none; 
     position: fixed;
     right: 85px;
     bottom: 90px;
@@ -16,7 +16,6 @@
     border-radius: 5px;
 }
 
-/* Esta clase la activa Angular al dar click */
 .chat-box.chat-abierto {
     display: block !important;
     animation: subir 0.3s ease;
@@ -27,23 +26,11 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* 🔥 REGLA DE ORO PARA EL CHAT EN CELULARES 🔥 */
-@media (max-width: 768px) {
-    .chat-box {
-        width: 90%; /* Ocupará el 90% de la pantalla del celu */
-        right: 0;
-        left: 0; /* Al poner left y right en 0... */
-        margin: 0 auto; /* ...este margin auto lo centra a la perfección */
-        bottom: 80px; /* Un poquito más abajo para que se vea cómodo */
-    }
-}
-
-
 /* 2. HOTSPOTS (Puntos en las fotos) */
-/* Aseguramos que el contenedor sea relativo para que los puntos se posicionen bien */
 .shop-look-container {
     position: relative;
     display: block;
+    margin-bottom: 15px;
 }
 
 .hotspot {
@@ -75,6 +62,75 @@
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     z-index: 20;
     text-align: center;
-    /* Angular controla el display, pero por si acaso: */
     display: none; 
+}
+
+.hotspot-card h5 {
+    font-size: 13px;
+    font-weight: bold;
+    color: #122A51;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.hotspot-card .price {
+    color: #FF8C00;
+    font-weight: bold;
+}
+
+/* =========================================
+   🔥 MEGA REGLA DE ORO PARA CELULARES 🔥
+   (Arregla el Navbar, Hotspots, Footer y Chat)
+   ========================================= */
+@media (max-width: 768px) {
+    
+    /* CHAT Y BOTONES FLOTANTES CELULAR */
+    .chat-box {
+        width: 90%; 
+        right: 0;
+        left: 0; 
+        margin: 0 auto; 
+        bottom: 80px; 
+    }
+
+    #chat-circle {
+        bottom: 20px !important; 
+    }
+
+    /* 1. DOMANDO EL MENÚ DE NAVEGACIÓN */
+    .navbar-nav > li {
+        float: none !important;
+        border-left: none !important;
+        border-bottom: 1px solid #eee;
+    }
+    .navbar-nav > li > a {
+        text-align: center !important; 
+        padding: 15px !important;
+    }
+
+    /* 2. CABECERA Y LOGO CENTRADOS */
+    .header-content > div {
+        display: block !important;
+        text-align: center !important;
+        margin: 0 auto 10px auto !important;
+    }
+    .header-title {
+        font-size: 1.6em !important; 
+    }
+
+    /* 3. FOOTER PERFECTAMENTE CENTRADO Y CON ESPACIO */
+    footer .col-md-4 {
+        text-align: center !important;
+        margin-bottom: 25px;
+    }
+    
+    /* 🔥 ESPACIO VITAL PARA ELEMENTOS FLOTANTES 🔥 */
+    footer .footer-content {
+        padding-bottom: 80px !important; /* Salva al footer de ser tapado */
+    }
+    
+    /* 4. OFERTAS RELÁMPAGO */
+    #ofertas-relampago .col-md-4 {
+        margin-bottom: 15px;
+    }
 }
