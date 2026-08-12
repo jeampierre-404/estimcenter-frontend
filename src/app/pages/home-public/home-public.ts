@@ -21,28 +21,33 @@ export class HomePublicComponent implements OnInit {
   nombreCliente: string = '';
   clienteLogueado: boolean = false;
 
+  // Variables Calculadora
   prodSeleccionado: any = null;
   metrosSolicitados: number | null = null;
   costoTotal: string = '';
   cajasLlevar: string = '';
   metrosReales: string = '';
   unidadesTotales: string = '';
+
+  // 🔥 Variables para la Vista en Ambiente Mejorada 🔥
   imagenSala: string = '';
+  prodVistaSala: any = null;
+  mostrandoSala: boolean = true;
 
   lblPregunta: string = '¿Cuántos metros cuadrados (m²) necesitas?';
   lblRendimiento: string = 'Rendimiento:';
   lblResultadoEmpaque: string = 'CAJAS A LLEVAR:';
   mostrarPiezas: boolean = true;
 
+  // Búsqueda y Carrito
   todosLosProductos: any[] = [];
   productosBuscados: any[] = [];
   terminoBusqueda: string = '';
-  
   carritoCotizacion: any[] = [];
 
   private http = inject(HttpClient);
   private cdr = inject(ChangeDetectorRef);
-  private router = inject(Router); // 🔥 Se inyectó el Router
+  private router = inject(Router);
 
   constructor() {}
 
@@ -120,7 +125,6 @@ export class HomePublicComponent implements OnInit {
     ).slice(0, 6);
   }
 
-  // 🔥 LÓGICA DE VIAJE AL CATÁLOGO CORREGIDA 🔥
   seleccionarBusquedaPred(prod: any) {
     (window as any).$('#modalBienvenidaBuscador').modal('hide');
     
@@ -128,7 +132,6 @@ export class HomePublicComponent implements OnInit {
         const elemento = document.getElementById('prod-' + prod.codigo);
         
         if (elemento) {
-            // Si el producto SÍ está en la página de inicio, hacemos scroll
             const accordionContent = elemento.closest('.panel-collapse');
             if (accordionContent && !accordionContent.classList.contains('in')) {
                 (window as any).$(accordionContent).collapse('show');
@@ -152,7 +155,6 @@ export class HomePublicComponent implements OnInit {
                 }
             }, 300);
         } else {
-            // 🔥 Si el producto NO está en la página de inicio, viajamos al catálogo 🔥
             localStorage.setItem('producto_a_enfocar', prod.codigo);
             this.router.navigate(['/catalogo']);
         }
@@ -211,11 +213,21 @@ export class HomePublicComponent implements OnInit {
       return 'assets/' + imagen; 
   }
 
+  // 🔥 NUEVA LÓGICA VISTA EN AMBIENTE CON FLECHAS 🔥
   verEnSala(prod: any) {
+    this.prodVistaSala = prod;
+    this.mostrandoSala = true; // Por defecto mostramos la foto del ambiente (sala)
+    
     const rutaBase = prod.imagenSala ? prod.imagenSala : prod.imagen;
     this.imagenSala = this.getImagenUrl(rutaBase);
+    
     (window as any).$ && (window as any).$('#modalSala').modal('show');
   }
+
+  cambiarVistaImagen() {
+    this.mostrandoSala = !this.mostrandoSala;
+  }
+  // 🔥 ============================================== 🔥
 
   prepararCalculadora(prod: any) {
     this.prodSeleccionado = prod;

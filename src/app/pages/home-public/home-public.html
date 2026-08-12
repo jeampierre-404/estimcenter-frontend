@@ -53,7 +53,6 @@
           </ul>
       </li>
 
-      <!-- 🔥 NUEVO: BOTÓN DE CARRITO DE COMPRAS EN EL MENÚ 🔥 -->
       <li style="float: right; border-left: 1px solid #e7e7e7; background-color: #fff8e1;">
           <a routerLink="/cotizar" style="cursor: pointer; color: #FF8C00; font-weight: bold;">
               <span class="glyphicon glyphicon-shopping-cart"></span> Mi Carrito 
@@ -61,7 +60,6 @@
           </a>
       </li>
 
-      <!-- 🔥 BOTÓN PARA REABRIR EL BUSCADOR PREDICTIVO 🔥 -->
       <li style="float: right; border-left: 1px solid #e7e7e7;">
           <a (click)="abrirBuscadorPred()" style="cursor: pointer; color: #122A51; font-weight: bold; background-color: #f8f9fa;">
               <span class="glyphicon glyphicon-search"></span> Búsqueda Rápida
@@ -339,10 +337,10 @@
                                     <p style="color: gray;"><i>Cargando nuevos diseños...</i></p>
                                 </div>
 
-                                <!-- 🔥 ID AGREGADO PARA EL SCROLL DEL BUSCADOR 🔥 -->
                                 <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of porcelanatosList" [id]="'prod-' + prod.codigo">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                                         
+                                        <!-- 🔥 BOTÓN DEL OJITO 🔥 -->
                                         <button type="button" class="btn btn-default btn-xs" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)" title="Ver en Ambiente">
                                             <span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span>
                                         </button>
@@ -379,7 +377,6 @@
                                     <p style="color: gray;"><i>Cargando nuevos diseños...</i></p>
                                 </div>
 
-                                <!-- 🔥 ID AGREGADO PARA EL SCROLL DEL BUSCADOR 🔥 -->
                                 <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of ceramicosList" [id]="'prod-' + prod.codigo">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                                         
@@ -419,7 +416,6 @@
                                     <p style="color: gray;"><i>Cargando nuevos diseños...</i></p>
                                 </div>
 
-                                <!-- 🔥 ID AGREGADO PARA EL SCROLL DEL BUSCADOR 🔥 -->
                                 <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of pegamentosList; let i = index" [id]="'prod-' + prod.codigo">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                                         
@@ -546,6 +542,7 @@
   </div>
 </div>
 
+<!-- 🔥 CALCULADORA INTELIGENTE 🔥 -->
 <div class="modal fade" id="calculadoraModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content" *ngIf="prodSeleccionado">
@@ -597,7 +594,6 @@
           </form>
       </div>   
       
-      <!-- 🔥 FOOTER ACTUALIZADO CON BOTÓN DEL CARRITO 🔥 -->
       <div class="modal-footer" style="text-align: center; border-top: 1px solid #eee; padding: 15px;">
         <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 20px; padding: 8px 25px; margin-right: 10px;">Cerrar</button>
         <button type="button" class="btn" style="background-color: #000080; color: white; padding: 8px 25px; border-radius: 20px; font-weight: bold;" (click)="calcularTotal()">¡Calcular Ahora!</button>
@@ -610,16 +606,54 @@
   </div>
 </div>
 
+<!-- 🔥 MODAL VISTA EN AMBIENTE MEJORADO 🔥 -->
 <div class="modal fade" id="modalSala" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: #000080; color: white;">
-                <button type="button" class="close" data-dismiss="modal" style="color: white;">&times;</button>
-                <h4 class="modal-title">Vista en Ambiente</h4>
+        <div class="modal-content" *ngIf="prodVistaSala">
+            
+            <div class="modal-header" style="background-color: #122A51; color: white; border-bottom: 3px solid #FF8C00;">
+                <button type="button" class="close" data-dismiss="modal" style="color: white; opacity: 1;">&times;</button>
+                <h4 class="modal-title" style="font-weight: bold;">
+                    <span class="glyphicon glyphicon-picture"></span> {{ prodVistaSala.nombre }}
+                </h4>
             </div>
-            <div class="modal-body text-center">
-                <img [src]="imagenSala" class="img-responsive center-block" style="max-height: 70vh; border-radius: 8px;">
+            
+            <div class="modal-body text-center" style="padding: 0; position: relative; background-color: #f4f4f4;">
+                
+                <!-- Flechas Mágicas de Navegación -->
+                <button class="btn btn-default" (click)="cambiarVistaImagen()" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); z-index: 10; border-radius: 50%; width: 45px; height: 45px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); border: none; background: rgba(255,255,255,0.8);">
+                    <span class="glyphicon glyphicon-chevron-left" style="color: #122A51; font-weight: bold; font-size: 18px;"></span>
+                </button>
+                
+                <button class="btn btn-default" (click)="cambiarVistaImagen()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); z-index: 10; border-radius: 50%; width: 45px; height: 45px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); border: none; background: rgba(255,255,255,0.8);">
+                    <span class="glyphicon glyphicon-chevron-right" style="color: #122A51; font-weight: bold; font-size: 18px;"></span>
+                </button>
+
+                <!-- Imagen Dinámica -->
+                <img [src]="mostrandoSala ? imagenSala : getImagenUrl(prodVistaSala.imagen)" class="img-responsive center-block" style="max-height: 60vh; object-fit: contain; width: 100%; padding: 20px;">
+                
+                <span class="label" [ngClass]="mostrandoSala ? 'label-warning' : 'label-primary'" style="position: absolute; top: 15px; left: 15px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                    <span class="glyphicon" [ngClass]="mostrandoSala ? 'glyphicon-home' : 'glyphicon-stop'"></span> 
+                    {{ mostrandoSala ? 'Vista en Ambiente' : 'Vista de la Pieza' }}
+                </span>
             </div>
+            
+            <!-- Detalles del Producto -->
+            <div class="modal-footer" style="text-align: left; background: white;">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <h4 style="margin: 0; font-weight: bold; color: #122A51;">{{ prodVistaSala.nombre }}</h4>
+                        <p style="margin: 5px 0 0 0; color: #666; font-size: 13px;">{{ prodVistaSala.descripcion || 'Detalles exclusivos de nuestro catálogo premium.' }}</p>
+                    </div>
+                    <div class="col-xs-4 text-right">
+                        <h3 style="margin: 0; color: #FF8C00; font-weight: bold;">S/ {{ prodVistaSala.precio | number:'1.2-2' }}</h3>
+                        <button type="button" class="btn btn-success btn-sm" style="margin-top: 5px; font-weight: bold; border-radius: 20px;" (click)="prepararCalculadora(prodVistaSala)" data-dismiss="modal" data-toggle="modal" data-target="#calculadoraModal">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>

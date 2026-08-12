@@ -134,3 +134,18 @@
         margin-bottom: 15px;
     }
 }
+
+/* =========================================
+   🔥 BLINDAJE DE HOTSPOTS EN CELULARES 🔥
+   ========================================= */
+.shop-look-container {
+    position: relative !important;
+    display: inline-block !important;
+    width: 100% !important;
+}
+
+.hotspot-card {
+    position: absolute !important;
+    z-index: 9999 !important; 
+    /* El z-index alto asegura que siempre flote y no rompa el diseño */
+}
