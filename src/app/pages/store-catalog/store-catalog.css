@@ -78,3 +78,59 @@
     /* Angular controla el display, pero por si acaso: */
     display: none; 
 }
+
+/* =========================================
+   🔥 MEGA REGLA DE ORO PARA CELULARES 🔥
+   (Arregla el Navbar, Tarjetas, Calculadora y Footer)
+   ========================================= */
+@media (max-width: 768px) {
+    
+    /* 1. DOMANDO EL MENÚ DE NAVEGACIÓN */
+    /* Quitamos el 'float: right' que rompe el menú al colapsarse */
+    .navbar-nav > li {
+        float: none !important;
+        border-left: none !important;
+        border-bottom: 1px solid #eee;
+    }
+    .navbar-nav > li > a {
+        text-align: center !important; /* Centramos las opciones */
+        padding: 15px !important;
+    }
+
+    /* 2. CABECERA Y LOGO CENTRADOS */
+    .header-content > div {
+        display: block !important;
+        text-align: center !important;
+        margin: 0 auto 10px auto !important;
+    }
+    .header-title {
+        font-size: 1.6em !important; /* Letra un poco más chica para que no desborde */
+    }
+
+    /* 3. TARJETAS DE PRODUCTO LIBRES */
+    /* Las alturas fijas cortan el texto en celular, las hacemos automáticas */
+    .card-producto .caption h4,
+    .card-producto .caption p {
+        height: auto !important;
+        min-height: 40px;
+    }
+
+    /* 4. MODAL CALCULADORA MÁS CÓMODO */
+    /* En vez de partir la pantalla en 2 (col-xs-6), forzamos a que ocupen el 100% hacia abajo */
+    #calculadoraModal .col-xs-6 {
+        width: 100% !important;
+        margin-bottom: 15px;
+    }
+
+    /* 5. FOOTER PERFECTAMENTE CENTRADO */
+    /* El texto de la derecha y de la izquierda ahora se apilan en el centro */
+    footer .col-md-4 {
+        text-align: center !important;
+        margin-bottom: 25px;
+    }
+    
+    /* 6. OFERTAS RELÁMPAGO (Darles espacio al apilarse) */
+    #info-bottom .col-md-4 {
+        margin-bottom: 15px;
+    }
+}

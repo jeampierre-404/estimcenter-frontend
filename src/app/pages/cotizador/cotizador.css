@@ -1,35 +1,65 @@
 /* =========================================
-   🔥 REGLA DE ORO PARA CELULARES 🔥
-   (Hace el chat y el layout 100% responsivos)
+   🔥 MEGA REGLA DE ORO PARA CELULARES 🔥
+   (Controla Chat, Tablas, Navbar, Factura y Modales)
    ========================================= */
 @media (max-width: 768px) {
-    /* Centrar la burbuja del chat en móviles */
-    .chat-box {
-        width: 90%; 
-        right: 0;
-        left: 0; 
-        margin: 0 auto; 
-        bottom: 90px; 
-    }
     
-    /* Evitar que el catálogo y la tabla se rompan en celular */
-    .main-container {
-        width: 100% !important;
-        padding: 10px;
+    /* --- 1. LO QUE YA TENÍAS (MANTENIDO Y MEJORADO) --- */
+    .chat-box { width: 90%; right: 0; left: 0; margin: 0 auto; bottom: 90px; }
+    .main-container { width: 100% !important; padding: 10px; }
+    .panel-body { height: 400px !important; }
+    .table > thead > tr > th:first-child,
+    .table > tbody > tr > td:first-child { display: none; } /* Oculta imagen en tabla proforma */
+    .row.ocultar-en-foto > div { margin-bottom: 10px; }
+
+    /* --- 2. DOMANDO EL MENÚ DE NAVEGACIÓN --- */
+    .navbar-nav > li {
+        float: none !important;
+        border-left: none !important;
+        border-bottom: 1px solid #eee;
     }
-    
-    .panel-body {
-        height: 400px !important; /* Más pequeño para que no ocupe toda la pantalla */
+    .navbar-nav > li > a {
+        text-align: center !important;
+        padding: 15px !important;
     }
 
-    /* Ocultar la columna de la imagen en celular para ahorrar espacio */
-    .table > thead > tr > th:first-child,
-    .table > tbody > tr > td:first-child {
-        display: none;
+    /* --- 3. CABECERA PRINCIPAL CENTRADA --- */
+    .header-content > div {
+        display: block !important;
+        text-align: center !important;
+        margin: 0 auto 10px auto !important;
     }
-    
-    /* Hacer que los botones de acción se vean en pila */
-    .row.ocultar-en-foto > div {
-        margin-bottom: 10px;
+    .header-title { font-size: 1.6em !important; }
+
+    /* --- 4. ARREGLANDO EL ENCABEZADO DE LA PROFORMA --- */
+    /* Rompe la estructura de 2 columnas (col-xs-8 y col-xs-4) para que baje fluidamente */
+    .factura-header .col-xs-8, 
+    .factura-header .col-xs-4 {
+        width: 100% !important; 
+        text-align: center !important; 
+        margin-bottom: 15px;
+    }
+    /* Pone el loguito pequeño arriba del nombre de la empresa */
+    .factura-header .col-xs-8 > div {
+        flex-direction: column !important; 
+    }
+    .factura-header .col-xs-8 img { 
+        margin-right: 0 !important; 
+        margin-bottom: 10px; 
+    }
+
+    /* --- 5. HACIENDO QUE LOS MODALES RESPIREN --- */
+    /* Modal de Cantidad y Modal Calculadora (Quita el col-xs-6 que partía la pantalla) */
+    #modalSeleccion .col-xs-6, 
+    #calculadoraModal .col-xs-6 {
+        width: 100% !important;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    /* --- 6. FOOTER PERFECTAMENTE CENTRADO --- */
+    footer .col-md-4 { 
+        text-align: center !important; 
+        margin-bottom: 25px; 
     }
 }
