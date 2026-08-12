@@ -53,7 +53,6 @@
           </ul>
       </li>
 
-      <!-- 🔥 INDICADOR DEL CARRITO (Conectado a la tabla de cotización) 🔥 -->
       <li style="float: right; border-left: 1px solid #e7e7e7; background-color: #fff8e1;">
           <a style="cursor: default; color: #FF8C00; font-weight: bold;">
               <span class="glyphicon glyphicon-shopping-cart"></span> Mi Carrito 
@@ -61,19 +60,18 @@
           </a>
       </li>
 
-      <!-- 🔥 BOTÓN PARA REABRIR EL BUSCADOR PREDICTIVO 🔥 -->
       <li style="float: right; border-left: 1px solid #e7e7e7;">
           <a (click)="abrirBuscadorPred()" style="cursor: pointer; color: #122A51; font-weight: bold; background-color: #f8f9fa;">
               <span class="glyphicon glyphicon-search"></span> Búsqueda Rápida
           </a>
       </li>
-
     </ul>
   </div>
 </nav>
 
 <div class="container main-container" style="margin-top: 30px; width: 95%; max-width: 1600px; margin-bottom: 50px;"> 
   <div class="row">
+    
     <!-- PANEL IZQUIERDO: CATÁLOGO -->
     <div class="col-md-4">
         <div class="panel panel-primary">
@@ -122,35 +120,38 @@
         </div>
         <hr>
 
-        <table class="table table-striped">
-            <thead>
-                <tr style="border-bottom:2px solid #eee;">
-                    <th>IMG</th>
-                    <th width="35%">DESCRIPCIÓN</th>
-                    <th>CANT.</th>
-                    <th>METRAJE</th>
-                    <th class="text-right">TOTAL</th>
-                    <th class="ocultar-en-foto"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let it of itemsCotizados; let i = index">
-                    <td><img [src]="getImagenUrl(it.img)" style="height:40px; border-radius: 4px; object-fit: cover;"></td>
-                    <td>{{ it.nombre }}</td>
-                    <td>{{ it.cantidad }}</td>
-                    <td>{{ it.metraje }} {{ it.metraje !== '-' ? 'm²' : '' }}</td>
-                    <td class="text-right">S/ {{ it.subtotal | number:'1.2-2' }}</td>
-                    <td class="ocultar-en-foto"><button class="btn btn-xs btn-danger" (click)="eliminarFila(i)">x</button></td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr style="border-top: 2px solid #122A51;">
-                    <td colspan="4" style="text-align: right; font-weight: bold; font-size: 1.2em; vertical-align: middle;">TOTAL A PAGAR:</td>
-                    <td class="text-right" style="font-weight: bold; font-size: 1.4em; color: #122A51; vertical-align: middle;">S/ {{ total | number:'1.2-2' }}</td>
-                    <td class="ocultar-en-foto"></td>
-                </tr>
-            </tfoot>
-        </table>
+        <!-- CAJA MÁGICA PARA LA TABLA DE PROFORMA -->
+        <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+            <table class="table table-striped" style="min-width: 600px;">
+                <thead>
+                    <tr style="border-bottom:2px solid #eee;">
+                        <th>IMG</th>
+                        <th width="35%">DESCRIPCIÓN</th>
+                        <th>CANT.</th>
+                        <th>METRAJE</th>
+                        <th class="text-right">TOTAL</th>
+                        <th class="ocultar-en-foto"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let it of itemsCotizados; let i = index">
+                        <td><img [src]="getImagenUrl(it.img)" style="height:40px; border-radius: 4px; object-fit: cover;"></td>
+                        <td>{{ it.nombre }}</td>
+                        <td>{{ it.cantidad }}</td>
+                        <td>{{ it.metraje }} {{ it.metraje !== '-' ? 'm²' : '' }}</td>
+                        <td class="text-right">S/ {{ it.subtotal | number:'1.2-2' }}</td>
+                        <td class="ocultar-en-foto"><button class="btn btn-xs btn-danger" (click)="eliminarFila(i)">x</button></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr style="border-top: 2px solid #122A51;">
+                        <td colspan="4" style="text-align: right; font-weight: bold; font-size: 1.2em; vertical-align: middle;">TOTAL A PAGAR:</td>
+                        <td class="text-right" style="font-weight: bold; font-size: 1.4em; color: #122A51; vertical-align: middle;">S/ {{ total | number:'1.2-2' }}</td>
+                        <td class="ocultar-en-foto"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
 
         <div class="row ocultar-en-foto" style="margin-top: 30px; border-top: 1px solid #ddd; padding-top: 20px;">
             <div class="col-md-3">
@@ -223,7 +224,7 @@
   </div>
 </div>
 
-<!-- MODAL DE SELECCIÓN ORIGINAL -->
+<!-- MODAL DE SELECCIÓN DE CANTIDAD -->
 <div class="modal fade" id="modalSeleccion" tabindex="-1">
   <div class="modal-dialog modal-sm">
     <div class="modal-content" *ngIf="prodSeleccionado">
@@ -291,3 +292,49 @@
     </div>
   </div>
 </footer>
+
+<!-- 🔥 BURBUJA DE CHAT FLOTANTE 🔥 -->
+<div id="chat-circle" class="btn btn-raised" (click)="toggleChat()">
+    <div id="chat-overlay"></div>
+    <span class="glyphicon glyphicon-comment" style="font-size: 24px; color: white; margin-top: 12px;"></span>
+</div>
+
+<div class="chat-box" [class.chat-abierto]="chatVisible">
+    <div class="chat-box-header">
+        <div class="chat-avatar">
+            <img src="assets/imagenes/logo_empresa.png" alt="Admin" style="background:white; padding:2px;">
+        </div>
+        <div class="chat-info">
+            <span class="chat-title">Soporte ESTIM CENTER FJ</span>
+            <span class="chat-status"><span class="status-dot"></span> En línea</span>
+        </div>
+        <span class="chat-box-toggle" (click)="toggleChat()"><span class="glyphicon glyphicon-remove"></span></span>
+    </div>
+    
+    <div class="chat-box-body" id="chat-box-body">
+        <div class="chat-logs">
+            <div class="chat-msg user">
+                <div class="cm-msg-text">
+                    ¡Hola! 👋 Bienvenido a ESTIM CENTER FJ<br>
+                    Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?
+                </div>
+            </div>
+            <div class="chat-msg user">
+                <div class="cm-msg-button-container">
+                    <button class="btn-quick-reply" (click)="enviarWhatsAppChat('Quiero cotizar porcelanatos')">Cotizar Porcelanatos</button>
+                    <button class="btn-quick-reply" (click)="enviarWhatsAppChat('¿Dónde están ubicados?')">Ubicación de tienda</button>
+                    <button class="btn-quick-reply" (click)="enviarWhatsAppChat('Quiero hablar con un asesor')">Hablar con un humano</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="chat-input">
+        <form (submit)="enviarMensajeEscrito($event)">
+            <input type="text" id="chat-input" placeholder="Escribe tu consulta aquí..." />
+            <button type="submit" class="chat-submit" id="chat-submit">
+                <span class="glyphicon glyphicon-send"></span>
+            </button>
+        </form>
+    </div>
+</div>

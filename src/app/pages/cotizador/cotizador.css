@@ -1,4 +1,63 @@
 /* =========================================
+   🔥 BLINDAJE PARA LA LISTA DE PRODUCTOS 🔥
+   (Mantiene la foto chiquita y el texto al lado)
+   ========================================= */
+
+.producto-listado-item {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important; /* 🔥 PROHIBIDO bajarse a la siguiente línea */
+    align-items: center !important;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px !important;
+    margin-bottom: 8px;
+    cursor: pointer;
+    height: auto !important; 
+    min-height: 80px;
+    transition: background 0.2s;
+}
+
+.producto-listado-item:hover {
+    background-color: #f2f7fb;
+    border-color: #122A51;
+}
+
+.thumb-lista-fix {
+    width: 60px !important;
+    height: 60px !important;
+    min-width: 60px !important; /* 🔥 Obliga a que no crezca en celular */
+    max-width: 60px !important;
+    object-fit: cover !important;
+    border-radius: 6px;
+    margin-right: 15px !important;
+    margin-bottom: 0 !important; 
+    border: 1px solid #eee;
+    flex-shrink: 0 !important; /* 🔥 Mantiene su tamaño original siempre */
+    display: block !important;
+}
+
+.info-producto-box {
+    flex: 1 !important; /* Toma todo el espacio sobrante del medio */
+    text-align: left !important;
+    overflow: hidden;
+}
+
+.info-producto-box h5 {
+    font-size: 13px !important;
+    font-weight: bold;
+    color: #122A51;
+    margin: 0 0 5px 0 !important;
+    white-space: normal !important;
+}
+
+.info-producto-box small {
+    font-size: 11px !important;
+    color: #666;
+}
+
+/* =========================================
    🔥 MEGA REGLA DE ORO PARA CELULARES 🔥
    (Controla Chat, Tablas, Navbar, Factura y Modales)
    ========================================= */
@@ -8,8 +67,11 @@
     .chat-box { width: 90%; right: 0; left: 0; margin: 0 auto; bottom: 90px; }
     .main-container { width: 100% !important; padding: 10px; }
     .panel-body { height: 400px !important; }
+    
+    /* Oculta imagen en tabla proforma para que la tabla respire en celular */
     .table > thead > tr > th:first-child,
-    .table > tbody > tr > td:first-child { display: none; } /* Oculta imagen en tabla proforma */
+    .table > tbody > tr > td:first-child { display: none; } 
+    
     .row.ocultar-en-foto > div { margin-bottom: 10px; }
 
     /* --- 2. DOMANDO EL MENÚ DE NAVEGACIÓN --- */
