@@ -70,13 +70,17 @@
    ========================================= */
 @media (max-width: 768px) {
     
-    /* CHAT CELULAR */
+    /* CHAT CELULAR Y BOTONES FLOTANTES */
     .chat-box {
         width: 90%; 
         right: 0;
         left: 0; 
         margin: 0 auto; 
         bottom: 80px; 
+    }
+
+    #chat-circle {
+        bottom: 20px !important; /* Asegura que el icono del chat no se monte */
     }
 
     /* 1. DOMANDO EL MENÚ DE NAVEGACIÓN */
@@ -113,10 +117,15 @@
         margin-bottom: 15px;
     }
 
-    /* 5. FOOTER PERFECTAMENTE CENTRADO */
+    /* 5. FOOTER PERFECTAMENTE CENTRADO Y CON ESPACIO */
     footer .col-md-4 {
         text-align: center !important;
         margin-bottom: 25px;
+    }
+    
+    /* 🔥 ESPACIO VITAL PARA ELEMENTOS FLOTANTES 🔥 */
+    footer .footer-content {
+        padding-bottom: 80px !important; /* Le da aire al final para que los botones flotantes no tapen el texto */
     }
     
     /* 6. OFERTAS RELÁMPAGO */
