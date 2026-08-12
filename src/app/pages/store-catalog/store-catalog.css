@@ -65,24 +65,6 @@
 }
 
 /* =========================================
-   🔥 CENTRADO PERFECTO DE IMÁGENES 🔥
-   (Obliga a la foto del catálogo a quedarse en el medio)
-   ========================================= */
-.card-producto .thumbnail {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.card-producto .thumbnail img {
-    margin: auto !important; /* Esta es la magia: empuja la imagen al centro exacto */
-    max-height: 190px !important;
-    object-fit: contain !important;
-    display: block !important;
-}
-
-
-/* =========================================
    🔥 MEGA REGLA DE ORO PARA CELULARES 🔥
    (Arregla el Chat, Navbar, Tarjetas, Calculadora y Footer)
    ========================================= */
