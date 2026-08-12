@@ -77,10 +77,14 @@
         <div class="row fila-productos">
             <div *ngIf="decorados.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of decorados" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
-                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
-                    <div class="clearfix"></div>
-                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                <!-- 🔥 THUMBNAIL CON FLEXBOX DE CENTRADO 🔥 -->
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
+                    <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                        <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
+                    </button>
+                    <div style="height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; padding-top: 10px;">
+                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive" [alt]="prod.nombre" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
@@ -106,10 +110,14 @@
         <div class="row fila-productos">
             <div *ngIf="decoradosEspanoles.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of decoradosEspanoles" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
-                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
-                    <div class="clearfix"></div>
-                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                <!-- 🔥 THUMBNAIL CON FLEXBOX DE CENTRADO 🔥 -->
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
+                    <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                        <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
+                    </button>
+                    <div style="height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; padding-top: 10px;">
+                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive" [alt]="prod.nombre" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
@@ -135,10 +143,14 @@
         <div class="row fila-productos">
             <div *ngIf="paredes.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of paredes" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
-                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
-                    <div class="clearfix"></div>
-                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                <!-- 🔥 THUMBNAIL CON FLEXBOX DE CENTRADO 🔥 -->
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
+                    <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                        <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
+                    </button>
+                    <div style="height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; padding-top: 10px;">
+                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive" [alt]="prod.nombre" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
@@ -164,10 +176,14 @@
         <div class="row fila-productos">
             <div *ngIf="fachaletas.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of fachaletas" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
-                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
-                    <div class="clearfix"></div>
-                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                <!-- 🔥 THUMBNAIL CON FLEXBOX DE CENTRADO 🔥 -->
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
+                    <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                        <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
+                    </button>
+                    <div style="height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; padding-top: 10px;">
+                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive" [alt]="prod.nombre" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
@@ -193,10 +209,14 @@
         <div class="row fila-productos">
             <div *ngIf="porcelanatos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of porcelanatos" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
-                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
-                    <div class="clearfix"></div>
-                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                <!-- 🔥 THUMBNAIL CON FLEXBOX DE CENTRADO 🔥 -->
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
+                    <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                        <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
+                    </button>
+                    <div style="height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; padding-top: 10px;">
+                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive" [alt]="prod.nombre" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
@@ -222,10 +242,14 @@
         <div class="row fila-productos">
             <div *ngIf="planchas.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of planchas" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
-                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
-                    <div class="clearfix"></div>
-                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                <!-- 🔥 THUMBNAIL CON FLEXBOX DE CENTRADO 🔥 -->
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
+                    <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                        <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
+                    </button>
+                    <div style="height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; padding-top: 10px;">
+                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive" [alt]="prod.nombre" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
@@ -251,10 +275,14 @@
         <div class="row fila-productos">
             <div *ngIf="ceramicos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of ceramicos" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
-                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
-                    <div class="clearfix"></div>
-                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                <!-- 🔥 THUMBNAIL CON FLEXBOX DE CENTRADO 🔥 -->
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
+                    <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                        <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
+                    </button>
+                    <div style="height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; padding-top: 10px;">
+                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive" [alt]="prod.nombre" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
@@ -280,10 +308,14 @@
         <div class="row fila-productos">
             <div *ngIf="lapices.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of lapices" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
-                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
-                    <div class="clearfix"></div>
-                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                <!-- 🔥 THUMBNAIL CON FLEXBOX DE CENTRADO 🔥 -->
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
+                    <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                        <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
+                    </button>
+                    <div style="height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; padding-top: 10px;">
+                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive" [alt]="prod.nombre" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
@@ -309,10 +341,14 @@
         <div class="row fila-productos">
             <div *ngIf="banos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of banos" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
-                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                    <button class="btn-ojito pull-right" (click)="verEnSala(prod)" style="border:none; background:none;"><span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span></button>
-                    <div class="clearfix"></div>
-                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
+                <!-- 🔥 THUMBNAIL CON FLEXBOX DE CENTRADO 🔥 -->
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
+                    <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                        <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
+                    </button>
+                    <div style="height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; padding-top: 10px;">
+                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive" [alt]="prod.nombre" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
@@ -368,8 +404,11 @@
         <div class="row fila-productos">
             <div *ngIf="pegamentos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of pegamentos; let i = index" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
-                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                    <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 220px; object-fit: contain; width: 100%;">
+                <!-- 🔥 THUMBNAIL CON FLEXBOX DE CENTRADO (SIN OJITO) 🔥 -->
+                <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
+                    <div style="height: 220px; width: 100%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; padding-top: 10px;">
+                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive" [alt]="prod.nombre" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #555; height: 30px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p><span class="label" [ngClass]="{'label-default': i===0, 'label-primary': i===1, 'label-danger': i===2}">{{ i === 0 ? 'Para Interiores' : i === 1 ? 'Para Porcelanatos' : 'Exteriores / Piscinas' }}</span></p>
