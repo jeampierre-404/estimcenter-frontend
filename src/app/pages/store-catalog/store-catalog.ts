@@ -34,8 +34,10 @@ export class StoreCatalogComponent implements OnInit {
   metrosReales: string = '';
   unidadesTotales: string = '';
   
-  // Variable para Vista en Ambiente
+  // 🔥 Variables para la Vista en Ambiente Mejorada 🔥
   imagenSala: string = '';
+  prodVistaSala: any = null;
+  mostrandoSala: boolean = true;
 
   // Etiquetas de UI
   lblPregunta: string = '¿Cuántos metros cuadrados (m²) necesitas?';
@@ -66,7 +68,6 @@ export class StoreCatalogComponent implements OnInit {
   }
 
   ngOnInit(): void { 
-    // 🔥 BLOQUEO DE MODAL: Si venimos de otra página buscando un producto, apagamos el modal inicial 🔥
     if (localStorage.getItem('producto_a_enfocar')) {
         this.modalBuscadorVisto = true;
     }
@@ -101,7 +102,6 @@ export class StoreCatalogComponent implements OnInit {
         const activos = data.filter(p => p.estado !== 'INACTIVO');
         this.todosLosProductos = activos;
 
-        // Filtro por Códigos
         this.decorados = activos.filter(p => p.codigo && p.codigo.includes('DEC') && !p.codigo.includes('ESPDEC'));
         this.decoradosEspanoles = activos.filter(p => p.codigo && p.codigo.includes('ESPDEC'));
         this.paredes = activos.filter(p => p.codigo && p.codigo.includes('PAR'));
@@ -115,7 +115,6 @@ export class StoreCatalogComponent implements OnInit {
         
         this.cdr.detectChanges(); 
         
-        // 🔥 LÓGICA DE AUTO-SCROLL AL PRODUCTO 🔥
         const productoEnfocar = localStorage.getItem('producto_a_enfocar');
 
         if (productoEnfocar) {
@@ -194,12 +193,22 @@ export class StoreCatalogComponent implements OnInit {
       return 'assets/' + imagen; 
   }
 
-  // 🔥 LÓGICA VISTA EN AMBIENTE 🔥
+  // 🔥 LÓGICA VISTA EN AMBIENTE MEJORADA 🔥
   verEnSala(prod: any) {
+    this.prodVistaSala = prod;
+    this.mostrandoSala = true; // Mostramos por defecto la vista en ambiente (sala)
+    
+    // Si no tiene imagenSala, le cargamos una por defecto para no dejarlo vacío
     const rutaBase = prod.imagenSala ? prod.imagenSala : prod.imagen;
     this.imagenSala = this.getImagenUrl(rutaBase);
+    
     (window as any).$ && (window as any).$('#modalSala').modal('show');
   }
+
+  cambiarVistaImagen() {
+    this.mostrandoSala = !this.mostrandoSala;
+  }
+  // 🔥 ============================================== 🔥
 
   toggleChat() { this.chatVisible = !this.chatVisible; }
   
