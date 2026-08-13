@@ -56,7 +56,7 @@ footer h4 { color: #FF8C00; font-weight: bold; }
 .label-info { background-color: #17a2b8; }
 
 /* =========================================
-   CHAT FLOTANTE (CON RESPONSIVE PARA CELULARES)
+   CHAT FLOTANTE
    ========================================= */
 #chat-circle {
     position: fixed;
@@ -163,14 +163,64 @@ footer h4 { color: #FF8C00; font-weight: bold; }
     width: 15%;
 }
 
-/* 🔥 REGLA DE ORO PARA CELULARES 🔥 */
+/* =========================================
+   🔥 MEGA REGLA DE ORO PARA CELULARES 🔥
+   (Arregla la Tabla, el Navbar, Footer y Chat)
+   ========================================= */
 @media (max-width: 768px) {
+    
+    /* 1. CHAT CELULAR Y BOTON FLOTANTE */
     .chat-box {
         width: 90%; 
         right: 0;
         left: 0; 
         margin: 0 auto; 
-        bottom: 90px; 
+        bottom: 80px; 
     }
-    .carousel-img { height: 180px; }
+    
+    #chat-circle {
+        bottom: 20px !important;
+        right: 20px !important;
+    }
+
+    /* 2. PROTECCIÓN PARA LA TABLA DE COTIZACIONES */
+    .table-responsive {
+        border: none !important; /* Quita el borde feo de Bootstrap en móviles */
+    }
+    .table {
+        min-width: 500px; /* Obliga a tener scroll en lugar de aplastar el texto */
+    }
+
+    /* 3. DOMANDO EL MENÚ DE NAVEGACIÓN */
+    .navbar-nav > li {
+        float: none !important;
+        border-left: none !important;
+        border-bottom: 1px solid #eee;
+    }
+    .navbar-nav > li > a {
+        text-align: center !important; 
+        padding: 15px !important;
+    }
+
+    /* 4. CABECERA Y LOGO CENTRADOS */
+    .header-content > div {
+        display: block !important;
+        text-align: center !important;
+        margin: 0 auto 10px auto !important;
+    }
+    .header-title {
+        font-size: 1.6em !important; 
+    }
+    .carousel-img { 
+        height: 180px; 
+    }
+
+    /* 5. FOOTER PERFECTAMENTE CENTRADO Y CON ESPACIO VITAL */
+    footer .col-md-4 {
+        text-align: center !important;
+        margin-bottom: 25px;
+    }
+    footer {
+        padding-bottom: 80px !important; /* Para que el boton de whatsapp/chat no estorbe */
+    }
 }
