@@ -499,13 +499,17 @@
               </div>
               <hr>
               <div class="row">
-                  <div class="col-md-6 col-xs-6">
+                  <!-- 🔥 MAGIA: Si es Unidad, el precio toma todo el ancho. Si no, se divide en 2. 🔥 -->
+                  <div [ngClass]="lblRendimiento === 'Unidad:' ? 'col-md-12 col-xs-12 text-center' : 'col-md-6 col-xs-6'">
                       <label>Precio Unitario:</label>
-                      <input type="text" class="form-control" [value]="'S/ ' + prodSeleccionado.precio" readonly>
+                      <input type="text" class="form-control" [ngClass]="{'text-center': lblRendimiento === 'Unidad:'}" [value]="'S/ ' + prodSeleccionado.precio" readonly>
                   </div>
-                  <div class="col-md-6 col-xs-6">
+                  
+                  <!-- 🔥 OCULTA EL RENDIMIENTO SI EL PRODUCTO ES UNIDAD 🔥 -->
+                  <div class="col-md-6 col-xs-6" *ngIf="lblRendimiento !== 'Unidad:'">
                       <label>{{ lblRendimiento }}</label>
-                      <input type="text" class="form-control" [value]="prodSeleccionado.rendimientoCaja ? (prodSeleccionado.rendimientoCaja + ' m²') : '-'" readonly>
+                      <!-- Mejora: Si es pegamento dice 4m2 aprox, si no, el rendimiento normal -->
+                      <input type="text" class="form-control" [value]="prodSeleccionado.codigo?.includes('PEG') ? '4 m² (aprox)' : (prodSeleccionado.rendimientoCaja ? (prodSeleccionado.rendimientoCaja + ' m²') : '-')" readonly>
                   </div>
               </div>
               <br>
@@ -521,7 +525,9 @@
                       </div>
                   </div>
                   <br>
-                  <div class="row" *ngIf="metrosReales !== '-'">
+                  
+                  <!-- 🔥 OCULTA EL METRAJE TOTAL SI ES UNIDAD 🔥 -->
+                  <div class="row" *ngIf="lblRendimiento !== 'Unidad:' && metrosReales !== '-'">
                       <div class="col-md-6 col-xs-6">
                           <label style="color: #333;">METRAJE TOTAL:</label>
                           <input type="text" class="form-control" [value]="metrosReales" readonly style="font-weight: bold; color: #333; background-color: #e6e6e6;">
@@ -531,6 +537,7 @@
                           <input type="text" class="form-control" [value]="unidadesTotales" readonly style="font-weight: bold; color: #333;">
                       </div>
                   </div>
+                  
                   <p class="help-block text-center" style="margin-top: 15px; font-size: 0.9em; color: #555;" *ngIf="mostrarPiezas || prodSeleccionado.codigo?.includes('PEG')">
                       *El cálculo se redondea al empaque superior para asegurar cobertura.
                   </p>
@@ -538,13 +545,14 @@
           </form>
       </div>   
       
-      <div class="modal-footer" style="text-align: center;">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="calcularTotal()">¡Calcular Ahora!</button>
-        <button type="button" class="btn btn-success" *ngIf="costoTotal" (click)="agregarAlCarrito()" style="font-weight: bold;">
+      <div class="modal-footer" style="text-align: center; border-top: 1px solid #eee; padding: 15px;">
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 20px; padding: 8px 25px; margin-right: 10px;">Cerrar</button>
+        <button type="button" class="btn" style="background-color: #122A51; color: white; padding: 8px 25px; border-radius: 20px; font-weight: bold;" (click)="calcularTotal()">¡Calcular Ahora!</button>
+        <button type="button" class="btn btn-success" *ngIf="costoTotal" (click)="agregarAlCarrito()" style="border-radius: 20px; padding: 8px 25px; font-weight: bold; margin-left: 10px;">
             <span class="glyphicon glyphicon-shopping-cart"></span> Agregar al Carrito
         </button>
       </div>
+      
     </div>
   </div>
 </div>
