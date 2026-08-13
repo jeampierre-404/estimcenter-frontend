@@ -246,6 +246,13 @@ export class StoreCatalogComponent implements OnInit {
         this.lblResultadoEmpaque = 'CAJAS A LLEVAR (Aprox):';
         this.mostrarPiezas = true;
     }
+
+    // 🔥 PARCHE NIVEL SENIOR: BUG DE BOOTSTRAP SCROLL MODAL 🔥
+    // Al cerrar el modal de la sala y abrir este casi al mismo tiempo, Bootstrap "olvida" 
+    // devolverle el scroll a la pantalla. Con esto lo obligamos a recuperarlo al instante.
+    setTimeout(() => {
+        document.body.classList.add('modal-open');
+    }, 500);
   }
 
   calcularTotal() {
