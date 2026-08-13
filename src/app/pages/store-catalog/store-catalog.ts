@@ -193,12 +193,10 @@ export class StoreCatalogComponent implements OnInit {
       return 'assets/' + imagen; 
   }
 
-  // 🔥 LÓGICA VISTA EN AMBIENTE MEJORADA 🔥
   verEnSala(prod: any) {
     this.prodVistaSala = prod;
-    this.mostrandoSala = true; // Mostramos por defecto la vista en ambiente (sala)
+    this.mostrandoSala = true; 
     
-    // Si no tiene imagenSala, le cargamos una por defecto para no dejarlo vacío
     const rutaBase = prod.imagenSala ? prod.imagenSala : prod.imagen;
     this.imagenSala = this.getImagenUrl(rutaBase);
     
@@ -208,7 +206,6 @@ export class StoreCatalogComponent implements OnInit {
   cambiarVistaImagen() {
     this.mostrandoSala = !this.mostrandoSala;
   }
-  // 🔥 ============================================== 🔥
 
   toggleChat() { this.chatVisible = !this.chatVisible; }
   
@@ -235,7 +232,9 @@ export class StoreCatalogComponent implements OnInit {
         this.lblRendimiento = 'Rendimiento Aprox (m²):';
         this.lblResultadoEmpaque = 'SACOS A LLEVAR:';
         this.mostrarPiezas = false; 
-    } else if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP')) {
+    } 
+    // 🔥 AQUÍ AGREGAMOS 'DEC' A LA FAMILIA DE LAS UNIDADES 🔥
+    else if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC')) {
         this.lblPregunta = '¿Cuántas unidades necesitas?';
         this.lblRendimiento = 'Unidad:';
         this.lblResultadoEmpaque = 'UNIDADES A LLEVAR:';
@@ -247,9 +246,6 @@ export class StoreCatalogComponent implements OnInit {
         this.mostrarPiezas = true;
     }
 
-    // 🔥 PARCHE NIVEL SENIOR: BUG DE BOOTSTRAP SCROLL MODAL 🔥
-    // Al cerrar el modal de la sala y abrir este casi al mismo tiempo, Bootstrap "olvida" 
-    // devolverle el scroll a la pantalla. Con esto lo obligamos a recuperarlo al instante.
     setTimeout(() => {
         document.body.classList.add('modal-open');
     }, 500);
@@ -264,7 +260,8 @@ export class StoreCatalogComponent implements OnInit {
     const precio = this.prodSeleccionado.precio || 0;
     
     const isPeg = cod.includes('PEG');
-    const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP');
+    // 🔥 TAMBIÉN LE DECIMOS AL CÁLCULO QUE 'DEC' ES UNIDAD 🔥
+    const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC');
 
     if (isUnd) {
         const cantidad = Math.ceil(this.metrosSolicitados); 
@@ -304,7 +301,8 @@ export class StoreCatalogComponent implements OnInit {
     const cod = this.prodSeleccionado.codigo || '';
     const precio = this.prodSeleccionado.precio || 0;
     const isPeg = cod.includes('PEG');
-    const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP');
+    // 🔥 Y FINALMENTE AQUÍ TAMBIÉN AGREGAMOS 'DEC' 🔥
+    const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC');
     
     let cantidadEmpaques = 0;
     let mReal = "-";
