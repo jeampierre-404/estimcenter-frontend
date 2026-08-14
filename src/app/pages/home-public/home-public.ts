@@ -225,17 +225,30 @@ export class HomePublicComponent implements OnInit {
   }
 
   // 🔥 PARCHE ANTI-CONGELAMIENTO AL ABRIR CALCULADORA 🔥
+  // 🔥 PARCHE NIVEL DIOS: ANTI-PANTALLA NEGRA EN CELULARES 🔥
   abrirCalculadoraDesdeSala(prod: any) {
-    const modalSala = (window as any).$('#modalSala');
-    const modalCalc = (window as any).$('#calculadoraModal');
+    // 1. Cargamos la data del producto en la calculadora
+    this.prepararCalculadora(prod);
+    
+    // 2. 🔥 MAGIA PURA: Obligamos a Angular a dibujar la calculadora en el HTML 
+    // en este exacto milisegundo. Esto evita que Bootstrap abra un modal vacío (pantalla negra).
+    this.cdr.detectChanges(); 
 
-    modalSala.modal('hide');
-    modalSala.on('hidden.bs.modal', () => {
-        this.prepararCalculadora(prod);
-        modalCalc.modal('show');
-        document.body.classList.add('modal-open');
-        modalSala.off('hidden.bs.modal');
-    });
+    // 3. Cerramos el modal de la foto suavemente
+    (window as any).$ && (window as any).$('#modalSala').modal('hide');
+    
+    // 4. Le damos 500ms a Bootstrap para que termine la animación de cierre, 
+    // limpiamos la basura y abrimos la calculadora de forma 100% segura.
+    setTimeout(() => {
+        // Matamos cualquier fondo oscuro que se haya quedado atascado
+        (window as any).$('.modal-backdrop').remove(); 
+        
+        // Abrimos la calculadora
+        (window as any).$ && (window as any).$('#calculadoraModal').modal('show');
+        
+        // Le devolvemos la barra de scroll a la página
+        document.body.classList.add('modal-open'); 
+    }, 500);
   }
 
   cambiarVistaImagen() {
