@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, ChangeDetectorRef, HostListener } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router'; // 🔥 Se agregó Router
+import { RouterModule, Router } from '@angular/router'; 
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
@@ -174,7 +174,7 @@ export class HomePublicComponent implements OnInit {
     const cod = this.prodSeleccionado.codigo || '';
     const precio = this.prodSeleccionado.precio || 0;
     const isPeg = cod.includes('PEG');
-    const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP');
+    const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC') || cod.includes('ESPDEC');
     
     let cantidadEmpaques = 0;
     let mReal = "-";
@@ -213,10 +213,10 @@ export class HomePublicComponent implements OnInit {
       return 'assets/' + imagen; 
   }
 
-  // 🔥 NUEVA LÓGICA VISTA EN AMBIENTE CON FLECHAS 🔥
+  // 🔥 LÓGICA VISTA EN AMBIENTE CON FLECHAS 🔥
   verEnSala(prod: any) {
     this.prodVistaSala = prod;
-    this.mostrandoSala = true; // Por defecto mostramos la foto del ambiente (sala)
+    this.mostrandoSala = true; 
     
     const rutaBase = prod.imagenSala ? prod.imagenSala : prod.imagen;
     this.imagenSala = this.getImagenUrl(rutaBase);
@@ -224,10 +224,23 @@ export class HomePublicComponent implements OnInit {
     (window as any).$ && (window as any).$('#modalSala').modal('show');
   }
 
+  // 🔥 PARCHE ANTI-CONGELAMIENTO AL ABRIR CALCULADORA 🔥
+  abrirCalculadoraDesdeSala(prod: any) {
+    const modalSala = (window as any).$('#modalSala');
+    const modalCalc = (window as any).$('#calculadoraModal');
+
+    modalSala.modal('hide');
+    modalSala.on('hidden.bs.modal', () => {
+        this.prepararCalculadora(prod);
+        modalCalc.modal('show');
+        document.body.classList.add('modal-open');
+        modalSala.off('hidden.bs.modal');
+    });
+  }
+
   cambiarVistaImagen() {
     this.mostrandoSala = !this.mostrandoSala;
   }
-  // 🔥 ============================================== 🔥
 
   prepararCalculadora(prod: any) {
     this.prodSeleccionado = prod;
@@ -241,7 +254,7 @@ export class HomePublicComponent implements OnInit {
         this.lblRendimiento = 'Rendimiento Aprox (m²):';
         this.lblResultadoEmpaque = 'SACOS A LLEVAR:';
         this.mostrarPiezas = false; 
-    } else if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP')) {
+    } else if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC') || cod.includes('ESPDEC')) {
         this.lblPregunta = '¿Cuántas unidades necesitas?';
         this.lblRendimiento = 'Unidad:';
         this.lblResultadoEmpaque = 'UNIDADES A LLEVAR:';
@@ -263,7 +276,7 @@ export class HomePublicComponent implements OnInit {
     const precio = this.prodSeleccionado.precio || 0;
     
     const isPeg = cod.includes('PEG');
-    const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP');
+    const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC') || cod.includes('ESPDEC');
 
     if (isUnd) {
         const cantidad = Math.ceil(this.metrosSolicitados); 
@@ -323,5 +336,22 @@ export class HomePublicComponent implements OnInit {
     this.verificarSesion(); 
     this.cdr.detectChanges();
     alert("Has cerrado sesión exitosamente. Vuelve pronto.");
+  }
+
+  // 🔥 MAGIA PARA ETIQUETAS DE PRECIO 🔥
+  getUnidadMedida(codigo: string): string {
+    const cod = (codigo || '').toUpperCase();
+    if (cod.includes('PEG')) return 'x saco';
+    if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC') || cod.includes('ESPDEC')) return 'x und.';
+    return 'x m²';
+  }
+
+  // 🔥 MAGIA ANTI-ERRORES PARA LA CATEGORÍA DE PEGAMENTOS 🔥
+  getEtiquetaPegamento(categoriaNombre: string | undefined): any {
+    const nom = (categoriaNombre || '').toLowerCase();
+    if (nom.includes('blanco')) {
+        return { texto: 'Para Porcelanatos', clase: 'label-primary' }; // Azul
+    }
+    return { texto: 'Para Interiores', clase: 'label-default' }; // Gris
   }
 }
