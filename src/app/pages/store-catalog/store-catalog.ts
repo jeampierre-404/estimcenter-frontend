@@ -34,7 +34,7 @@ export class StoreCatalogComponent implements OnInit {
   metrosReales: string = '';
   unidadesTotales: string = '';
   
-  // Variables para Vista en Ambiente
+  // Variables para la Vista en Ambiente Mejorada
   imagenSala: string = '';
   prodVistaSala: any = null;
   mostrandoSala: boolean = true;
@@ -193,7 +193,6 @@ export class StoreCatalogComponent implements OnInit {
       return 'assets/' + imagen; 
   }
 
-  // 🔥 LÓGICA VISTA EN AMBIENTE MEJORADA 🔥
   verEnSala(prod: any) {
     this.prodVistaSala = prod;
     this.mostrandoSala = true; 
@@ -204,14 +203,17 @@ export class StoreCatalogComponent implements OnInit {
     (window as any).$ && (window as any).$('#modalSala').modal('show');
   }
 
-  // 🔥 PARCHE ANTI-CONGELAMIENTO PARA ABRIR LA CALCULADORA 🔥
   abrirCalculadoraDesdeSala(prod: any) {
-    (window as any).$ && (window as any).$('#modalSala').modal('hide'); // Cierra foto
-    
-    setTimeout(() => {
+    const modalSala = (window as any).$('#modalSala');
+    const modalCalc = (window as any).$('#calculadoraModal');
+
+    modalSala.modal('hide');
+    modalSala.on('hidden.bs.modal', () => {
         this.prepararCalculadora(prod);
-        (window as any).$ && (window as any).$('#calculadoraModal').modal('show'); // Abre calculadora limpia
-    }, 400);
+        modalCalc.modal('show');
+        document.body.classList.add('modal-open');
+        modalSala.off('hidden.bs.modal');
+    });
   }
 
   cambiarVistaImagen() {
@@ -244,7 +246,6 @@ export class StoreCatalogComponent implements OnInit {
         this.lblResultadoEmpaque = 'SACOS A LLEVAR:';
         this.mostrarPiezas = false; 
     } 
-    // 🔥 INCLUIMOS A LOS DECORADOS Y BAÑOS COMO UNIDADES 🔥
     else if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC') || cod.includes('ESPDEC')) {
         this.lblPregunta = '¿Cuántas unidades necesitas?';
         this.lblRendimiento = 'Unidad:';
@@ -256,10 +257,6 @@ export class StoreCatalogComponent implements OnInit {
         this.lblResultadoEmpaque = 'CAJAS A LLEVAR (Aprox):';
         this.mostrarPiezas = true;
     }
-
-    setTimeout(() => {
-        document.body.classList.add('modal-open'); // Forzar barra de scroll
-    }, 500);
   }
 
   calcularTotal() {
@@ -343,11 +340,20 @@ export class StoreCatalogComponent implements OnInit {
     alert("✅ Producto agregado a tu carrito. Ve a 'Cotizar' para confirmar la compra.");
   }
 
-  // 🔥 MAGIA PARA IDENTIFICAR LA UNIDAD DE MEDIDA SEGÚN EL CÓDIGO 🔥
+  // 🔥 MAGIA PARA ETIQUETAS DE PRECIO 🔥
   getUnidadMedida(codigo: string): string {
     const cod = (codigo || '').toUpperCase();
     if (cod.includes('PEG')) return 'x saco';
     if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC') || cod.includes('ESPDEC')) return 'x und.';
     return 'x m²';
+  }
+
+  // 🔥 NUEVA MAGIA ANTI-ERRORES PARA LA CATEGORÍA DE PEGAMENTOS 🔥
+  getEtiquetaPegamento(categoriaNombre: string | undefined): any {
+    const nom = (categoriaNombre || '').toLowerCase();
+    if (nom.includes('blanco')) {
+        return { texto: 'Para Porcelanatos', clase: 'label-primary' }; // Azul
+    }
+    return { texto: 'Para Interiores', clase: 'label-default' }; // Gris
   }
 }
