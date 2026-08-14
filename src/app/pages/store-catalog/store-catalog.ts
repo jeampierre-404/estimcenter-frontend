@@ -34,7 +34,7 @@ export class StoreCatalogComponent implements OnInit {
   metrosReales: string = '';
   unidadesTotales: string = '';
   
-  // Variables para la Vista en Ambiente
+  // Variables para Vista en Ambiente
   imagenSala: string = '';
   prodVistaSala: any = null;
   mostrandoSala: boolean = true;
@@ -193,6 +193,7 @@ export class StoreCatalogComponent implements OnInit {
       return 'assets/' + imagen; 
   }
 
+  // 🔥 LÓGICA VISTA EN AMBIENTE MEJORADA 🔥
   verEnSala(prod: any) {
     this.prodVistaSala = prod;
     this.mostrandoSala = true; 
@@ -201,6 +202,16 @@ export class StoreCatalogComponent implements OnInit {
     this.imagenSala = this.getImagenUrl(rutaBase);
     
     (window as any).$ && (window as any).$('#modalSala').modal('show');
+  }
+
+  // 🔥 PARCHE ANTI-CONGELAMIENTO PARA ABRIR LA CALCULADORA 🔥
+  abrirCalculadoraDesdeSala(prod: any) {
+    (window as any).$ && (window as any).$('#modalSala').modal('hide'); // Cierra foto
+    
+    setTimeout(() => {
+        this.prepararCalculadora(prod);
+        (window as any).$ && (window as any).$('#calculadoraModal').modal('show'); // Abre calculadora limpia
+    }, 400);
   }
 
   cambiarVistaImagen() {
@@ -233,7 +244,8 @@ export class StoreCatalogComponent implements OnInit {
         this.lblResultadoEmpaque = 'SACOS A LLEVAR:';
         this.mostrarPiezas = false; 
     } 
-    else if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC')) {
+    // 🔥 INCLUIMOS A LOS DECORADOS Y BAÑOS COMO UNIDADES 🔥
+    else if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC') || cod.includes('ESPDEC')) {
         this.lblPregunta = '¿Cuántas unidades necesitas?';
         this.lblRendimiento = 'Unidad:';
         this.lblResultadoEmpaque = 'UNIDADES A LLEVAR:';
@@ -246,7 +258,7 @@ export class StoreCatalogComponent implements OnInit {
     }
 
     setTimeout(() => {
-        document.body.classList.add('modal-open');
+        document.body.classList.add('modal-open'); // Forzar barra de scroll
     }, 500);
   }
 
@@ -259,7 +271,7 @@ export class StoreCatalogComponent implements OnInit {
     const precio = this.prodSeleccionado.precio || 0;
     
     const isPeg = cod.includes('PEG');
-    const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC');
+    const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC') || cod.includes('ESPDEC');
 
     if (isUnd) {
         const cantidad = Math.ceil(this.metrosSolicitados); 
@@ -299,7 +311,7 @@ export class StoreCatalogComponent implements OnInit {
     const cod = this.prodSeleccionado.codigo || '';
     const precio = this.prodSeleccionado.precio || 0;
     const isPeg = cod.includes('PEG');
-    const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC');
+    const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC') || cod.includes('ESPDEC');
     
     let cantidadEmpaques = 0;
     let mReal = "-";
@@ -331,11 +343,11 @@ export class StoreCatalogComponent implements OnInit {
     alert("✅ Producto agregado a tu carrito. Ve a 'Cotizar' para confirmar la compra.");
   }
 
-  // 🔥 NUEVA FUNCIÓN MÁGICA PARA ETIQUETAS DE PRECIO 🔥
+  // 🔥 MAGIA PARA IDENTIFICAR LA UNIDAD DE MEDIDA SEGÚN EL CÓDIGO 🔥
   getUnidadMedida(codigo: string): string {
     const cod = (codigo || '').toUpperCase();
     if (cod.includes('PEG')) return 'x saco';
-    if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC')) return 'x und';
+    if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC') || cod.includes('ESPDEC')) return 'x und.';
     return 'x m²';
   }
 }

@@ -77,6 +77,7 @@
         <div class="row fila-productos">
             <div *ngIf="decorados.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of decorados" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -87,9 +88,9 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA 🔥 -->
+                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #888; font-size: 0.6em;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
-                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                        <button type="button" class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)" data-toggle="modal" data-target="#calculadoraModal">Ver Detalles y Calcular</button>
                     </div>
                 </div>
             </div>
@@ -110,6 +111,7 @@
         <div class="row fila-productos">
             <div *ngIf="decoradosEspanoles.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of decoradosEspanoles" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -120,9 +122,9 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA 🔥 -->
+                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #888; font-size: 0.6em;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
-                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                        <button type="button" class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)" data-toggle="modal" data-target="#calculadoraModal">Ver Detalles y Calcular</button>
                     </div>
                 </div>
             </div>
@@ -143,6 +145,7 @@
         <div class="row fila-productos">
             <div *ngIf="paredes.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of paredes" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -153,9 +156,9 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA 🔥 -->
+                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #888; font-size: 0.6em;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
-                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                        <button type="button" class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)" data-toggle="modal" data-target="#calculadoraModal">Ver Detalles y Calcular</button>
                     </div>
                 </div>
             </div>
@@ -176,6 +179,7 @@
         <div class="row fila-productos">
             <div *ngIf="fachaletas.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of fachaletas" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -186,9 +190,9 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA 🔥 -->
+                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #888; font-size: 0.6em;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
-                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                        <button type="button" class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)" data-toggle="modal" data-target="#calculadoraModal">Ver Detalles y Calcular</button>
                     </div>
                 </div>
             </div>
@@ -209,6 +213,7 @@
         <div class="row fila-productos">
             <div *ngIf="porcelanatos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of porcelanatos" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -219,9 +224,9 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA 🔥 -->
+                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #888; font-size: 0.6em;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
-                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                        <button type="button" class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)" data-toggle="modal" data-target="#calculadoraModal">Ver Detalles y Calcular</button>
                     </div>
                 </div>
             </div>
@@ -242,6 +247,7 @@
         <div class="row fila-productos">
             <div *ngIf="planchas.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of planchas" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -252,9 +258,9 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA 🔥 -->
+                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #888; font-size: 0.6em;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
-                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                        <button type="button" class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)" data-toggle="modal" data-target="#calculadoraModal">Ver Detalles y Calcular</button>
                     </div>
                 </div>
             </div>
@@ -275,6 +281,7 @@
         <div class="row fila-productos">
             <div *ngIf="ceramicos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of ceramicos" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -285,9 +292,9 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA 🔥 -->
+                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #888; font-size: 0.6em;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
-                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                        <button type="button" class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)" data-toggle="modal" data-target="#calculadoraModal">Ver Detalles y Calcular</button>
                     </div>
                 </div>
             </div>
@@ -308,6 +315,7 @@
         <div class="row fila-productos">
             <div *ngIf="lapices.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of lapices" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -318,9 +326,9 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA 🔥 -->
+                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #888; font-size: 0.6em;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
-                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                        <button type="button" class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)" data-toggle="modal" data-target="#calculadoraModal">Ver Detalles y Calcular</button>
                     </div>
                 </div>
             </div>
@@ -341,6 +349,7 @@
         <div class="row fila-productos">
             <div *ngIf="banos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of banos" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -351,9 +360,9 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA 🔥 -->
+                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #888; font-size: 0.6em;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
-                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
+                        <button type="button" class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)" data-toggle="modal" data-target="#calculadoraModal">Ver Detalles y Calcular</button>
                     </div>
                 </div>
             </div>
@@ -404,7 +413,8 @@
         <div class="row fila-productos">
             <div *ngIf="pegamentos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
             
-            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of pegamentos" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of pegamentos; let i = index" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+                
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <div style="width: 100%; margin-bottom: 15px; padding-top: 10px; text-align: center;">
                         <img [src]="getImagenUrl(prod.imagen)" [alt]="prod.nombre" style="width: 100%; height: 210px; object-fit: contain; margin: 0 auto; display: block;">
@@ -412,7 +422,7 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #555; height: 30px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p>
-                            <!-- 🔥 ETIQUETA DINÁMICA DE LA BASE DE DATOS 🔥 -->
+                            <!-- ETIQUETA DINÁMICA DE LA BASE DE DATOS -->
                             <span class="label" [ngClass]="prod.categoria?.nombre?.toLowerCase().includes('blanco') ? 'label-primary' : (prod.categoria?.nombre?.toLowerCase().includes('gris') ? 'label-default' : 'label-info')">
                                 {{ prod.categoria?.nombre || 'Pegamento' }}
                             </span>
@@ -420,7 +430,7 @@
                         <p style="color: #666; height: 35px; overflow: hidden; font-size: 0.9em; margin-top: 10px;">{{ prod.descripcion }}</p>
                         <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #122A51; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #888; font-size: 0.6em;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
-                        <button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)" style="font-weight: bold;">
+                        <button type="button" class="btn btn-warning btn-block" (click)="prepararCalculadora(prod)" data-toggle="modal" data-target="#calculadoraModal" style="font-weight: bold;">
                             <span class="glyphicon glyphicon-shopping-cart"></span> Calcular Sacos
                         </button>
                     </div>
@@ -507,13 +517,13 @@
               </div>
               <hr>
               <div class="row">
-                  <!-- 🔥 MAGIA: Si es Unidad, el precio toma todo el ancho. Si no, se divide en 2. 🔥 -->
+                  <!-- MAGIA: Si es Unidad, el precio toma todo el ancho. Si no, se divide en 2. -->
                   <div [ngClass]="lblRendimiento === 'Unidad:' ? 'col-md-12 col-xs-12 text-center' : 'col-md-6 col-xs-6'">
                       <label>Precio Unitario:</label>
                       <input type="text" class="form-control" [ngClass]="{'text-center': lblRendimiento === 'Unidad:'}" [value]="'S/ ' + prodSeleccionado.precio" readonly>
                   </div>
                   
-                  <!-- 🔥 OCULTA EL RENDIMIENTO SI EL PRODUCTO ES UNIDAD 🔥 -->
+                  <!-- OCULTA EL RENDIMIENTO SI EL PRODUCTO ES UNIDAD -->
                   <div class="col-md-6 col-xs-6" *ngIf="lblRendimiento !== 'Unidad:'">
                       <label>{{ lblRendimiento }}</label>
                       <input type="text" class="form-control" [value]="prodSeleccionado.codigo?.includes('PEG') ? '4 m² (aprox)' : (prodSeleccionado.rendimientoCaja ? (prodSeleccionado.rendimientoCaja + ' m²') : '-')" readonly>
@@ -533,7 +543,7 @@
                   </div>
                   <br>
                   
-                  <!-- 🔥 OCULTA EL METRAJE TOTAL SI ES UNIDAD 🔥 -->
+                  <!-- OCULTA EL METRAJE TOTAL SI ES UNIDAD -->
                   <div class="row" *ngIf="lblRendimiento !== 'Unidad:' && metrosReales !== '-'">
                       <div class="col-md-6 col-xs-6">
                           <label style="color: #333;">METRAJE TOTAL:</label>
@@ -604,8 +614,10 @@
                         <p style="margin: 5px 0 0 0; color: #666; font-size: 13px;">{{ prodVistaSala.descripcion || 'Detalles exclusivos de nuestro catálogo premium.' }}</p>
                     </div>
                     <div class="col-xs-4 text-right">
+                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO AQUÍ TAMBIÉN 🔥 -->
                         <h3 style="margin: 0; color: #FF8C00; font-weight: bold;">S/ {{ prodVistaSala.precio | number:'1.2-2' }} <small style="color: #888; font-size: 0.5em;">{{ getUnidadMedida(prodVistaSala.codigo) }}</small></h3>
-                        <button type="button" class="btn btn-success btn-sm" style="margin-top: 5px; font-weight: bold; border-radius: 20px;" (click)="prepararCalculadora(prodVistaSala)" data-dismiss="modal" data-toggle="modal" data-target="#calculadoraModal">
+                        <!-- 🔥 EL BOTÓN MÁGICO QUE NO CONGELA LA PANTALLA 🔥 -->
+                        <button type="button" class="btn btn-success btn-sm" style="margin-top: 5px; font-weight: bold; border-radius: 20px;" (click)="abrirCalculadoraDesdeSala(prodVistaSala)">
                             <span class="glyphicon glyphicon-shopping-cart"></span> Cotizar
                         </button>
                     </div>
