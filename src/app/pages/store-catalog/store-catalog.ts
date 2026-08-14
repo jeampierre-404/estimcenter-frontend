@@ -34,7 +34,7 @@ export class StoreCatalogComponent implements OnInit {
   metrosReales: string = '';
   unidadesTotales: string = '';
   
-  // 🔥 Variables para la Vista en Ambiente Mejorada 🔥
+  // Variables para la Vista en Ambiente
   imagenSala: string = '';
   prodVistaSala: any = null;
   mostrandoSala: boolean = true;
@@ -233,7 +233,6 @@ export class StoreCatalogComponent implements OnInit {
         this.lblResultadoEmpaque = 'SACOS A LLEVAR:';
         this.mostrarPiezas = false; 
     } 
-    // 🔥 AQUÍ AGREGAMOS 'DEC' A LA FAMILIA DE LAS UNIDADES 🔥
     else if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC')) {
         this.lblPregunta = '¿Cuántas unidades necesitas?';
         this.lblRendimiento = 'Unidad:';
@@ -260,7 +259,6 @@ export class StoreCatalogComponent implements OnInit {
     const precio = this.prodSeleccionado.precio || 0;
     
     const isPeg = cod.includes('PEG');
-    // 🔥 TAMBIÉN LE DECIMOS AL CÁLCULO QUE 'DEC' ES UNIDAD 🔥
     const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC');
 
     if (isUnd) {
@@ -301,7 +299,6 @@ export class StoreCatalogComponent implements OnInit {
     const cod = this.prodSeleccionado.codigo || '';
     const precio = this.prodSeleccionado.precio || 0;
     const isPeg = cod.includes('PEG');
-    // 🔥 Y FINALMENTE AQUÍ TAMBIÉN AGREGAMOS 'DEC' 🔥
     const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC');
     
     let cantidadEmpaques = 0;
@@ -332,5 +329,13 @@ export class StoreCatalogComponent implements OnInit {
     
     (window as any).$('#calculadoraModal').modal('hide');
     alert("✅ Producto agregado a tu carrito. Ve a 'Cotizar' para confirmar la compra.");
+  }
+
+  // 🔥 NUEVA FUNCIÓN MÁGICA PARA ETIQUETAS DE PRECIO 🔥
+  getUnidadMedida(codigo: string): string {
+    const cod = (codigo || '').toUpperCase();
+    if (cod.includes('PEG')) return 'x saco';
+    if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC')) return 'x und';
+    return 'x m²';
   }
 }
