@@ -42,7 +42,6 @@ export class CotizadorComponent implements OnInit {
   productosFiltrados: Producto[] = [];
   busqueda: string = '';
 
-  // 🔥 Variables para la Búsqueda Predictiva Integrada 🔥
   terminoBusqueda: string = '';
   productosBuscados: Producto[] = [];
 
@@ -65,14 +64,23 @@ export class CotizadorComponent implements OnInit {
     this.verificarSesion();
     this.cargarProductosReales();
 
-    // 🔥 RECUPERAMOS EL CARRITO DEL CATÁLOGO AL ENTRAR A COTIZAR 🔥
     const carritoGuardado = localStorage.getItem('carrito_temporal');
     if (carritoGuardado) {
       const items = JSON.parse(carritoGuardado);
       this.itemsCotizados = [...this.itemsCotizados, ...items];
       this.actualizarTotal();
-      localStorage.removeItem('carrito_temporal'); // Lo limpiamos para no duplicar si recarga
+      localStorage.removeItem('carrito_temporal'); 
     }
+
+    // 🔥 MAGIA: ABRIR EL MENÚ AUTOMÁTICAMENTE EN CELULARES 🔥
+    setTimeout(() => {
+        if (window.innerWidth <= 768) {
+            const menu = (window as any).$('#menuPrincipal');
+            if (!menu.hasClass('in')) {
+                menu.collapse('show');
+            }
+        }
+    }, 1000);
   }
 
   verificarSesion() {
@@ -101,7 +109,6 @@ export class CotizadorComponent implements OnInit {
       return 'assets/' + imagen; 
   }
 
-  // Búsqueda Clásica (Panel Izquierdo)
   filtrar() {
     const term = this.busqueda.toLowerCase().trim();
     this.productosFiltrados = this.productosCatalogo.filter(p => 
@@ -109,7 +116,6 @@ export class CotizadorComponent implements OnInit {
     );
   }
 
-  // 🔥 FUNCIONES DE LA BÚSQUEDA PREDICTIVA (MODAL EMERGENTE) 🔥
   abrirBuscadorPred() {
     this.terminoBusqueda = '';
     this.productosBuscados = [];
@@ -129,24 +135,29 @@ export class CotizadorComponent implements OnInit {
     ).slice(0, 6);
   }
 
-  // 🔥 CORRECCIÓN: REDIRECCIÓN HACIA EL CATÁLOGO 🔥
   seleccionarBusquedaPred(prod: any) {
     (window as any).$('#modalBienvenidaBuscador').modal('hide');
-    
     setTimeout(() => {
-        // Guardamos el producto y "viajamos" a la página del Catálogo
         localStorage.setItem('producto_a_enfocar', prod.codigo);
         this.router.navigate(['/catalogo']);
     }, 400); 
   }
-  // 🔥 ===================================== 🔥
 
+  // 🔥 PARCHE ANTI-PANTALLA NEGRA PARA LA PROFORMA 🔥
   seleccionarProducto(p: Producto) {
     this.prodSeleccionado = p;
     this.modoCalculo = 'cajas';
     this.cantidadInput = 1;
     this.calcularResumenModal();
+    
+    // Obligamos a Angular a dibujar el modal ANTES de que Bootstrap lo abra
+    this.cdr.detectChanges(); 
+    
     (window as any).$('#modalSeleccion').modal('show');
+    
+    setTimeout(() => {
+        document.body.classList.add('modal-open'); 
+    }, 500);
   }
 
   alternarModo() {
@@ -329,5 +340,13 @@ export class CotizadorComponent implements OnInit {
     localStorage.removeItem('clienteNombre');
     localStorage.removeItem('clienteDNI');
     window.location.href = '/';
+  }
+
+  // Etiquetas para la vista
+  getUnidadMedida(codigo: string): string {
+    const cod = (codigo || '').toUpperCase();
+    if (cod.includes('PEG')) return 'x saco';
+    if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC') || cod.includes('ESPDEC')) return 'x und.';
+    return 'x m²';
   }
 }

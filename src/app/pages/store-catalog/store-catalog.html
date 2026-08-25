@@ -29,14 +29,18 @@
      <a class="navbar-brand" routerLink="/"><span class="glyphicon glyphicon-home"></span></a>
    </div>
   <div class="collapse navbar-collapse" id="menuPrincipal">
-    <ul class="nav navbar-nav"> 
+    
+    <!-- 🔥 ENLACES CENTRALES 🔥 -->
+    <ul class="nav navbar-nav navbar-center"> 
       <li><a routerLink="/"><b>INICIO</b></a></li>
       <li class="active"><a routerLink="/catalogo"><b><span class="glyphicon glyphicon-book"></span> Catálogo</b></a></li>
       <li><a routerLink="/pedidos"><b><span class="glyphicon glyphicon-shopping-cart"></span> Mis Cotizaciones</b></a></li>
       <li><a routerLink="/cotizar"><b><span class="glyphicon glyphicon-edit"></span> Cotizar</b></a></li>
-      <li><a (click)="abrirBuscador()" style="cursor: pointer; color: #122A51; font-weight: bold;"><span class="glyphicon glyphicon-search"></span> Buscar</a></li>
-      
-      <li class="dropdown">
+    </ul>
+
+    <!-- 🔥 BOTONES DERECHOS 🔥 -->
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown" style="border-left: 1px solid #e7e7e7;">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #FF8C00; font-weight: bold;">
               <span class="glyphicon glyphicon-user"></span> 
               <span>{{ nombreCliente || 'Cuenta' }}</span> 
@@ -46,6 +50,12 @@
               <li *ngIf="!clienteLogueado"><a routerLink="/login">Iniciar Sesión</a></li>
               <li *ngIf="clienteLogueado"><a style="cursor: pointer;" (click)="cerrarSesion()"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a></li>
           </ul>
+      </li>
+
+      <li style="border-left: 1px solid #e7e7e7; margin-right: 15px;">
+          <a (click)="abrirBuscador()" style="cursor: pointer; color: #122A51; font-weight: bold; background-color: #f8f9fa;">
+              <span class="glyphicon glyphicon-search"></span> Búsqueda Rápida
+          </a>
       </li>
     </ul>
   </div>
@@ -75,7 +85,6 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 16px;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
                         <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
                     </div>
@@ -108,7 +117,6 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 16px;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
                         <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
                     </div>
@@ -141,7 +149,6 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 16px;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
                         <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
                     </div>
@@ -174,7 +181,6 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 16px;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
                         <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
                     </div>
@@ -207,7 +213,6 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 16px;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
                         <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
                     </div>
@@ -240,7 +245,6 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 16px;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
                         <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
                     </div>
@@ -273,7 +277,6 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 16px;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
                         <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
                     </div>
@@ -306,7 +309,6 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 16px;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
                         <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
                     </div>
@@ -339,7 +341,6 @@
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                         <p style="color: #666; height: 40px; overflow: hidden;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 16px;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
                         <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalles y Calcular</button>
                     </div>
@@ -394,7 +395,7 @@
             
             <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of pegamentos" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
-                    <!-- 🔥 SE AGREGÓ EL OJITO DE VUELTA A PEGAMENTOS 🔥 -->
+                    <!-- 🔥 OJITO PARA PEGAMENTOS 🔥 -->
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
                     </button>
@@ -412,7 +413,6 @@
                         </p>
 
                         <p style="color: #666; height: 35px; overflow: hidden; font-size: 0.9em; margin-top: 10px;">{{ prod.descripcion }}</p>
-                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO CON EL MISMO COLOR 🔥 -->
                         <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 16px;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
                         <button type="button" class="btn btn-warning btn-block" (click)="prepararCalculadora(prod)" data-toggle="modal" data-target="#calculadoraModal" style="font-weight: bold;">
                             <span class="glyphicon glyphicon-shopping-cart"></span> Calcular Sacos
@@ -435,6 +435,12 @@
           <div class="col-md-4"><img src="assets/imagenes/oferta3.png" class="img-responsive center-block" style="border-radius: 8px; margin-bottom: 15px;"></div>
       </div>
   </section>
+</div>
+
+<!-- 🔥 CARRITO FLOTANTE (Abajo a la derecha) 🔥 -->
+<div id="floating-cart" routerLink="/cotizar" title="Ir a mi carrito">
+    <span class="glyphicon glyphicon-shopping-cart" style="font-size: 24px; position: relative; top: 5px;"></span>
+    <span class="badge badge-flotante">{{ carritoCotizacion.length }}</span>
 </div>
 
 <!-- MODAL DE BÚSQUEDA PREDICTIVA -->
@@ -463,7 +469,6 @@
                           <p style="margin: 0; font-size: 0.85em; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;">{{ p.descripcion }}</p>
                       </div>
                       <div style="text-align: right;">
-                          <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO EN EL BUSCADOR 🔥 -->
                           <strong style="color: #FF8C00; font-size: 1.1em;">S/ {{ p.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 12px;">{{ getUnidadMedida(p.codigo) }}</small></strong>
                       </div>
                   </div>
@@ -481,7 +486,7 @@
   </div>
 </div>
 
-<!-- 🔥 CALCULADORA INTELIGENTE ACTUALIZADA 🔥 -->
+<!-- 🔥 CALCULADORA INTELIGENTE 🔥 -->
 <div class="modal fade" id="calculadoraModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content" *ngIf="prodSeleccionado">
@@ -592,7 +597,6 @@
                         <p style="margin: 5px 0 0 0; color: #666; font-size: 13px;">{{ prodVistaSala.descripcion || 'Detalles exclusivos de nuestro catálogo premium.' }}</p>
                     </div>
                     <div class="col-xs-4 text-right">
-                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO AQUÍ TAMBIÉN 🔥 -->
                         <h3 style="margin: 0; color: #FF8C00; font-weight: bold;">S/ {{ prodVistaSala.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 16px;">{{ getUnidadMedida(prodVistaSala.codigo) }}</small></h3>
                         <button type="button" class="btn btn-success btn-sm" style="margin-top: 5px; font-weight: bold; border-radius: 20px;" (click)="abrirCalculadoraDesdeSala(prodVistaSala)">
                             <span class="glyphicon glyphicon-shopping-cart"></span> Cotizar
@@ -630,12 +634,6 @@
 <div id="chat-circle" class="btn btn-raised" (click)="toggleChat()">
     <div id="chat-overlay"></div>
     <span class="glyphicon glyphicon-comment" style="font-size: 24px; color: white; margin-top: 12px;"></span>
-</div>
-
-<!-- 🔥 NUEVO CARRITO FLOTANTE 🔥 -->
-<div id="floating-cart" routerLink="/cotizar" title="Ir a mi carrito">
-    <span class="glyphicon glyphicon-shopping-cart" style="font-size: 24px; position: relative; top: 5px;"></span>
-    <span class="badge badge-flotante">{{ carritoCotizacion.length }}</span>
 </div>
 
 <div class="chat-box" [class.chat-abierto]="chatVisible">

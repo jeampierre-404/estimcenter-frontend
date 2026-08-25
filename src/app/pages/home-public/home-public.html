@@ -35,13 +35,18 @@
      <a class="navbar-brand" routerLink="/"><span class="glyphicon glyphicon-home"></span></a>
    </div>
   <div class="collapse navbar-collapse" id="menuPrincipal">
-    <ul class="nav navbar-nav"> 
+    
+    <!-- 🔥 ENLACES CENTRALIZADOS (No se rompen) 🔥 -->
+    <ul class="nav navbar-nav navbar-center"> 
       <li class="active"><a routerLink="/"><b>INICIO</b></a></li>
       <li><a routerLink="/catalogo"><b><span class="glyphicon glyphicon-book"></span> Catálogo</b></a></li>
       <li><a routerLink="/pedidos"><b><span class="glyphicon glyphicon-shopping-cart"></span> Mis Cotizaciones</b></a></li>
       <li><a routerLink="/cotizar"><b><span class="glyphicon glyphicon-edit"></span> Cotizar</b></a></li>
-      
-      <li class="dropdown" style="float: right; border-left: 1px solid #e7e7e7;">
+    </ul>
+
+    <!-- 🔥 BOTONES ALINEADOS A LA DERECHA 🔥 -->
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown" style="border-left: 1px solid #e7e7e7;">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #FF8C00; font-weight: bold;">
               <span class="glyphicon glyphicon-user"></span> 
               <span>{{ nombreCliente || 'Cuenta' }}</span> 
@@ -53,20 +58,20 @@
           </ul>
       </li>
 
-      <li style="float: right; border-left: 1px solid #e7e7e7; background-color: #fff8e1;">
+      <li style="border-left: 1px solid #e7e7e7; background-color: #fff8e1;">
           <a routerLink="/cotizar" style="cursor: pointer; color: #FF8C00; font-weight: bold;">
               <span class="glyphicon glyphicon-shopping-cart"></span> Mi Carrito 
               <span class="badge" style="background-color: #122A51; margin-left: 5px;">{{ carritoCotizacion.length }}</span>
           </a>
       </li>
 
-      <li style="float: right; border-left: 1px solid #e7e7e7;">
+      <li style="border-left: 1px solid #e7e7e7; margin-right: 15px;">
           <a (click)="abrirBuscadorPred()" style="cursor: pointer; color: #122A51; font-weight: bold; background-color: #f8f9fa;">
               <span class="glyphicon glyphicon-search"></span> Búsqueda Rápida
           </a>
       </li>
-
     </ul>
+
   </div>
 </nav>
 
@@ -79,22 +84,23 @@
             <p style="color: #666; font-size: 1.1em; margin-bottom: 30px;">Descubre nuestros nuevos diseños. Haz clic en los puntos <span class="glyphicon glyphicon-plus-sign" style="color:#FF8C00"></span>.</p>
         </div>
 
+        <!-- BAÑOS HOTSPOTS -->
         <div class="row">
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #FF8C00;">Estilo Moderno Tarraco</h4>
                 <div class="shop-look-container">
                     <img src="assets/imagenes/enchape_de_baño1.png" class="img-responsive shop-look-img" alt="Diseño Baño 1">
                     <div class="hotspot" style="top: 30%; left: 50%;" (click)="toggleHotspot('m1-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m1-1" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Cerámico Convex Marfil</h5><span class="price">S/ 25.00 x m²</span>
+                    <div class="hotspot-card" id="card-m1-1" style="display: none;">
+                        <h5>Cerámico Convex Marfil</h5><span class="price">S/ 25.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                     <div class="hotspot" style="top: 60%; left: 50%;" (click)="toggleHotspot('m1-2', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m1-2" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Inodoro One Piece</h5><span class="price">S/ 270.00 x und.</span>
+                    <div class="hotspot-card" id="card-m1-2" style="display: none;">
+                        <h5>Inodoro One Piece</h5><span class="price">S/ 270.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                     <div class="hotspot" style="top: 47%; left: 50%;" (click)="toggleHotspot('m1-3', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m1-3" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Decorado Convex Baño</h5><span class="price">S/ 15.00 x und.</span>
+                    <div class="hotspot-card" id="card-m1-3" style="display: none;">
+                        <h5>Decorado Convex Baño</h5><span class="price">S/ 15.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                 </div>
             </div>
@@ -104,20 +110,20 @@
                 <div class="shop-look-container">
                     <img src="assets/imagenes/enchape_de_baño2.png" class="img-responsive shop-look-img" alt="Diseño Baño 2">
                     <div class="hotspot" style="top: 37%; left: 30%;" (click)="toggleHotspot('m2-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m2-1" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Ceramico Hojas</h5><span class="price">S/ 25.00 x m²</span>
+                    <div class="hotspot-card" id="card-m2-1" style="display: none;">
+                        <h5>Ceramico Hojas</h5><span class="price">S/ 25.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                     <div class="hotspot" style="top: 70%; left: 50%;" (click)="toggleHotspot('m2-2', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m2-2" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Inodoro Orange</h5><span class="price">S/ 250.00 x und.</span>
+                    <div class="hotspot-card" id="card-m2-2" style="display: none;">
+                        <h5>Inodoro Orange</h5><span class="price">S/ 250.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                     <div class="hotspot" style="top: 45%; left: 70%;" (click)="toggleHotspot('m2-3', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m2-3" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Decorado Hojas Baño</h5><span class="price">S/ 15.00 x und.</span>
+                    <div class="hotspot-card" id="card-m2-3" style="display: none;">
+                        <h5>Decorado Hojas Baño</h5><span class="price">S/ 15.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                     <div class="hotspot" style="top: 65%; left: 18%;" (click)="toggleHotspot('m2-4', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m2-4" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Lavatorio</h5><span class="price">S/ 105.00 x und.</span>
+                    <div class="hotspot-card" id="card-m2-4" style="display: none;">
+                        <h5>Lavatorio</h5><span class="price">S/ 105.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                 </div>  
             </div>
@@ -127,16 +133,16 @@
                 <div class="shop-look-container">
                     <img src="assets/imagenes/enchape_de_baño3.png" class="img-responsive shop-look-img" alt="Diseño Baño 3">
                     <div class="hotspot" style="top: 45%; left: 60%;" (click)="toggleHotspot('m3-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m3-1" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Decorado Burbuja</h5><span class="price">S/ 15.00 x und.</span>
+                    <div class="hotspot-card" id="card-m3-1" style="display: none;">
+                        <h5>Decorado Burbuja</h5><span class="price">S/ 15.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                     <div class="hotspot" style="top: 25%; left: 50%;" (click)="toggleHotspot('m3-2', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m3-2" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Ceramico Burbuja</h5><span class="price">S/ 25.00 x m²</span>
+                    <div class="hotspot-card" id="card-m3-2" style="display: none;">
+                        <h5>Ceramico Burbuja</h5><span class="price">S/ 25.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                     <div class="hotspot" style="top: 65%; left: 30%;" (click)="toggleHotspot('m3-3', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m3-3" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Inodoro Tarraco</h5><span class="price">S/ 205.00 x und.</span>
+                    <div class="hotspot-card" id="card-m3-3" style="display: none;">
+                        <h5>Inodoro Tarraco</h5><span class="price">S/ 205.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                 </div>
             </div>
@@ -146,16 +152,16 @@
                 <div class="shop-look-container">
                     <img src="assets/imagenes/enchape_de_baño4.png" class="img-responsive shop-look-img" alt="Diseño Baño 4">
                     <div class="hotspot" style="top: 47%; left: 47%;" (click)="toggleHotspot('m4-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m4-1" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Decorado Cuadros Plata</h5><span class="price">S/ 15.00 x und.</span>
+                    <div class="hotspot-card" id="card-m4-1" style="display: none;">
+                        <h5>Decorado Cuadros Plata</h5><span class="price">S/ 15.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                     <div class="hotspot" style="top: 65%; left: 30%;" (click)="toggleHotspot('m4-2', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m4-2" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Inodoro Tarraco con boton</h5><span class="price">S/ 450.00 x und.</span>
+                    <div class="hotspot-card" id="card-m4-2" style="display: none;">
+                        <h5>Inodoro Tarraco con boton</h5><span class="price">S/ 450.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                     <div class="hotspot" style="top: 57%; left: 47%;" (click)="toggleHotspot('m4-3', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m4-3" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Cerámico Cuadros Plata </h5><span class="price">S/ 25.00 x m²</span>
+                    <div class="hotspot-card" id="card-m4-3" style="display: none;">
+                        <h5>Cerámico Cuadros Plata </h5><span class="price">S/ 25.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                 </div>
             </div>
@@ -165,20 +171,20 @@
                 <div class="shop-look-container">
                     <img src="assets/imagenes/enchape_de_baño5.png" class="img-responsive shop-look-img" alt="Diseño Baño 5">
                     <div class="hotspot" style="top: 45%; left: 60%;" (click)="toggleHotspot('m5-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m5-1" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Decorado Jovy Baño</h5><span class="price">S/ 15.00 x und.</span>
+                    <div class="hotspot-card" id="card-m5-1" style="display: none;">
+                        <h5>Decorado Jovy Baño</h5><span class="price">S/ 15.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                     <div class="hotspot" style="top: 53%; left: 50%;" (click)="toggleHotspot('m5-2', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m5-2" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Cerámico Jovy Oro</h5><span class="price">S/ 25.00 x m²</span>
+                    <div class="hotspot-card" id="card-m5-2" style="display: none;">
+                        <h5>Cerámico Jovy Oro</h5><span class="price">S/ 25.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                     <div class="hotspot" style="top: 62%; left: 22%;" (click)="toggleHotspot('m5-3', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m5-3" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Inodoro Tarraco Gris</h5><span class="price">S/370.00 x und.</span>
+                    <div class="hotspot-card" id="card-m5-3" style="display: none;">
+                        <h5>Inodoro Tarraco Gris</h5><span class="price">S/ 370.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                     <div class="hotspot" style="top: 60%; left: 70%;" (click)="toggleHotspot('m5-4', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m5-4" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Lavatorio Gris</h5><span class="price">S/ 115.00 x und.</span>
+                    <div class="hotspot-card" id="card-m5-4" style="display: none;">
+                        <h5>Lavatorio Gris</h5><span class="price">S/ 115.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div> 
                 </div>
             </div>
@@ -188,12 +194,12 @@
                 <div class="shop-look-container">
                     <img src="assets/imagenes/enchape_de_baño6.png" class="img-responsive shop-look-img" alt="Diseño Baño 6">
                     <div class="hotspot" style="top: 30%; left: 60%;" (click)="toggleHotspot('m6-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m6-1" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Cerámico Colmena</h5><span class="price">S/ 26.00 x m²</span>
+                    <div class="hotspot-card" id="card-m6-1" style="display: none;">
+                        <h5>Cerámico Colmena</h5><span class="price">S/ 26.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                     <div class="hotspot" style="top: 48%; left: 60%;" (click)="toggleHotspot('m6-2', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m6-2" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Decorado Colmena</h5><span class="price">S/ 15.00 x und.</span>
+                    <div class="hotspot-card" id="card-m6-2" style="display: none;">
+                        <h5>Decorado Colmena</h5><span class="price">S/ 15.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                 </div>
             </div>
@@ -202,22 +208,23 @@
         <hr class="divider-style" style="margin: 40px 0;">
         <h3 style="color: #000080; font-weight: bold; margin-top: 5px; font-size: 1.8em;" class="text-center">Cocina</h3>
 
+        <!-- COCINAS HOTSPOTS -->
         <div class="row">
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #000080;">Estilo Industrial</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_cocina1.png" class="img-responsive shop-look-img" alt="Diseño Baño 1">
+                    <img src="assets/imagenes/enchape_de_cocina1.png" class="img-responsive shop-look-img" alt="Diseño Cocina 1">
                     <div class="hotspot" style="top: 31%; left: 50%;" (click)="toggleHotspot('m7-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m7-1" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Cerámico Ladrillo</h5><span class="price">S/ 25.00 x m²</span>
+                    <div class="hotspot-card" id="card-m7-1" style="display: none;">
+                        <h5>Cerámico Ladrillo</h5><span class="price">S/ 25.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                     <div class="hotspot" style="top: 61%; left: 20%;" (click)="toggleHotspot('m7-2', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m7-2" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Porcelanato Negro Vetado</h5><span class="price">S/ 40.00 x m²</span>
+                    <div class="hotspot-card" id="card-m7-2" style="display: none;">
+                        <h5>Porcelanato Negro Vetado</h5><span class="price">S/ 40.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                     <div class="hotspot" style="top: 37%; left: 5%;" (click)="toggleHotspot('m7-3', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m7-3" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Decorado Español Cocina</h5><span class="price">S/ 20.00 x und.</span>
+                    <div class="hotspot-card" id="card-m7-3" style="display: none;">
+                        <h5>Decorado Español Cocina</h5><span class="price">S/ 20.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                 </div>
             </div>
@@ -225,18 +232,18 @@
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #000080;">Estilo Burbujas</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_cocina2.png" class="img-responsive shop-look-img" alt="Diseño Baño 2">
+                    <img src="assets/imagenes/enchape_de_cocina2.png" class="img-responsive shop-look-img" alt="Diseño Cocina 2">
                     <div class="hotspot" style="top: 36%; left: 40%;" (click)="toggleHotspot('m8-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m8-1" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Decorado Burbuja</h5><span class="price">S/ 15.00 x und.</span>
+                    <div class="hotspot-card" id="card-m8-1" style="display: none;">
+                        <h5>Decorado Burbuja</h5><span class="price">S/ 15.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                     <div class="hotspot" style="top: 12%; left: 40%;" (click)="toggleHotspot('m8-2', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m8-2" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Ceramico Burbuja</h5><span class="price">S/ 25.00 x m²</span>
+                    <div class="hotspot-card" id="card-m8-2" style="display: none;">
+                        <h5>Ceramico Burbuja</h5><span class="price">S/ 25.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                     <div class="hotspot" style="top: 58%; left: 20%;" (click)="toggleHotspot('m8-3', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m8-3" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Porcelanato Grafito Blanco</h5><span class="price">S/ 36.00 x m²</span>
+                    <div class="hotspot-card" id="card-m8-3" style="display: none;">
+                        <h5>Porcelanato Grafito Blanco</h5><span class="price">S/ 36.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                 </div>
             </div>
@@ -244,18 +251,18 @@
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #000080;">Estilo Contemporáneo</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_cocina3.png" class="img-responsive shop-look-img" alt="Diseño Baño 3">
+                    <img src="assets/imagenes/enchape_de_cocina3.png" class="img-responsive shop-look-img" alt="Diseño Cocina 3">
                     <div class="hotspot" style="top: 15%; left: 60%;" (click)="toggleHotspot('m9-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m9-1" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Cerámico Cuadros Plata</h5><span class="price">S/ 25.00 x m²</span>
+                    <div class="hotspot-card" id="card-m9-1" style="display: none;">
+                        <h5>Cerámico Cuadros Plata</h5><span class="price">S/ 25.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                     <div class="hotspot" style="top: 40%; left: 70%;" (click)="toggleHotspot('m9-2', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m9-2" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Decorado Indu Tetera</h5><span class="price">S/ 18.00 x und.</span>
+                    <div class="hotspot-card" id="card-m9-2" style="display: none;">
+                        <h5>Decorado Indu Tetera</h5><span class="price">S/ 18.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                     <div class="hotspot" style="top: 60%; left: 44%;" (click)="toggleHotspot('m9-3', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m9-3" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Porcelanato Genesis Negro</h5><span class="price">S/ 41.00 x m²</span>
+                    <div class="hotspot-card" id="card-m9-3" style="display: none;">
+                        <h5>Porcelanato Genesis Negro</h5><span class="price">S/ 41.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                 </div>
             </div>
@@ -263,18 +270,18 @@
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #000080;">Estilo Dorado</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_cocina4.png" class="img-responsive shop-look-img" alt="Diseño Baño 3">
+                    <img src="assets/imagenes/enchape_de_cocina4.png" class="img-responsive shop-look-img" alt="Diseño Cocina 4">
                     <div class="hotspot" style="top: 20%; left: 20%;" (click)="toggleHotspot('m10-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m10-1" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Cerámico Convex Marfil</h5><span class="price">S/ 24.00 x m²</span>
+                    <div class="hotspot-card" id="card-m10-1" style="display: none;">
+                        <h5>Cerámico Convex Marfil</h5><span class="price">S/ 24.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                     <div class="hotspot" style="top: 39%; left: 10%;" (click)="toggleHotspot('m10-2', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m10-2" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Decorado Indu</h5><span class="price">S/ 20.00 x und.</span>
+                    <div class="hotspot-card" id="card-m10-2" style="display: none;">
+                        <h5>Decorado Indu</h5><span class="price">S/ 20.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                     <div class="hotspot" style="top: 80%; left: 20%;" (click)="toggleHotspot('m10-3', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m10-3" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Porcelanato Nacar</h5><span class="price">S/ 39.00 x m²</span>
+                    <div class="hotspot-card" id="card-m10-3" style="display: none;">
+                        <h5>Porcelanato Nacar</h5><span class="price">S/ 39.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                 </div>
             </div>
@@ -282,18 +289,18 @@
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #000080;">Estilo Grafito</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_cocina5.png" class="img-responsive shop-look-img" alt="Diseño Baño 3">
+                    <img src="assets/imagenes/enchape_de_cocina5.png" class="img-responsive shop-look-img" alt="Diseño Cocina 5">
                     <div class="hotspot" style="top: 70%; left: 30%;" (click)="toggleHotspot('m11-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m11-1" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Porcelanato Doble Carga Gris</h5><span class="price">S/ 38.00 x m²</span>
+                    <div class="hotspot-card" id="card-m11-1" style="display: none;">
+                        <h5>Porcelanato Doble Carga Gris</h5><span class="price">S/ 38.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                     <div class="hotspot" style="top: 11%; left: 40%;" (click)="toggleHotspot('m11-2', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m11-2" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Cerámico Ondas Raya</h5><span class="price">S/ 24.00 x m²</span>
+                    <div class="hotspot-card" id="card-m11-2" style="display: none;">
+                        <h5>Cerámico Ondas Raya</h5><span class="price">S/ 24.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                     <div class="hotspot" style="top: 20%; left: 85%;" (click)="toggleHotspot('m11-3', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m11-3" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Decorado Ondas Raya COcina </h5><span class="price">S/ 15.00 x und.</span>
+                    <div class="hotspot-card" id="card-m11-3" style="display: none;">
+                        <h5>Decorado Ondas Raya COcina </h5><span class="price">S/ 15.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                 </div>
             </div>
@@ -301,14 +308,14 @@
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #000080;">Acabado Maderado</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_cocina6.png" class="img-responsive shop-look-img" alt="Diseño Baño 3">
+                    <img src="assets/imagenes/enchape_de_cocina6.png" class="img-responsive shop-look-img" alt="Diseño Cocina 6">
                     <div class="hotspot" style="top: 50%; left: 70%;" (click)="toggleHotspot('m12-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m12-1" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Porcelanato Mate Carrara</h5><span class="price">S/ 34.00 x m²</span>
+                    <div class="hotspot-card" id="card-m12-1" style="display: none;">
+                        <h5>Porcelanato Mate Carrara</h5><span class="price">S/ 34.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
                     </div>
                     <div class="hotspot" style="top: 35%; left: 10%;" (click)="toggleHotspot('m12-2', $event)"><span class="glyphicon glyphicon-plus"></span></div>
-                    <div class="hotspot-card" id="card-m12-2" style="top: 15px; left: 50%; transform: translateX(-50%); display: none;">
-                        <h5>Decorado Ladrillo Cocina</h5><span class="price">S/ 15.00 x und.</span>
+                    <div class="hotspot-card" id="card-m12-2" style="display: none;">
+                        <h5>Decorado Ladrillo Cocina</h5><span class="price">S/ 15.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                 </div>
             </div>
@@ -322,7 +329,8 @@
         <h3 style="margin-top: 20px;">Destacados del Mes</h3>
         <article>
             <div class="panel-group" id="accordionDecor">
-            
+
+                <!-- CATÁLOGO 1 -->
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat1">Porcelanatos 60x60</a></h4>
@@ -330,41 +338,36 @@
                     <div id="cat1" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <p>Ideal para salas y comedores. Acabado brillante de alta resistencia y fácil limpieza.</p>
-                            
+
                             <div class="row fila-productos">
-                                
                                 <div *ngIf="porcelanatosList.length === 0" class="text-center" style="padding: 20px;">
                                     <p style="color: gray;"><i>Cargando nuevos diseños...</i></p>
                                 </div>
 
                                 <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of porcelanatosList" [id]="'prod-' + prod.codigo">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                                        
-                                        <button type="button" class="btn btn-default btn-xs" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)" title="Ver en Ambiente">
+                                        <button type="button" class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)" title="Ver en Ambiente">
                                             <span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span>
                                         </button>
-                                        
                                         <img *ngIf="prod.imagen" [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
                                         <img *ngIf="!prod.imagen" src="assets/imagenes/logo.jpg" class="img-responsive center-block" alt="Sin imagen" style="height: 200px; object-fit: contain;">
                                         
                                         <div class="caption text-center">
                                             <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
-                                            
                                             <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                                             <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">
                                                 S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small>
                                             </p>
-                                            
                                             <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalle</button>
                                         </div>
                                     </div>
                                 </div>
-
                             </div> 
                         </div>
                     </div>
                 </div>
 
+                <!-- CATÁLOGO 2 -->
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat2">Cerámicos 46x46</a></h4>
@@ -372,39 +375,33 @@
                     <div id="cat2" class="panel-collapse collapse">
                         <div class="panel-body">
                             <div class="row fila-productos">
-                                
                                 <div *ngIf="ceramicosList.length === 0" class="text-center" style="padding: 20px;">
                                     <p style="color: gray;"><i>Cargando nuevos diseños...</i></p>
                                 </div>
-
                                 <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of ceramicosList" [id]="'prod-' + prod.codigo">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                                        
-                                        <button type="button" class="btn btn-default btn-xs" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)" title="Ver en Ambiente">
+                                        <button type="button" class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)" title="Ver en Ambiente">
                                             <span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span>
                                         </button>
-                                        
                                         <img *ngIf="prod.imagen" [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
                                         <img *ngIf="!prod.imagen" src="assets/imagenes/logo.jpg" class="img-responsive center-block" alt="Sin imagen" style="height: 200px; object-fit: contain;">
                                         
                                         <div class="caption text-center">
                                             <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
-                                            
                                             <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
                                             <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">
                                                 S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small>
                                             </p>
-                                            
                                             <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalle</button>
                                         </div>
                                     </div>
                                 </div>
-
                             </div> 
                         </div>
                     </div>
                 </div>
 
+                <!-- CATÁLOGO 3 -->
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat3">Pegamentos</a></h4>
@@ -412,19 +409,15 @@
                     <div id="cat3" class="panel-collapse collapse">
                         <div class="panel-body">
                             <div class="row fila-productos">
-                                
                                 <div *ngIf="pegamentosList.length === 0" class="text-center" style="padding: 20px;">
                                     <p style="color: gray;"><i>Cargando nuevos diseños...</i></p>
                                 </div>
-
                                 <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of pegamentosList" [id]="'prod-' + prod.codigo">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                                        
                                         <!-- 🔥 OJITO PARA PEGAMENTOS 🔥 -->
-                                        <button type="button" class="btn btn-default btn-xs" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)" title="Ver en Ambiente">
+                                        <button type="button" class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)" title="Ver en Ambiente">
                                             <span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span>
                                         </button>
-                                        
                                         <img *ngIf="prod.imagen" [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 220px; object-fit: contain;">
                                         <img *ngIf="!prod.imagen" src="assets/imagenes/logo.jpg" class="img-responsive center-block" alt="Sin imagen" style="height: 220px; object-fit: contain;">
                                         
@@ -447,7 +440,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div> 
                         </div>
                     </div>
@@ -469,7 +461,7 @@
                  <img src="assets/imagenes/oferta2.png" class="img-responsive center-block" alt="Oferta 2" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
              </div>
              <div class="col-md-4 col-sm-4">
-                 <img src="assets/imagenes/oferta3.png" class="img-responsive center-block" alt="Oferta 2" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                 <img src="assets/imagenes/oferta3.png" class="img-responsive center-block" alt="Oferta 3" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
              </div>
         </div>
     </section>
@@ -500,6 +492,12 @@
             </article>
         </div>
     </div>
+</div>
+
+<!-- 🔥 CARRITO FLOTANTE (ARRIBA A LA DERECHA, TOP: 100px) 🔥 -->
+<div id="floating-cart" routerLink="/cotizar" title="Ir a mi carrito">
+    <span class="glyphicon glyphicon-shopping-cart" style="font-size: 24px; position: relative; top: 5px;"></span>
+    <span class="badge badge-flotante">{{ carritoCotizacion.length }}</span>
 </div>
 
 <!-- 🔥 MODAL DE BÚSQUEDA PREDICTIVA 🔥 -->

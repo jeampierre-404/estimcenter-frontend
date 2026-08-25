@@ -28,7 +28,6 @@
 
 /* =========================================
    🔥 MEGA REGLA DE ORO PARA CELULARES 🔥
-   (Arregla el Chat, Navbar, Tarjetas, Calculadora y Footer)
    ========================================= */
 @media (max-width: 768px) {
     
@@ -42,10 +41,11 @@
     }
 
     #chat-circle {
-        bottom: 20px !important; /* Asegura que el icono del chat no se monte */
+        bottom: 20px !important; 
     }
 
     /* 1. DOMANDO EL MENÚ DE NAVEGACIÓN */
+    .navbar-nav { margin: 0 !important; float: none !important; display: block !important; }
     .navbar-nav > li {
         float: none !important;
         border-left: none !important;
@@ -55,6 +55,7 @@
         text-align: center !important; 
         padding: 15px !important;
     }
+    .navbar-right { position: relative !important; display: block !important; }
 
     /* 2. CABECERA Y LOGO CENTRADOS */
     .header-content > div {
@@ -77,6 +78,7 @@
     #calculadoraModal .col-xs-6 {
         width: 100% !important;
         margin-bottom: 15px;
+        text-align: center;
     }
 
     /* 5. FOOTER PERFECTAMENTE CENTRADO Y CON ESPACIO */
@@ -87,7 +89,7 @@
     
     /* 🔥 ESPACIO VITAL PARA ELEMENTOS FLOTANTES 🔥 */
     footer .footer-content {
-        padding-bottom: 80px !important; /* Le da aire al final para que los botones flotantes no tapen el texto */
+        padding-bottom: 80px !important; 
     }
     
     /* 6. OFERTAS RELÁMPAGO */
@@ -100,52 +102,54 @@
    🔥 MEJORAS DE INTERACTIVIDAD (UX/UI) 🔥
    ========================================= */
 
-/* 1. Ojito y Botón Menú con "Efecto Radar" */
 @keyframes latido-radar {
     0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.8); }
     50% { transform: scale(1.15); box-shadow: 0 0 0 12px rgba(255, 140, 0, 0); }
     100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 140, 0, 0); }
 }
 
-.btn-ojito {
+.btn-ojito, .navbar-toggle {
     animation: latido-radar 2s infinite !important;
 }
 
 .navbar-toggle {
     background-color: #FF8C00 !important;
     border: none !important;
-    animation: latido-radar 2s infinite !important;
 }
 
 .navbar-toggle .icon-bar {
     background-color: white !important;
 }
 
-/* 2. Menú de Navegación 100% Centrado */
-.navbar-collapse {
-    text-align: center;
-}
-.navbar-nav {
-    display: inline-block;
-    float: none !important;
-    margin: 0 auto;
-}
-.navbar-nav > li {
-    float: left; /* Mantiene la horizontalidad en PC */
-}
-
-@media (max-width: 768px) {
-    .navbar-nav > li {
-        float: none !important;
-        display: block;
+/* 🔥 CENTRADO PERFECTO DEL MENÚ SIN ROMPER NADA 🔥 */
+@media (min-width: 768px) {
+    .navbar-collapse {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+    .navbar-center {
+        margin: 0 auto !important;
+        display: flex;
+    }
+    .navbar-right {
+        position: absolute !important;
+        right: 15px;
+        top: 0;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        margin: 0 !important;
     }
 }
 
-/* 3. Carrito Flotante Elegante (Arriba a la Derecha) */
+/* 🔥 CARRITO FLOTANTE (Arriba a la derecha, posición segura) 🔥 */
 #floating-cart {
     position: fixed;
     right: 20px;
-    top: 20px; /* 🔥 MAGIA: Lo mandamos pa' arriba 🔥 */
+    top: 120px; /* 🔥 MAGIA: Queda arriba, pero a salvo de la 'X' de los modales 🔥 */
+    bottom: auto; /* Limpiamos cualquier código anterior */
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -154,7 +158,7 @@
     text-align: center;
     line-height: 60px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    z-index: 9999; /* Asegura que flote por encima del carrusel y todo lo demás */
+    z-index: 9998;
     cursor: pointer;
     transition: transform 0.3s, background-color 0.3s;
 }

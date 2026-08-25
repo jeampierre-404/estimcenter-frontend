@@ -6,7 +6,7 @@
 .producto-listado-item {
     display: flex !important;
     flex-direction: row !important;
-    flex-wrap: nowrap !important; /* 🔥 PROHIBIDO bajarse a la siguiente línea */
+    flex-wrap: nowrap !important;
     align-items: center !important;
     background-color: #fff;
     border: 1px solid #ddd;
@@ -27,19 +27,19 @@
 .thumb-lista-fix {
     width: 60px !important;
     height: 60px !important;
-    min-width: 60px !important; /* 🔥 Obliga a que no crezca en celular */
+    min-width: 60px !important;
     max-width: 60px !important;
     object-fit: cover !important;
     border-radius: 6px;
     margin-right: 15px !important;
     margin-bottom: 0 !important; 
     border: 1px solid #eee;
-    flex-shrink: 0 !important; /* 🔥 Mantiene su tamaño original siempre */
+    flex-shrink: 0 !important;
     display: block !important;
 }
 
 .info-producto-box {
-    flex: 1 !important; /* Toma todo el espacio sobrante del medio */
+    flex: 1 !important;
     text-align: left !important;
     overflow: hidden;
 }
@@ -58,23 +58,96 @@
 }
 
 /* =========================================
+   🔥 MEJORAS DE INTERACTIVIDAD (UX/UI) 🔥
+   ========================================= */
+
+@keyframes latido-radar {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.8); }
+    50% { transform: scale(1.15); box-shadow: 0 0 0 12px rgba(255, 140, 0, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 140, 0, 0); }
+}
+
+.btn-ojito, .navbar-toggle {
+    animation: latido-radar 2s infinite !important;
+}
+
+.navbar-toggle {
+    background-color: #FF8C00 !important;
+    border: none !important;
+}
+
+.navbar-toggle .icon-bar {
+    background-color: white !important;
+}
+
+/* 🔥 CENTRADO PERFECTO DEL MENÚ SIN ROMPER NADA 🔥 */
+@media (min-width: 768px) {
+    .navbar-center {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+/* 🔥 CARRITO FLOTANTE (Posición Segura: Arriba Derecha) 🔥 */
+#floating-cart {
+    position: fixed;
+    right: 20px;
+    top: 100px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #122A51;
+    color: white;
+    text-align: center;
+    line-height: 60px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 9998;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+#floating-cart:hover {
+    transform: scale(1.1);
+    background-color: #FF8C00;
+}
+
+.badge-flotante {
+    position: absolute;
+    top: 5px;
+    right: -5px;
+    background-color: #FF8C00;
+    color: white;
+    font-size: 13px;
+    border: 2px solid white;
+    border-radius: 50%;
+    padding: 3px 7px;
+}
+
+/* 🔥 SEGURO ANTI-CONGELAMIENTO PARA MODALES 🔥 */
+.modal {
+    overflow-y: auto !important;
+}
+
+body.modal-open {
+    overflow-y: auto !important;
+    padding-right: 0 !important;
+}
+
+/* =========================================
    🔥 MEGA REGLA DE ORO PARA CELULARES 🔥
-   (Controla Chat, Tablas, Navbar, Factura y Modales)
    ========================================= */
 @media (max-width: 768px) {
     
-    /* --- 1. LO QUE YA TENÍAS (MANTENIDO Y MEJORADO) --- */
     .chat-box { width: 90%; right: 0; left: 0; margin: 0 auto; bottom: 90px; }
     .main-container { width: 100% !important; padding: 10px; }
     .panel-body { height: 400px !important; }
     
-    /* Oculta imagen en tabla proforma para que la tabla respire en celular */
     .table > thead > tr > th:first-child,
     .table > tbody > tr > td:first-child { display: none; } 
     
     .row.ocultar-en-foto > div { margin-bottom: 10px; }
 
-    /* --- 2. DOMANDO EL MENÚ DE NAVEGACIÓN --- */
     .navbar-nav > li {
         float: none !important;
         border-left: none !important;
@@ -85,7 +158,6 @@
         padding: 15px !important;
     }
 
-    /* --- 3. CABECERA PRINCIPAL CENTRADA --- */
     .header-content > div {
         display: block !important;
         text-align: center !important;
@@ -93,15 +165,12 @@
     }
     .header-title { font-size: 1.6em !important; }
 
-    /* --- 4. ARREGLANDO EL ENCABEZADO DE LA PROFORMA --- */
-    /* Rompe la estructura de 2 columnas (col-xs-8 y col-xs-4) para que baje fluidamente */
     .factura-header .col-xs-8, 
     .factura-header .col-xs-4 {
         width: 100% !important; 
         text-align: center !important; 
         margin-bottom: 15px;
     }
-    /* Pone el loguito pequeño arriba del nombre de la empresa */
     .factura-header .col-xs-8 > div {
         flex-direction: column !important; 
     }
@@ -110,8 +179,6 @@
         margin-bottom: 10px; 
     }
 
-    /* --- 5. HACIENDO QUE LOS MODALES RESPIREN --- */
-    /* Modal de Cantidad y Modal Calculadora (Quita el col-xs-6 que partía la pantalla) */
     #modalSeleccion .col-xs-6, 
     #calculadoraModal .col-xs-6 {
         width: 100% !important;
@@ -119,7 +186,6 @@
         text-align: center;
     }
 
-    /* --- 6. FOOTER PERFECTAMENTE CENTRADO --- */
     footer .col-md-4 { 
         text-align: center !important; 
         margin-bottom: 25px; 

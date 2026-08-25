@@ -35,13 +35,18 @@
      <a class="navbar-brand" routerLink="/"><span class="glyphicon glyphicon-home"></span></a>
    </div>
   <div class="collapse navbar-collapse" id="menuPrincipal">
-    <ul class="nav navbar-nav"> 
+    
+    <!-- 🔥 ENLACES CENTRALIZADOS (No se rompen) 🔥 -->
+    <ul class="nav navbar-nav navbar-center"> 
       <li><a routerLink="/"><b>INICIO</b></a></li>
       <li><a routerLink="/catalogo"><b><span class="glyphicon glyphicon-book"></span> Catálogo</b></a></li>
       <li><a routerLink="/pedidos"><b><span class="glyphicon glyphicon-shopping-cart"></span> Mis Cotizaciones</b></a></li>
       <li class="active"><a routerLink="/cotizar"><b><span class="glyphicon glyphicon-edit"></span> Cotizar</b></a></li>
-      
-      <li class="dropdown" style="float: right; border-left: 1px solid #e7e7e7;">
+    </ul>
+
+    <!-- 🔥 BOTONES ALINEADOS A LA DERECHA 🔥 -->
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown" style="border-left: 1px solid #e7e7e7;">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #FF8C00; font-weight: bold;">
               <span class="glyphicon glyphicon-user"></span> 
               <span>{{ clienteLogueado ? nombreCliente.split(' ')[0] : 'Cuenta' }}</span> 
@@ -53,14 +58,14 @@
           </ul>
       </li>
 
-      <li style="float: right; border-left: 1px solid #e7e7e7; background-color: #fff8e1;">
+      <li style="border-left: 1px solid #e7e7e7; background-color: #fff8e1;">
           <a style="cursor: default; color: #FF8C00; font-weight: bold;">
               <span class="glyphicon glyphicon-shopping-cart"></span> Mi Carrito 
               <span class="badge" style="background-color: #122A51; margin-left: 5px;">{{ itemsCotizados.length }}</span>
           </a>
       </li>
 
-      <li style="float: right; border-left: 1px solid #e7e7e7;">
+      <li style="border-left: 1px solid #e7e7e7; margin-right: 15px;">
           <a (click)="abrirBuscadorPred()" style="cursor: pointer; color: #122A51; font-weight: bold; background-color: #f8f9fa;">
               <span class="glyphicon glyphicon-search"></span> Búsqueda Rápida
           </a>
@@ -87,7 +92,8 @@
                         <h5>{{ p.nombre }}</h5>
                         <small>Precio: S/ {{ p.precio | number:'1.2-2' }} x {{ p.unidadMedida }}</small>
                     </div>
-                    <span class="glyphicon glyphicon-plus-sign" style="color:#122A51; font-size: 1.5em;"></span>
+                    <!-- 🔥 EL BOTÓN MÁGICO PULSANTE ARREGLADO 🔥 -->
+                    <span class="glyphicon glyphicon-plus-sign btn-latido-proforma" style="color:#FF8C00; font-size: 2em; cursor: pointer; border-radius: 50%;"></span>
                 </div>
             </div>
         </div>
@@ -297,6 +303,12 @@
 <div id="chat-circle" class="btn btn-raised" (click)="toggleChat()">
     <div id="chat-overlay"></div>
     <span class="glyphicon glyphicon-comment" style="font-size: 24px; color: white; margin-top: 12px;"></span>
+</div>
+
+<!-- 🔥 NUEVO CARRITO FLOTANTE (Con posición segura: top: 130px) 🔥 -->
+<div id="floating-cart" routerLink="/cotizar" title="Ir a mi carrito">
+    <span class="glyphicon glyphicon-shopping-cart" style="font-size: 24px; position: relative; top: 5px;"></span>
+    <span class="badge badge-flotante">{{ itemsCotizados.length }}</span>
 </div>
 
 <div class="chat-box" [class.chat-abierto]="chatVisible">
