@@ -367,4 +367,14 @@ export class HomePublicComponent implements OnInit {
     }
     return { texto: 'Para Interiores', clase: 'label-default' }; // Gris
   }
+
+  // 🔥 RESTRICCIÓN INTELIGENTE DEL CARRITO 🔥
+  irACotizar() {
+    if (this.carritoCotizacion.length === 0) {
+      alert("🛒 Tu carrito está vacío. ¡Agrega algunos productos antes de ir a cotizar!");
+    } else {
+      // Si hay productos, lo mandamos en primera clase a la proforma
+      this.router.navigate(['/cotizar']);
+    }
+  }
 }
