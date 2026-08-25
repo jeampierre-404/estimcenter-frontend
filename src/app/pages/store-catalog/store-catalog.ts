@@ -75,6 +75,18 @@ export class StoreCatalogComponent implements OnInit {
     this.verificarSesion();
     this.cargarCatalogo(); 
     this.cargarCarrito(); 
+
+    // 🔥 MAGIA: ABRIR EL MENÚ AUTOMÁTICAMENTE EN CELULARES 🔥
+    setTimeout(() => {
+        // Detecta si es un dispositivo móvil (pantalla pequeña)
+        if (window.innerWidth <= 768) {
+            const menu = (window as any).$('#menuPrincipal');
+            // Si el menú está cerrado, lo forzamos a abrirse
+            if (!menu.hasClass('in')) {
+                menu.collapse('show');
+            }
+        }
+    }, 1000); // Le damos 1 segundito para que respire después de cargar
   }
 
   verificarSesion() {

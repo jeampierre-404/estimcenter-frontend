@@ -95,3 +95,83 @@
         margin-bottom: 15px;
     }
 }
+
+/* =========================================
+   🔥 MEJORAS DE INTERACTIVIDAD (UX/UI) 🔥
+   ========================================= */
+
+/* 1. Ojito y Botón Menú con "Efecto Radar" */
+@keyframes latido-radar {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.8); }
+    50% { transform: scale(1.15); box-shadow: 0 0 0 12px rgba(255, 140, 0, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 140, 0, 0); }
+}
+
+.btn-ojito {
+    animation: latido-radar 2s infinite !important;
+}
+
+.navbar-toggle {
+    background-color: #FF8C00 !important;
+    border: none !important;
+    animation: latido-radar 2s infinite !important;
+}
+
+.navbar-toggle .icon-bar {
+    background-color: white !important;
+}
+
+/* 2. Menú de Navegación 100% Centrado */
+.navbar-collapse {
+    text-align: center;
+}
+.navbar-nav {
+    display: inline-block;
+    float: none !important;
+    margin: 0 auto;
+}
+.navbar-nav > li {
+    float: left; /* Mantiene la horizontalidad en PC */
+}
+
+@media (max-width: 768px) {
+    .navbar-nav > li {
+        float: none !important;
+        display: block;
+    }
+}
+
+/* 3. Carrito Flotante Elegante (Arriba a la Derecha) */
+#floating-cart {
+    position: fixed;
+    right: 20px;
+    top: 20px; /* 🔥 MAGIA: Lo mandamos pa' arriba 🔥 */
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #122A51;
+    color: white;
+    text-align: center;
+    line-height: 60px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 9999; /* Asegura que flote por encima del carrusel y todo lo demás */
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+#floating-cart:hover {
+    transform: scale(1.1);
+    background-color: #FF8C00;
+}
+
+.badge-flotante {
+    position: absolute;
+    top: 5px;
+    right: -5px;
+    background-color: #FF8C00;
+    color: white;
+    font-size: 13px;
+    border: 2px solid white;
+    border-radius: 50%;
+    padding: 3px 7px;
+}
