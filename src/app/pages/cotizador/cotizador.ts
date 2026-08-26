@@ -217,6 +217,8 @@ export class CotizadorComponent implements OnInit {
     
     if (!this.clienteLogueado) {
       alert("⚠️ ¡Casi listo! Por favor, inicia sesión para poder guardar tu cotización.");
+      // 🔥 EL PARCHE: Guardamos el carrito actual antes de viajar al login 🔥
+      localStorage.setItem('carrito_temporal', JSON.stringify(this.itemsCotizados));
       this.router.navigate(['/login']);
       return;
     }
@@ -259,6 +261,8 @@ export class CotizadorComponent implements OnInit {
 
     if (!this.clienteLogueado) {
       alert("⚠️ ¡Casi listo! Por favor, inicia sesión para procesar tu compra y enviarla a la tienda.");
+      // 🔥 EL PARCHE: Guardamos el carrito actual antes de viajar al login 🔥
+      localStorage.setItem('carrito_temporal', JSON.stringify(this.itemsCotizados));
       this.router.navigate(['/login']);
       return;
     }

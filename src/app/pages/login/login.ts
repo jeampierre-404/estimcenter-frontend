@@ -15,163 +15,64 @@ export class LoginComponent {
   private http = inject(HttpClient);
   private router = inject(Router);
 
-  isFlipped: boolean = false;
-  terminosAceptados: boolean = false;
+  loginNombre: string = '';
+  loginCelular: string = '';
 
-  // Variables Registro
-  regDni: string = '';
-  regNombre: string = '';
-  regTelefono: string = '';
-  regPass: string = ''; 
-  
-  // Variables Login
-  loginDni: string = ''; 
-  loginPass: string = ''; 
-
-  girarPanel() {
-    this.isFlipped = !this.isFlipped;
+  soloNumeros(event: any) {
+    this.loginCelular = event.target.value.replace(/[^0-9]/g, '');
   }
 
-  // 🔥 VALIDACIONES EN TIEMPO REAL (Filtros de escritura) 🔥
-  soloNumerosLogin(event: any) {
-    this.loginDni = event.target.value.replace(/[^0-9]/g, '');
-  }
-
-  soloNumerosRegDni(event: any) {
-    this.regDni = event.target.value.replace(/[^0-9]/g, '');
-  }
-
-  soloNumerosRegCel(event: any) {
-    this.regTelefono = event.target.value.replace(/[^0-9]/g, '');
-  }
-
-  soloLetrasNombre(event: any) {
-    // Permite solo letras y un espacio simple entre palabras (elimina dobles espacios)
+  soloLetras(event: any) {
     let valor = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/g, '');
-    this.regNombre = valor.replace(/\s{2,}/g, ' '); 
-  }
-  // 🔥 =================================================== 🔥
-
-  consultarAPI() {
-    const btn = document.getElementById('btnSearchDni') as HTMLButtonElement;
-    if (btn) { btn.innerHTML = '...'; btn.disabled = true; }
-    
-    setTimeout(() => {
-      const dniStr = this.regDni.trim();
-      
-      if (dniStr.length !== 8) {
-          alert("El DNI debe tener exactamente 8 dígitos.");
-          if (btn) { btn.innerHTML = '<i class="fas fa-search"></i> Buscar'; btn.disabled = false; }
-          return;
-      }
-
-      if (dniStr === "10442508" || dniStr === "44250864") {
-        this.regNombre = "TAPIA SANCHEZ JOSE LUIS";
-      } else {
-        alert("DNI no encontrado en la API demo de RENIEC. Por favor, escribe tu nombre manualmente.");
-      }
-      if (btn) { btn.innerHTML = '<i class="fas fa-search"></i> Buscar'; btn.disabled = false; }
-    }, 500);
+    this.loginNombre = valor.replace(/\s{2,}/g, ' '); 
   }
 
-  registrarManual() {
-    const dni = this.regDni.trim();
-    const nombre = this.regNombre.trim();
-    const telefono = this.regTelefono.trim();
-    const pass = this.regPass.trim();
+  ingresarMagico() {
+    const nom = this.loginNombre.trim();
+    const cel = this.loginCelular.trim();
 
-    // 🔥 RESTRICCIONES ESTRICTAS ANTES DE ENVIAR AL BACKEND 🔥
-    if (!dni || !nombre || !telefono || !pass) {
-        return alert("⚠️ Por favor, llena todos los campos obligatorios.");
-    }
-    
-    if (dni.length !== 8) {
-        return alert("⚠️ El DNI debe tener exactamente 8 números.");
-    }
-    
-    if (nombre.length < 3) {
-        return alert("⚠️ El nombre es demasiado corto. Escribe tu nombre completo.");
-    }
+    if (!nom || !cel) return alert("⚠️ Por favor, llena tu Nombre y tu Celular.");
+    if (cel.length !== 9) return alert("⚠️ El celular debe tener 9 dígitos.");
+    if (nom.length < 3) return alert("⚠️ Por favor, ingresa un nombre válido.");
 
-    if (telefono.length !== 9) {
-        return alert("⚠️ El número de celular debe tener exactamente 9 dígitos.");
-    }
-
-    if (pass.length < 6) {
-        return alert("⚠️ La contraseña debe tener al menos 6 caracteres por seguridad.");
-    }
-    // 🔥 ===================================================== 🔥
-
-    const nuevoCliente = {
-      tipoDoc: "DNI",
-      numDoc: dni,
-      nombreCompleto: nombre,
-      telefono: telefono,
-      email: "pendiente@poractualizar.com", 
-      password: pass, 
-      descriptorFacial: "[]", 
-      direcciones: [
-        { 
-            direccion: "Pendiente (Se pedirá al comprar)", 
-            ciudad: "Por Defecto", 
-            referencia: "-" 
-        }
-      ]
-    };
-
-    this.http.post('https://estimcenter.onrender.com/rest/cliente/registrar-ia', nuevoCliente, {responseType: 'text'}).subscribe({
-      next: (res) => {
-        // 1. Giramos el panel visualmente para que vea la animación
-        this.girarPanel(); 
-        this.loginDni = dni; 
+    // Consultar si el cliente ya existe
+    this.http.get<any[]>('https://estimcenter.onrender.com/rest/cliente/listar').subscribe({
+      next: (clientes) => {
+        const clienteExistente = clientes.find(c => c.telefono === cel || c.numDoc === cel);
         
-        // Limpiamos el formulario por seguridad
-        this.regDni = '';
-        this.regNombre = '';
-        this.regTelefono = '';
-        this.regPass = '';
-        this.terminosAceptados = false;
+        if (clienteExistente) {
+          // ✅ El cliente existe: Solo iniciamos sesión
+          this.iniciarSesion(clienteExistente.nombreCompleto, clienteExistente.numDoc);
+        } else {
+          // 🆕 El cliente no existe: Lo registramos en silencio
+          const nuevoCliente = {
+            tipoDoc: "CEL",
+            numDoc: cel, // Usamos el celular como documento de identidad
+            nombreCompleto: nom,
+            telefono: cel,
+            email: "cliente@whatsapp.com", 
+            password: cel, 
+            descriptorFacial: "[]", 
+            direcciones: [{ direccion: "Pendiente", ciudad: "Por Defecto", referencia: "-" }]
+          };
 
-        // 2. Esperamos a que termine de girar la tarjeta (800ms) e iniciamos sesión automáticamente
-        setTimeout(() => {
-            alert(`¡Excelente ${nombre.split(' ')[0]}!\nTu cuenta ha sido creada. Iniciando sesión automáticamente...`);
-            this.iniciarSesion(nombre, dni);
-        }, 800);
+          this.http.post('https://estimcenter.onrender.com/rest/cliente/registrar-ia', nuevoCliente, {responseType: 'text'}).subscribe({
+            next: () => this.iniciarSesion(nom, cel),
+            error: () => alert("❌ Error al crear tu acceso rápido.")
+          });
+        }
       },
-      error: (err) => {
-        console.error("Error completo del backend:", err);
-        alert("Error al registrar: " + (err.error || "Es posible que el DNI ya exista."));
-      }
+      error: () => alert("❌ Error de conexión con el servidor.")
     });
   }
 
-  loginManual() {
-    const dni = this.loginDni.trim();
-    const pass = this.loginPass.trim();
-
-    if (!dni || !pass) {
-      return alert("⚠️ Ingresa tu DNI y Contraseña.");
-    }
-
-    if (dni.length !== 8) {
-        return alert("⚠️ El DNI debe tener 8 números.");
-    }
-
-    const credenciales = { numDoc: dni, password: pass };
-
-    this.http.post<any>('https://estimcenter.onrender.com/rest/cliente/login-manual', credenciales).subscribe({
-      next: (clienteBD) => {
-        this.iniciarSesion(clienteBD.nombreCompleto, clienteBD.numDoc);
-      },
-      error: () => alert("❌ DNI o Contraseña incorrectos.")
-    });
-  }
-
-  iniciarSesion(nombre: string, dni: string) {
+  iniciarSesion(nombre: string, dniOCel: string) {
     localStorage.removeItem('adminLogueado'); 
     localStorage.setItem('clienteLogueado', 'true');
     localStorage.setItem('clienteNombre', nombre);
-    localStorage.setItem('clienteDNI', dni);
+    localStorage.setItem('clienteDNI', dniOCel);
+    
+    // Lo regresamos a cotizar; el ngOnInit de cotizar se encargará de recuperar el carrito
     this.router.navigate(['/cotizar']);
   }
 }

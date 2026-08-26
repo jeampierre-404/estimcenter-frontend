@@ -1,78 +1,34 @@
 <div class="login-wrapper">
     <div class="overlay"></div>
-    
     <div class="dual-layout">
         
-        <!-- 🔥 EL ÚNICO Y ELEGANTE ÓVALO GIRATORIO 🔥 -->
-        <div class="flip-container" id="card" [class.rotate]="isFlipped">
-            <div class="flipper">
-                
-                <!-- 🔥 CARA FRONTAL: LOGIN 🔥 -->
-                <div class="front">
-                    <!-- Logo centrado y elegante arriba del Login -->
-                    <div style="width: 80px; height: 80px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px auto; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
-                        <img src="assets/imagenes/logo_empresa.png" style="width: 55px;">
-                    </div>
-                    
-                    <h2 style="font-size: 1.6em; margin-bottom: 2px;">BIENVENIDO</h2>
-                    <p style="font-size: 11px; color: #666; margin-top:0px; margin-bottom: 15px;">Inicia sesión en tu cuenta</p>
-                    
-                    <form style="width: 85%;">
-                        <div class="form-group" style="position: relative; margin-bottom: 15px;">
-                            <span class="glyphicon glyphicon-user" style="position: absolute; left: 15px; top: 12px; color: #FF8C00;"></span>
-                            <input type="text" class="form-control" placeholder="Ingresa tu DNI" name="loginDni" [(ngModel)]="loginDni" maxlength="8" (input)="soloNumerosLogin($event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="padding-left: 40px; border-radius: 25px; height: 40px;">
-                        </div>
-                        
-                        <div class="form-group" style="position: relative; margin-bottom: 15px;">
-                            <span class="glyphicon glyphicon-lock" style="position: absolute; left: 15px; top: 12px; color: #FF8C00;"></span>
-                            <input type="password" class="form-control" placeholder="Contraseña" name="loginPass" [(ngModel)]="loginPass" maxlength="20" style="padding-left: 40px; border-radius: 25px; height: 40px;">
-                        </div>
-
-                        <button type="button" class="btn btn-action" style="background: #122A51; color: white; width: 100%; border-radius: 25px; height: 40px; font-weight: bold; margin-top: 5px;" (click)="loginManual()">
-                            INGRESAR
-                        </button>
-                    </form>
-                    
-                    <a href="#" style="display: block; margin-top: 15px; font-size: 11px; color: #ccc; text-decoration: none; cursor: not-allowed;" title="Configurar con el asesor">
-                        ¿Olvidaste tu contraseña? Contáctanos
-                    </a>
-        
-                    <p class="toggle-link" (click)="girarPanel()" style="margin-top: 15px; font-weight: bold; color: #FF8C00;">¿Nuevo? Regístrate aquí</p>
-                    <a routerLink="/" style="font-size: 11px; color: #aaa; margin-top: 5px; text-decoration: none;"><span class="glyphicon glyphicon-arrow-left"></span> Volver a la Tienda</a>
-                </div>
-        
-                <!-- 🔥 CARA TRASERA: REGISTRO 🔥 -->
-                <div class="back">
-                    <h2>CREAR CUENTA</h2>
-                    <p style="font-size: 12px; color: #666; margin-top:-5px; margin-bottom: 15px;">Registro rápido en 10 segundos</p>
-        
-                    <form style="width: 85%;">
-                        
-                        <!-- 🔥 DNI LIMPIO (Sin botón de SUNAT y con bordes redondos) 🔥 -->
-                        <input type="text" class="form-control" placeholder="DNI (Tu usuario)" name="regDni" [(ngModel)]="regDni" maxlength="8" (input)="soloNumerosRegDni($event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="margin-bottom: 10px; border-radius: 20px; height: 35px; font-size: 13px;">
-
-                        <input type="text" class="form-control" placeholder="Tu Nombre Completo" name="regNombre" [(ngModel)]="regNombre" maxlength="50" (input)="soloLetrasNombre($event)" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode === 32 || event.charCode === 209 || event.charCode === 241" style="margin-bottom: 10px; border-radius: 20px; height: 35px; font-size: 13px;">
-                        
-                        <input type="tel" class="form-control" placeholder="Celular (Para WhatsApp)" name="regTelefono" [(ngModel)]="regTelefono" maxlength="9" (input)="soloNumerosRegCel($event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="margin-bottom: 10px; border-radius: 20px; height: 35px; font-size: 13px;">
-                        
-                        <input type="password" class="form-control" placeholder="Crea una Contraseña (Min 6 caract.)" name="regPass" [(ngModel)]="regPass" maxlength="20" style="margin-bottom: 15px; border-radius: 20px; height: 35px; font-size: 13px;">
-                        
-                        <div style="text-align: left; margin-bottom: 15px; font-size: 11px; color: #555;">
-                            <label style="cursor: pointer; font-weight: normal; display: flex; align-items: flex-start; gap: 5px;">
-                                <input type="checkbox" [(ngModel)]="terminosAceptados" name="terminosReg" style="margin-top: 2px;">
-                                <span>Acepto los <a href="#" style="color: #FF8C00;">Términos</a> para registrar mis datos.</span>
-                            </label>
-                        </div>
-
-                        <button type="button" class="btn btn-action" style="background: #FF8C00; color: white; width: 100%; border-radius: 25px; height: 40px; font-weight: bold; border:none;" (click)="registrarManual()" [disabled]="!terminosAceptados">
-                            CREAR CUENTA
-                        </button>
-                    </form>
-        
-                    <p class="toggle-link" (click)="girarPanel()" style="margin-top: 20px; font-weight: bold; color: #122A51;">¿Ya tienes cuenta? Inicia Sesión</p>
-                </div>
-        
+        <div class="front">
+            <div style="width: 80px; height: 80px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                <img src="assets/imagenes/logo_empresa.png" style="width: 55px;">
             </div>
+            
+            <h2 style="font-size: 1.6em; margin-bottom: 2px; color: #FF8C00; font-weight: bold;">ACCESO RÁPIDO</h2>
+            <p style="font-size: 12px; color: #666; margin-top:0px; margin-bottom: 20px;">Ingresa tus datos para continuar</p>
+            
+            <form style="width: 90%;">
+                <div class="form-group" style="position: relative; margin-bottom: 15px;">
+                    <span class="glyphicon glyphicon-user" style="position: absolute; left: 15px; top: 12px; color: #FF8C00;"></span>
+                    <input type="text" class="form-control" placeholder="Tu Nombre Completo" name="loginNombre" [(ngModel)]="loginNombre" maxlength="50" (input)="soloLetras($event)" style="padding-left: 40px; border-radius: 25px; height: 40px;">
+                </div>
+                
+                <div class="form-group" style="position: relative; margin-bottom: 20px;">
+                    <span class="glyphicon glyphicon-phone" style="position: absolute; left: 15px; top: 12px; color: #FF8C00;"></span>
+                    <input type="tel" class="form-control" placeholder="Tu WhatsApp (Celular)" name="loginCelular" [(ngModel)]="loginCelular" maxlength="9" (input)="soloNumeros($event)" style="padding-left: 40px; border-radius: 25px; height: 40px;">
+                </div>
+
+                <button type="button" class="btn btn-action" style="background: #122A51; color: white; width: 100%; border-radius: 25px; height: 45px; font-weight: bold; margin-top: 5px;" (click)="ingresarMagico()">
+                    INGRESAR AHORA
+                </button>
+            </form>
+            
+            <a routerLink="/cotizar" style="display: block; margin-top: 20px; font-size: 12px; color: #aaa; text-decoration: none;">
+                <span class="glyphicon glyphicon-arrow-left"></span> Volver a Cotizar
+            </a>
         </div>
 
     </div>
