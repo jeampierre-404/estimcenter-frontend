@@ -54,6 +54,16 @@ export class PedidosComponent implements OnInit {
     this.cargarHistorial();
     this.cargarCarrito();
     this.cargarProductosBase();
+
+    // 🔥 MAGIA: ABRIR EL MENÚ AUTOMÁTICAMENTE EN CELULARES 🔥
+    setTimeout(() => {
+        if (window.innerWidth <= 768) {
+            const menu = (window as any).$('#menuPrincipal');
+            if (!menu.hasClass('in')) {
+                menu.collapse('show');
+            }
+        }
+    }, 1000);
   }
 
   verificarSesion() {
@@ -118,7 +128,6 @@ export class PedidosComponent implements OnInit {
     (window as any).$('#modalBienvenidaBuscador').modal('hide');
     
     setTimeout(() => {
-        // Guardamos la intención de búsqueda y "viajamos" al catálogo
         localStorage.setItem('producto_a_enfocar', prod.codigo);
         this.router.navigate(['/catalogo']);
     }, 400); 
@@ -136,7 +145,7 @@ export class PedidosComponent implements OnInit {
         this.lblRendimiento = 'Rendimiento Aprox (m²):';
         this.lblResultadoEmpaque = 'SACOS A LLEVAR:';
         this.mostrarPiezas = false; 
-    } else if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP')) {
+    } else if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC') || cod.includes('ESPDEC')) {
         this.lblPregunta = '¿Cuántas unidades necesitas?';
         this.lblRendimiento = 'Unidad:';
         this.lblResultadoEmpaque = 'UNIDADES A LLEVAR:';
@@ -158,7 +167,7 @@ export class PedidosComponent implements OnInit {
     const precio = this.prodSeleccionado.precio || 0;
     
     const isPeg = cod.includes('PEG');
-    const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP');
+    const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC') || cod.includes('ESPDEC');
 
     if (isUnd) {
         const cantidad = Math.ceil(this.metrosSolicitados); 
@@ -192,7 +201,7 @@ export class PedidosComponent implements OnInit {
     const cod = this.prodSeleccionado.codigo || '';
     const precio = this.prodSeleccionado.precio || 0;
     const isPeg = cod.includes('PEG');
-    const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP');
+    const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC') || cod.includes('ESPDEC');
     
     let cantidadEmpaques = 0;
     let mReal = "-";
@@ -271,5 +280,22 @@ export class PedidosComponent implements OnInit {
     localStorage.removeItem('clienteDNI');
     alert("Sesión cerrada correctamente.");
     window.location.href = '/'; 
+  }
+
+  // 🔥 MAGIA PARA ETIQUETAS DE PRECIO 🔥
+  getUnidadMedida(codigo: string): string {
+    const cod = (codigo || '').toUpperCase();
+    if (cod.includes('PEG')) return 'x saco';
+    if (cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC') || cod.includes('ESPDEC')) return 'x und.';
+    return 'x m²';
+  }
+
+  // 🔥 RESTRICCIÓN INTELIGENTE DEL CARRITO 🔥
+  irACotizar() {
+    if (this.carritoCotizacion.length === 0) {
+      alert("🛒 Tu carrito está vacío. ¡Agrega algunos productos antes de ir a cotizar!");
+    } else {
+      this.router.navigate(['/cotizar']);
+    }
   }
 }

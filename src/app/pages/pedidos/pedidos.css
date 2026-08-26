@@ -164,12 +164,87 @@ footer h4 { color: #FF8C00; font-weight: bold; }
 }
 
 /* =========================================
-   🔥 MEGA REGLA DE ORO PARA CELULARES 🔥
-   (Arregla la Tabla, el Navbar, Footer y Chat)
+   🔥 INTERACTIVIDAD, MENÚ CENTRADO Y CARRITO 🔥
+   ========================================= */
+@keyframes latido-radar {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.8); }
+    50% { transform: scale(1.15); box-shadow: 0 0 0 12px rgba(255, 140, 0, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 140, 0, 0); }
+}
+
+.navbar-toggle {
+    background-color: #FF8C00 !important;
+    border: none !important;
+    animation: latido-radar 2s infinite !important;
+}
+
+.navbar-toggle .icon-bar {
+    background-color: white !important;
+}
+
+/* Centrado del menú en PC */
+@media (min-width: 768px) {
+    .navbar-collapse {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+    .navbar-center {
+        margin: 0 auto !important;
+        display: flex;
+    }
+    .navbar-right {
+        position: absolute !important;
+        right: 15px;
+        top: 0;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        margin: 0 !important;
+    }
+}
+
+/* Carrito Flotante (Abajo a la derecha, encima del chat) */
+#floating-cart {
+    position: fixed;
+    right: 20px;
+    bottom: 100px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #122A51;
+    color: white;
+    text-align: center;
+    line-height: 60px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 9998;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+#floating-cart:hover {
+    transform: scale(1.1);
+    background-color: #FF8C00;
+}
+
+.badge-flotante {
+    position: absolute;
+    top: 5px;
+    right: -5px;
+    background-color: #FF8C00;
+    color: white;
+    font-size: 13px;
+    border: 2px solid white;
+    border-radius: 50%;
+    padding: 3px 7px;
+}
+
+/* =========================================
+   🔥 REGLA DE ORO PARA CELULARES 🔥
    ========================================= */
 @media (max-width: 768px) {
     
-    /* 1. CHAT CELULAR Y BOTON FLOTANTE */
     .chat-box {
         width: 90%; 
         right: 0;
@@ -183,15 +258,14 @@ footer h4 { color: #FF8C00; font-weight: bold; }
         right: 20px !important;
     }
 
-    /* 2. PROTECCIÓN PARA LA TABLA DE COTIZACIONES */
     .table-responsive {
-        border: none !important; /* Quita el borde feo de Bootstrap en móviles */
+        border: none !important;
     }
     .table {
-        min-width: 500px; /* Obliga a tener scroll en lugar de aplastar el texto */
+        min-width: 500px;
     }
 
-    /* 3. DOMANDO EL MENÚ DE NAVEGACIÓN */
+    .navbar-nav { margin: 0 !important; float: none !important; display: block !important; }
     .navbar-nav > li {
         float: none !important;
         border-left: none !important;
@@ -201,8 +275,8 @@ footer h4 { color: #FF8C00; font-weight: bold; }
         text-align: center !important; 
         padding: 15px !important;
     }
+    .navbar-right { position: relative !important; display: block !important; }
 
-    /* 4. CABECERA Y LOGO CENTRADOS */
     .header-content > div {
         display: block !important;
         text-align: center !important;
@@ -215,12 +289,11 @@ footer h4 { color: #FF8C00; font-weight: bold; }
         height: 180px; 
     }
 
-    /* 5. FOOTER PERFECTAMENTE CENTRADO Y CON ESPACIO VITAL */
     footer .col-md-4 {
         text-align: center !important;
         margin-bottom: 25px;
     }
     footer {
-        padding-bottom: 80px !important; /* Para que el boton de whatsapp/chat no estorbe */
+        padding-bottom: 80px !important; 
     }
 }
