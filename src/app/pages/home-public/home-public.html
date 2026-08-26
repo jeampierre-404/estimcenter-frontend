@@ -16,15 +16,9 @@
       <li data-target="#carouselDecor" data-slide-to="2"></li>
     </ol>
     <div class="carousel-inner" role="listbox">
-      <div class="item active">
-        <img src="assets/imagenes/sala_moderna.jpg" alt="Sala Moderna" class="center-block carousel-img">
-      </div>
-      <div class="item">
-        <img src="assets/imagenes/bano.jpg" alt="Baño" class="center-block carousel-img">
-      </div>
-      <div class="item">
-        <img src="assets/imagenes/cocina.jpg" alt="Cocina" class="center-block carousel-img">
-      </div>
+      <div class="item active"><img src="assets/imagenes/sala_moderna.jpg" alt="Sala Moderna" class="center-block carousel-img"></div>
+      <div class="item"><img src="assets/imagenes/bano.jpg" alt="Baño" class="center-block carousel-img"></div>
+      <div class="item"><img src="assets/imagenes/cocina.jpg" alt="Cocina" class="center-block carousel-img"></div>
     </div>
   </div>
 </header>
@@ -36,7 +30,6 @@
    </div>
   <div class="collapse navbar-collapse" id="menuPrincipal">
     
-    <!-- 🔥 ENLACES CENTRALIZADOS (No se rompen) 🔥 -->
     <ul class="nav navbar-nav navbar-center"> 
       <li class="active"><a routerLink="/"><b>INICIO</b></a></li>
       <li><a routerLink="/catalogo"><b><span class="glyphicon glyphicon-book"></span> Catálogo</b></a></li>
@@ -44,7 +37,6 @@
       <li><a routerLink="/cotizar"><b><span class="glyphicon glyphicon-edit"></span> Cotizar</b></a></li>
     </ul>
 
-    <!-- 🔥 BOTONES ALINEADOS A LA DERECHA 🔥 -->
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown" style="border-left: 1px solid #e7e7e7;">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #FF8C00; font-weight: bold;">
@@ -57,21 +49,12 @@
               <li *ngIf="clienteLogueado"><a style="cursor: pointer;" (click)="cerrarSesion()"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a></li>
           </ul>
       </li>
-
-      <li style="border-left: 1px solid #e7e7e7; background-color: #fff8e1;">
-          <a routerLink="/cotizar" style="cursor: pointer; color: #FF8C00; font-weight: bold;">
-              <span class="glyphicon glyphicon-shopping-cart"></span> Mi Carrito 
-              <span class="badge" style="background-color: #122A51; margin-left: 5px;">{{ carritoCotizacion.length }}</span>
-          </a>
-      </li>
-
       <li style="border-left: 1px solid #e7e7e7; margin-right: 15px;">
           <a (click)="abrirBuscadorPred()" style="cursor: pointer; color: #122A51; font-weight: bold; background-color: #f8f9fa;">
               <span class="glyphicon glyphicon-search"></span> Búsqueda Rápida
           </a>
       </li>
     </ul>
-
   </div>
 </nav>
 
@@ -84,12 +67,12 @@
             <p style="color: #666; font-size: 1.1em; margin-bottom: 30px;">Descubre nuestros nuevos diseños. Haz clic en los puntos <span class="glyphicon glyphicon-plus-sign" style="color:#FF8C00"></span>.</p>
         </div>
 
-        <!-- BAÑOS HOTSPOTS -->
+        <!-- BAÑOS -->
         <div class="row">
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #FF8C00;">Estilo Moderno Tarraco</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_baño1.png" class="img-responsive shop-look-img" alt="Diseño Baño 1">
+                    <img src="assets/imagenes/enchape_de_baño1.png" class="img-responsive shop-look-img">
                     <div class="hotspot" style="top: 30%; left: 50%;" (click)="toggleHotspot('m1-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
                     <div class="hotspot-card" id="card-m1-1" style="display: none;">
                         <h5>Cerámico Convex Marfil</h5><span class="price">S/ 25.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
@@ -108,7 +91,7 @@
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #FF8C00;">Estilo Clásico Gris</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_baño2.png" class="img-responsive shop-look-img" alt="Diseño Baño 2">
+                    <img src="assets/imagenes/enchape_de_baño2.png" class="img-responsive shop-look-img">
                     <div class="hotspot" style="top: 37%; left: 30%;" (click)="toggleHotspot('m2-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
                     <div class="hotspot-card" id="card-m2-1" style="display: none;">
                         <h5>Ceramico Hojas</h5><span class="price">S/ 25.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
@@ -131,7 +114,7 @@
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #FF8C00;">Estilo Burbujas</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_baño3.png" class="img-responsive shop-look-img" alt="Diseño Baño 3">
+                    <img src="assets/imagenes/enchape_de_baño3.png" class="img-responsive shop-look-img">
                     <div class="hotspot" style="top: 45%; left: 60%;" (click)="toggleHotspot('m3-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
                     <div class="hotspot-card" id="card-m3-1" style="display: none;">
                         <h5>Decorado Burbuja</h5><span class="price">S/ 15.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
@@ -150,7 +133,7 @@
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #FF8C00;">Estilo Moderno Retro</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_baño4.png" class="img-responsive shop-look-img" alt="Diseño Baño 4">
+                    <img src="assets/imagenes/enchape_de_baño4.png" class="img-responsive shop-look-img">
                     <div class="hotspot" style="top: 47%; left: 47%;" (click)="toggleHotspot('m4-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
                     <div class="hotspot-card" id="card-m4-1" style="display: none;">
                         <h5>Decorado Cuadros Plata</h5><span class="price">S/ 15.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
@@ -169,7 +152,7 @@
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #FF8C00;">Estilo Innovador Rectangular</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_baño5.png" class="img-responsive shop-look-img" alt="Diseño Baño 5">
+                    <img src="assets/imagenes/enchape_de_baño5.png" class="img-responsive shop-look-img">
                     <div class="hotspot" style="top: 45%; left: 60%;" (click)="toggleHotspot('m5-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
                     <div class="hotspot-card" id="card-m5-1" style="display: none;">
                         <h5>Decorado Jovy Baño</h5><span class="price">S/ 15.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
@@ -180,7 +163,7 @@
                     </div>
                     <div class="hotspot" style="top: 62%; left: 22%;" (click)="toggleHotspot('m5-3', $event)"><span class="glyphicon glyphicon-plus"></span></div>
                     <div class="hotspot-card" id="card-m5-3" style="display: none;">
-                        <h5>Inodoro Tarraco Gris</h5><span class="price">S/ 370.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
+                        <h5>Inodoro Tarraco Gris</h5><span class="price">S/370.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                     <div class="hotspot" style="top: 60%; left: 70%;" (click)="toggleHotspot('m5-4', $event)"><span class="glyphicon glyphicon-plus"></span></div>
                     <div class="hotspot-card" id="card-m5-4" style="display: none;">
@@ -192,7 +175,7 @@
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #FF8C00;">Estilo Novedoso Lujoso</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_baño6.png" class="img-responsive shop-look-img" alt="Diseño Baño 6">
+                    <img src="assets/imagenes/enchape_de_baño6.png" class="img-responsive shop-look-img">
                     <div class="hotspot" style="top: 30%; left: 60%;" (click)="toggleHotspot('m6-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
                     <div class="hotspot-card" id="card-m6-1" style="display: none;">
                         <h5>Cerámico Colmena</h5><span class="price">S/ 26.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
@@ -208,12 +191,12 @@
         <hr class="divider-style" style="margin: 40px 0;">
         <h3 style="color: #000080; font-weight: bold; margin-top: 5px; font-size: 1.8em;" class="text-center">Cocina</h3>
 
-        <!-- COCINAS HOTSPOTS -->
+        <!-- COCINAS -->
         <div class="row">
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #000080;">Estilo Industrial</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_cocina1.png" class="img-responsive shop-look-img" alt="Diseño Cocina 1">
+                    <img src="assets/imagenes/enchape_de_cocina1.png" class="img-responsive shop-look-img">
                     <div class="hotspot" style="top: 31%; left: 50%;" (click)="toggleHotspot('m7-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
                     <div class="hotspot-card" id="card-m7-1" style="display: none;">
                         <h5>Cerámico Ladrillo</h5><span class="price">S/ 25.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
@@ -232,7 +215,7 @@
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #000080;">Estilo Burbujas</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_cocina2.png" class="img-responsive shop-look-img" alt="Diseño Cocina 2">
+                    <img src="assets/imagenes/enchape_de_cocina2.png" class="img-responsive shop-look-img">
                     <div class="hotspot" style="top: 36%; left: 40%;" (click)="toggleHotspot('m8-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
                     <div class="hotspot-card" id="card-m8-1" style="display: none;">
                         <h5>Decorado Burbuja</h5><span class="price">S/ 15.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
@@ -251,7 +234,7 @@
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #000080;">Estilo Contemporáneo</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_cocina3.png" class="img-responsive shop-look-img" alt="Diseño Cocina 3">
+                    <img src="assets/imagenes/enchape_de_cocina3.png" class="img-responsive shop-look-img">
                     <div class="hotspot" style="top: 15%; left: 60%;" (click)="toggleHotspot('m9-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
                     <div class="hotspot-card" id="card-m9-1" style="display: none;">
                         <h5>Cerámico Cuadros Plata</h5><span class="price">S/ 25.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
@@ -270,7 +253,7 @@
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #000080;">Estilo Dorado</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_cocina4.png" class="img-responsive shop-look-img" alt="Diseño Cocina 4">
+                    <img src="assets/imagenes/enchape_de_cocina4.png" class="img-responsive shop-look-img">
                     <div class="hotspot" style="top: 20%; left: 20%;" (click)="toggleHotspot('m10-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
                     <div class="hotspot-card" id="card-m10-1" style="display: none;">
                         <h5>Cerámico Convex Marfil</h5><span class="price">S/ 24.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
@@ -289,7 +272,7 @@
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #000080;">Estilo Grafito</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_cocina5.png" class="img-responsive shop-look-img" alt="Diseño Cocina 5">
+                    <img src="assets/imagenes/enchape_de_cocina5.png" class="img-responsive shop-look-img">
                     <div class="hotspot" style="top: 70%; left: 30%;" (click)="toggleHotspot('m11-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
                     <div class="hotspot-card" id="card-m11-1" style="display: none;">
                         <h5>Porcelanato Doble Carga Gris</h5><span class="price">S/ 38.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
@@ -300,7 +283,7 @@
                     </div>
                     <div class="hotspot" style="top: 20%; left: 85%;" (click)="toggleHotspot('m11-3', $event)"><span class="glyphicon glyphicon-plus"></span></div>
                     <div class="hotspot-card" id="card-m11-3" style="display: none;">
-                        <h5>Decorado Ondas Raya COcina </h5><span class="price">S/ 15.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
+                        <h5>Decorado Ondas Raya Cocina </h5><span class="price">S/ 15.00 <small style="color: #FF8C00; font-size: 14px;">x und.</small></span>
                     </div>
                 </div>
             </div>
@@ -308,7 +291,7 @@
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #000080;">Acabado Maderado</h4>
                 <div class="shop-look-container">
-                    <img src="assets/imagenes/enchape_de_cocina6.png" class="img-responsive shop-look-img" alt="Diseño Cocina 6">
+                    <img src="assets/imagenes/enchape_de_cocina6.png" class="img-responsive shop-look-img">
                     <div class="hotspot" style="top: 50%; left: 70%;" (click)="toggleHotspot('m12-1', $event)"><span class="glyphicon glyphicon-plus"></span></div>
                     <div class="hotspot-card" id="card-m12-1" style="display: none;">
                         <h5>Porcelanato Mate Carrara</h5><span class="price">S/ 34.00 <small style="color: #FF8C00; font-size: 14px;">x m²</small></span>
@@ -327,38 +310,27 @@
     <section id="catalogos">
         <h2 style="color: #000080; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; font-size: 2.5em;" class="text-center">Nuestros Catálogos</h2>
         <h3 style="margin-top: 20px;">Destacados del Mes</h3>
+        
         <article>
             <div class="panel-group" id="accordionDecor">
 
-                <!-- CATÁLOGO 1 -->
+                <!-- 1. DECORADOS -->
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat1">Porcelanatos 60x60</a></h4>
+                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat1" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Decorados</a></h4>
                     </div>
                     <div id="cat1" class="panel-collapse collapse in">
                         <div class="panel-body">
-                            <p>Ideal para salas y comedores. Acabado brillante de alta resistencia y fácil limpieza.</p>
-
                             <div class="row fila-productos">
-                                <div *ngIf="porcelanatosList.length === 0" class="text-center" style="padding: 20px;">
-                                    <p style="color: gray;"><i>Cargando nuevos diseños...</i></p>
-                                </div>
-
-                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of porcelanatosList" [id]="'prod-' + prod.codigo">
+                                <div *ngIf="decorados.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of decorados">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                                        <button type="button" class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)" title="Ver en Ambiente">
-                                            <span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span>
-                                        </button>
-                                        <img *ngIf="prod.imagen" [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
-                                        <img *ngIf="!prod.imagen" src="assets/imagenes/logo.jpg" class="img-responsive center-block" alt="Sin imagen" style="height: 200px; object-fit: contain;">
-                                        
+                                        <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
+                                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
                                         <div class="caption text-center">
                                             <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
-                                            <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
-                                            <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">
-                                                S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small>
-                                            </p>
-                                            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                            <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
+                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
                                         </div>
                                     </div>
                                 </div>
@@ -367,32 +339,23 @@
                     </div>
                 </div>
 
-                <!-- CATÁLOGO 2 -->
+                <!-- 2. DECORADOS ESPAÑOLES -->
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat2">Cerámicos 46x46</a></h4>
+                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat2" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Decorados Españoles</a></h4>
                     </div>
                     <div id="cat2" class="panel-collapse collapse">
                         <div class="panel-body">
                             <div class="row fila-productos">
-                                <div *ngIf="ceramicosList.length === 0" class="text-center" style="padding: 20px;">
-                                    <p style="color: gray;"><i>Cargando nuevos diseños...</i></p>
-                                </div>
-                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of ceramicosList" [id]="'prod-' + prod.codigo">
+                                <div *ngIf="decoradosEspanoles.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of decoradosEspanoles">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                                        <button type="button" class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)" title="Ver en Ambiente">
-                                            <span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span>
-                                        </button>
-                                        <img *ngIf="prod.imagen" [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 200px; object-fit: contain;">
-                                        <img *ngIf="!prod.imagen" src="assets/imagenes/logo.jpg" class="img-responsive center-block" alt="Sin imagen" style="height: 200px; object-fit: contain;">
-                                        
+                                        <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
+                                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
                                         <div class="caption text-center">
                                             <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
-                                            <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
-                                            <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">
-                                                S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small>
-                                            </p>
-                                            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                            <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
+                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
                                         </div>
                                     </div>
                                 </div>
@@ -401,42 +364,200 @@
                     </div>
                 </div>
 
-                <!-- CATÁLOGO 3 -->
+                <!-- 3. PAREDES -->
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat3">Pegamentos</a></h4>
+                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat3" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Paredes 30x60</a></h4>
                     </div>
                     <div id="cat3" class="panel-collapse collapse">
                         <div class="panel-body">
                             <div class="row fila-productos">
-                                <div *ngIf="pegamentosList.length === 0" class="text-center" style="padding: 20px;">
-                                    <p style="color: gray;"><i>Cargando nuevos diseños...</i></p>
-                                </div>
-                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of pegamentosList" [id]="'prod-' + prod.codigo">
+                                <div *ngIf="paredes.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of paredes">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                                        <!-- 🔥 OJITO PARA PEGAMENTOS 🔥 -->
-                                        <button type="button" class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)" title="Ver en Ambiente">
-                                            <span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span>
-                                        </button>
-                                        <img *ngIf="prod.imagen" [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" [alt]="prod.nombre" style="height: 220px; object-fit: contain;">
-                                        <img *ngIf="!prod.imagen" src="assets/imagenes/logo.jpg" class="img-responsive center-block" alt="Sin imagen" style="height: 220px; object-fit: contain;">
+                                        <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
+                                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
+                                        <div class="caption text-center">
+                                            <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
+                                            <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
+                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. FACHALETAS -->
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat4" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Fachaletas</a></h4>
+                    </div>
+                    <div id="cat4" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row fila-productos">
+                                <div *ngIf="fachaletas.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of fachaletas">
+                                    <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                                        <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
+                                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
+                                        <div class="caption text-center">
+                                            <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
+                                            <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
+                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. PORCELANATOS -->
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat5" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Porcelanatos 60x60</a></h4>
+                    </div>
+                    <div id="cat5" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row fila-productos">
+                                <div *ngIf="porcelanatos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of porcelanatos">
+                                    <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                                        <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
+                                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
+                                        <div class="caption text-center">
+                                            <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
+                                            <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
+                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. PLANCHAS -->
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat6" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Planchas 120x60</a></h4>
+                    </div>
+                    <div id="cat6" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row fila-productos">
+                                <div *ngIf="planchas.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of planchas">
+                                    <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                                        <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
+                                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
+                                        <div class="caption text-center">
+                                            <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
+                                            <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
+                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. CERAMICOS -->
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat7" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Cerámicos 46x46 & 60x60</a></h4>
+                    </div>
+                    <div id="cat7" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row fila-productos">
+                                <div *ngIf="ceramicos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of ceramicos">
+                                    <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                                        <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
+                                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
+                                        <div class="caption text-center">
+                                            <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
+                                            <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
+                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. LÁPICES -->
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat8" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Lápices</a></h4>
+                    </div>
+                    <div id="cat8" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row fila-productos">
+                                <div *ngIf="lapices.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of lapices">
+                                    <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                                        <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
+                                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
+                                        <div class="caption text-center">
+                                            <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
+                                            <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
+                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. BAÑOS -->
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat9" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Baños & Ovalines</a></h4>
+                    </div>
+                    <div id="cat9" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row fila-productos">
+                                <div *ngIf="banos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of banos">
+                                    <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                                        <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
+                                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
+                                        <div class="caption text-center">
+                                            <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
+                                            <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
+                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10. PEGAMENTOS -->
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat10" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Pegamentos</a></h4>
+                    </div>
+                    <div id="cat10" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row fila-productos">
+                                <div *ngIf="pegamentos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of pegamentos">
+                                    <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                                        <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
+                                        <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 220px; object-fit: contain;">
                                         
                                         <div class="caption text-center">
                                             <h4 style="font-weight: bold; color: #555; height: 30px; overflow: hidden;">{{ prod.nombre }}</h4>
-                                            
-                                            <!-- 🔥 ETIQUETA DINÁMICA DE LA BASE DE DATOS (BLANCO/GRIS) 🔥 -->
-                                            <p>
-                                                <span class="label" [ngClass]="getEtiquetaPegamento(prod.categoria?.nombre).clase">
-                                                    {{ getEtiquetaPegamento(prod.categoria?.nombre).texto }}
-                                                </span>
-                                            </p>
-                                            
-                                            <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO 🔥 -->
+                                            <p><span class="label" [ngClass]="getEtiquetaPegamento(prod.categoria?.nombre).clase">{{ getEtiquetaPegamento(prod.categoria?.nombre).texto }}</span></p>
                                             <h3 style="color: #122A51; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #122A51; font-size: 16px;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
-                                            
-                                            <button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)" style="font-weight: bold;">
-                                                <span class="glyphicon glyphicon-shopping-cart"></span> Calcular Sacos
-                                            </button>
+                                            <button class="btn btn-warning btn-block" (click)="prepararCalculadora(prod)" style="font-weight: bold;"><span class="glyphicon glyphicon-shopping-cart"></span> Calcular Sacos</button>
                                         </div>
                                     </div>
                                 </div>
@@ -454,15 +575,9 @@
     <section id="ofertas-relampago" style="margin-bottom: 40px;">
         <h4 class="text-center" style="color: #FF8C00; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; font-size: 2.5em;">Ofertas Relámpago</h4>
         <div class="row">
-             <div class="col-md-4 col-sm-4">
-                 <img src="assets/imagenes/oferta1.png" class="img-responsive center-block" alt="Oferta 1" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-             </div>
-             <div class="col-md-4 col-sm-4">
-                 <img src="assets/imagenes/oferta2.png" class="img-responsive center-block" alt="Oferta 2" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-             </div>
-             <div class="col-md-4 col-sm-4">
-                 <img src="assets/imagenes/oferta3.png" class="img-responsive center-block" alt="Oferta 3" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-             </div>
+             <div class="col-md-4 col-sm-4"><img src="assets/imagenes/oferta1.png" class="img-responsive center-block" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></div>
+             <div class="col-md-4 col-sm-4"><img src="assets/imagenes/oferta2.png" class="img-responsive center-block" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></div>
+             <div class="col-md-4 col-sm-4"><img src="assets/imagenes/oferta3.png" class="img-responsive center-block" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></div>
         </div>
     </section>
 
@@ -470,13 +585,8 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12">
                 <div class="well text-center" style="border: 2px solid #FF8C00; background-color: #fff; padding: 20px; margin-bottom: 0;">
-                    <h4 style="color: #FF8C00; margin-top: 0; font-weight: bold; text-transform: uppercase;">
-                        <span class="glyphicon glyphicon-time"></span> Horario
-                    </h4>
-                    <p style="color: #333; font-size: 1.4em; margin: 5px 0 0 0;">
-                        Lunes a Sábado<br>
-                        <strong>8:30 am - 8:00 pm</strong>
-                    </p>
+                    <h4 style="color: #FF8C00; margin-top: 0; font-weight: bold; text-transform: uppercase;"><span class="glyphicon glyphicon-time"></span> Horario</h4>
+                    <p style="color: #333; font-size: 1.4em; margin: 5px 0 0 0;">Lunes a Sábado<br><strong>8:30 am - 8:00 pm</strong></p>
                 </div>
             </div>
         </div>
@@ -487,9 +597,7 @@
     <div class="row">
         <div class="col-md-12">
             <h2>¿Por qué elegir ESTIM CENTER FJ?</h2>
-            <article class="info-box">
-              <p>Somos especialistas en acabados para la construcción. Ofrecemos asesoría personalizada para que encuentres el piso ideal para tu hogar. Contamos con las mejores marcas del mercado y servicio de entrega a domicilio.</p>
-            </article>
+            <article class="info-box"><p>Somos especialistas en acabados para la construcción. Ofrecemos asesoría personalizada para que encuentres el piso ideal para tu hogar. Contamos con las mejores marcas del mercado y servicio de entrega a domicilio.</p></article>
         </div>
     </div>
 </div>
@@ -500,25 +608,20 @@
     <span class="badge badge-flotante">{{ carritoCotizacion.length }}</span>
 </div>
 
-<!-- 🔥 MODAL DE BÚSQUEDA PREDICTIVA 🔥 -->
+<!-- MODAL DE BÚSQUEDA PREDICTIVA -->
 <div class="modal fade" id="modalBienvenidaBuscador" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog" role="document" style="margin-top: 10vh;">
     <div class="modal-content" style="border-radius: 12px; border: none; box-shadow: 0 15px 30px rgba(0,0,0,0.2);">
       <div class="modal-header" style="background-color: #122A51; color: white; border-radius: 12px 12px 0 0; border-bottom: 3px solid #FF8C00;">
         <button type="button" class="close" data-dismiss="modal" style="color: white; opacity: 1; text-shadow: none;">&times;</button>
-        <h4 class="modal-title" style="font-weight: bold; font-size: 1.5em; text-align: center;">
-            <span class="glyphicon glyphicon-search"></span> ¿Qué estás buscando hoy?
-        </h4>
+        <h4 class="modal-title" style="font-weight: bold; font-size: 1.5em; text-align: center;"><span class="glyphicon glyphicon-search"></span> ¿Qué estás buscando hoy?</h4>
       </div>
       <div class="modal-body" style="background-color: #f9f9f9; padding: 25px;">
-          
           <div class="form-group" style="position: relative; margin-bottom: 20px;">
               <input type="text" [(ngModel)]="terminoBusqueda" (keyup)="buscarProductoPred()" name="busquedaPredictiva" class="form-control input-lg" placeholder="Ej: Porcelanato, Pegamento, Gris..." style="border-radius: 25px; padding-left: 20px; border: 2px solid #FF8C00; box-shadow: none;">
               <span class="glyphicon glyphicon-search" style="position: absolute; right: 20px; top: 15px; font-size: 18px; color: #888;"></span>
           </div>
-          
           <div class="list-group" style="margin-bottom: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
-              
               <a *ngFor="let p of productosBuscados" class="list-group-item" (click)="seleccionarBusquedaPred(p)" style="cursor: pointer; border-left: 4px solid #FF8C00; transition: background 0.2s;">
                   <div style="display: flex; align-items: center;">
                       <img [src]="getImagenUrl(p.imagen)" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; margin-right: 15px; border: 1px solid #eee;">
@@ -527,27 +630,23 @@
                           <p style="margin: 0; font-size: 0.85em; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;">{{ p.descripcion }}</p>
                       </div>
                       <div style="text-align: right;">
-                          <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO EN EL BUSCADOR 🔥 -->
                           <strong style="color: #FF8C00; font-size: 1.1em;">S/ {{ p.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 12px;">{{ getUnidadMedida(p.codigo) }}</small></strong>
                       </div>
                   </div>
               </a>
-              
               <div *ngIf="terminoBusqueda && productosBuscados.length === 0" class="text-center" style="padding: 20px; background: white; border: 1px solid #ddd; border-radius: 8px;">
-                  <span class="glyphicon glyphicon-info-sign" style="font-size: 24px; color: #ccc; display: block; margin-bottom: 10px;"></span>
-                  No encontramos productos con "<b>{{ terminoBusqueda }}</b>".
+                  <span class="glyphicon glyphicon-info-sign" style="font-size: 24px; color: #ccc; display: block; margin-bottom: 10px;"></span>No encontramos productos con "<b>{{ terminoBusqueda }}</b>".
               </div>
           </div>
-
       </div>   
       <div class="modal-footer" style="text-align: center; border-top: none; background-color: #f9f9f9; padding-bottom: 20px;">
-        <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 20px; padding: 8px 30px; font-weight: bold; color: #122A51;">Explorar Catálogo Manualmente</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 20px; padding: 8px 30px; font-weight: bold; color: #122A51;">Cerrar Buscador</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- 🔥 CALCULADORA INTELIGENTE ACTUALIZADA 🔥 -->
+<!-- CALCULADORA MODAL -->
 <div class="modal fade" id="calculadoraModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content" *ngIf="prodSeleccionado">
@@ -567,13 +666,10 @@
               </div>
               <hr>
               <div class="row">
-                  <!-- MAGIA: Si es Unidad, el precio toma todo el ancho. Si no, se divide en 2. -->
                   <div [ngClass]="lblRendimiento === 'Unidad:' ? 'col-md-12 col-xs-12 text-center' : 'col-md-6 col-xs-6'">
                       <label>Precio Unitario:</label>
                       <input type="text" class="form-control" [ngClass]="{'text-center': lblRendimiento === 'Unidad:'}" [value]="'S/ ' + prodSeleccionado.precio" readonly>
                   </div>
-                  
-                  <!-- OCULTA EL RENDIMIENTO SI EL PRODUCTO ES UNIDAD -->
                   <div class="col-md-6 col-xs-6" *ngIf="lblRendimiento !== 'Unidad:'">
                       <label>{{ lblRendimiento }}</label>
                       <input type="text" class="form-control" [value]="prodSeleccionado.codigo?.includes('PEG') ? '4 m² (aprox)' : (prodSeleccionado.rendimientoCaja ? (prodSeleccionado.rendimientoCaja + ' m²') : '-')" readonly>
@@ -592,8 +688,6 @@
                       </div>
                   </div>
                   <br>
-                  
-                  <!-- OCULTA EL METRAJE TOTAL SI ES UNIDAD -->
                   <div class="row" *ngIf="lblRendimiento !== 'Unidad:' && metrosReales !== '-'">
                       <div class="col-md-6 col-xs-6">
                           <label style="color: #333;">METRAJE TOTAL:</label>
@@ -604,14 +698,9 @@
                           <input type="text" class="form-control" [value]="unidadesTotales" readonly style="font-weight: bold; color: #333;">
                       </div>
                   </div>
-                  
-                  <p class="help-block text-center" style="margin-top: 15px; font-size: 0.9em; color: #555;" *ngIf="mostrarPiezas || prodSeleccionado.codigo?.includes('PEG')">
-                      *El cálculo se redondea al empaque superior para asegurar cobertura.
-                  </p>
               </div>
           </form>
       </div>   
-      
       <div class="modal-footer" style="text-align: center; border-top: 1px solid #eee; padding: 15px;">
         <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 20px; padding: 8px 25px; margin-right: 10px;">Cerrar</button>
         <button type="button" class="btn" style="background-color: #122A51; color: white; padding: 8px 25px; border-radius: 20px; font-weight: bold;" (click)="calcularTotal()">¡Calcular Ahora!</button>
@@ -619,41 +708,23 @@
             <span class="glyphicon glyphicon-shopping-cart"></span> Agregar al Carrito
         </button>
       </div>
-      
     </div>
   </div>
 </div>
 
-<!-- 🔥 MODAL VISTA EN AMBIENTE MEJORADO 🔥 -->
+<!-- MODAL VISTA AMBIENTE -->
 <div class="modal fade" id="modalSala" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" *ngIf="prodVistaSala">
-            
             <div class="modal-header" style="background-color: #122A51; color: white; border-bottom: 3px solid #FF8C00;">
                 <button type="button" class="close" data-dismiss="modal" style="color: white; opacity: 1;">&times;</button>
-                <h4 class="modal-title" style="font-weight: bold;">
-                    <span class="glyphicon glyphicon-picture"></span> {{ prodVistaSala.nombre }}
-                </h4>
+                <h4 class="modal-title" style="font-weight: bold;"><span class="glyphicon glyphicon-picture"></span> {{ prodVistaSala.nombre }}</h4>
             </div>
-            
             <div class="modal-body text-center" style="padding: 0; position: relative; background-color: #f4f4f4;">
-                
-                <button class="btn btn-default" (click)="cambiarVistaImagen()" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); z-index: 10; border-radius: 50%; width: 45px; height: 45px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); border: none; background: rgba(255,255,255,0.8);">
-                    <span class="glyphicon glyphicon-chevron-left" style="color: #122A51; font-weight: bold; font-size: 18px;"></span>
-                </button>
-                
-                <button class="btn btn-default" (click)="cambiarVistaImagen()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); z-index: 10; border-radius: 50%; width: 45px; height: 45px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); border: none; background: rgba(255,255,255,0.8);">
-                    <span class="glyphicon glyphicon-chevron-right" style="color: #122A51; font-weight: bold; font-size: 18px;"></span>
-                </button>
-
+                <button class="btn btn-default" (click)="cambiarVistaImagen()" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); z-index: 10; border-radius: 50%; width: 45px; height: 45px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); border: none; background: rgba(255,255,255,0.8);"><span class="glyphicon glyphicon-chevron-left" style="color: #122A51; font-weight: bold; font-size: 18px;"></span></button>
+                <button class="btn btn-default" (click)="cambiarVistaImagen()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); z-index: 10; border-radius: 50%; width: 45px; height: 45px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); border: none; background: rgba(255,255,255,0.8);"><span class="glyphicon glyphicon-chevron-right" style="color: #122A51; font-weight: bold; font-size: 18px;"></span></button>
                 <img [src]="mostrandoSala ? imagenSala : getImagenUrl(prodVistaSala.imagen)" class="img-responsive center-block" style="max-height: 60vh; object-fit: contain; width: 100%; padding: 20px;">
-                
-                <span class="label" [ngClass]="mostrandoSala ? 'label-warning' : 'label-primary'" style="position: absolute; top: 15px; left: 15px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                    <span class="glyphicon" [ngClass]="mostrandoSala ? 'glyphicon-home' : 'glyphicon-stop'"></span> 
-                    {{ mostrandoSala ? 'Vista en Ambiente' : 'Vista de la Pieza' }}
-                </span>
             </div>
-            
             <div class="modal-footer" style="text-align: left; background: white;">
                 <div class="row">
                     <div class="col-xs-8">
@@ -661,15 +732,13 @@
                         <p style="margin: 5px 0 0 0; color: #666; font-size: 13px;">{{ prodVistaSala.descripcion || 'Detalles exclusivos de nuestro catálogo premium.' }}</p>
                     </div>
                     <div class="col-xs-4 text-right">
-                        <!-- 🔥 ETIQUETA DINÁMICA DE PRECIO AQUÍ TAMBIÉN 🔥 -->
-                        <h3 style="margin: 0; color: #FF8C00; font-weight: bold;">S/ {{ prodVistaSala.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 16px;">{{ getUnidadMedida(prodVistaSala.codigo) }}</small></h3>
+                        <h3 style="margin: 0; color: #FF8C00; font-weight: bold;">S/ {{ prodVistaSala.precio | number:'1.2-2' }}</h3>
                         <button type="button" class="btn btn-success btn-sm" style="margin-top: 5px; font-weight: bold; border-radius: 20px;" (click)="abrirCalculadoraDesdeSala(prodVistaSala)">
                             <span class="glyphicon glyphicon-shopping-cart"></span> Cotizar
                         </button>
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
 </div>
@@ -703,9 +772,7 @@
 
 <div class="chat-box" [class.chat-abierto]="chatVisible">
     <div class="chat-box-header">
-        <div class="chat-avatar">
-            <img src="assets/imagenes/logo_empresa.png" alt="Admin" style="background:white; padding:2px;">
-        </div>
+        <div class="chat-avatar"><img src="assets/imagenes/logo_empresa.png" alt="Admin" style="background:white; padding:2px;"></div>
         <div class="chat-info">
             <span class="chat-title">Soporte ESTIM CENTER FJ</span>
             <span class="chat-status"><span class="status-dot"></span> En línea</span>
@@ -715,10 +782,7 @@
     <div class="chat-box-body" id="chat-box-body">
         <div class="chat-logs">
             <div class="chat-msg user">
-                <div class="cm-msg-text">
-                    ¡Hola! 👋 Bienvenido a ESTIM CENTER FJ<br>
-                    Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?
-                </div>
+                <div class="cm-msg-text">¡Hola! 👋 Bienvenido a ESTIM CENTER FJ<br>Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?</div>
             </div>
             <div class="chat-msg user">
                 <div class="cm-msg-button-container">
@@ -732,9 +796,7 @@
     <div class="chat-input">
         <form (submit)="enviarMensajeEscrito($event)">
             <input type="text" id="chat-input" placeholder="Escribe tu consulta aquí..." />
-            <button type="submit" class="chat-submit" id="chat-submit">
-                <span class="glyphicon glyphicon-send"></span>
-            </button>
+            <button type="submit" class="chat-submit" id="chat-submit"><span class="glyphicon glyphicon-send"></span></button>
         </form>
     </div>
 </div>

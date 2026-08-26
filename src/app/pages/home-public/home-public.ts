@@ -14,9 +14,18 @@ import { FormsModule } from '@angular/forms';
 export class HomePublicComponent implements OnInit {
 
   chatVisible: boolean = false;
-  porcelanatosList: any[] = [];
-  ceramicosList: any[] = [];
-  pegamentosList: any[] = [];
+  
+  // 🔥 LAS 10 CATEGORÍAS (Para el Home) 🔥
+  decorados: any[] = [];
+  decoradosEspanoles: any[] = [];
+  paredes: any[] = [];
+  fachaletas: any[] = [];
+  porcelanatos: any[] = [];
+  planchas: any[] = [];
+  ceramicos: any[] = [];
+  lapices: any[] = [];
+  banos: any[] = [];
+  pegamentos: any[] = [];
 
   nombreCliente: string = '';
   clienteLogueado: boolean = false;
@@ -29,7 +38,7 @@ export class HomePublicComponent implements OnInit {
   metrosReales: string = '';
   unidadesTotales: string = '';
 
-  // 🔥 Variables para la Vista en Ambiente Mejorada 🔥
+  // Variables Vista Sala
   imagenSala: string = '';
   prodVistaSala: any = null;
   mostrandoSala: boolean = true;
@@ -71,6 +80,14 @@ export class HomePublicComponent implements OnInit {
     this.verificarSesion(); 
     this.cargarProductos();
     this.cargarCarrito();
+
+    // Abrir menú automático en celulares
+    setTimeout(() => {
+        if (window.innerWidth <= 768) {
+            const menu = (window as any).$('#menuPrincipal');
+            if (!menu.hasClass('in')) { menu.collapse('show'); }
+        }
+    }, 1000);
   }
 
   verificarSesion() {
@@ -84,20 +101,23 @@ export class HomePublicComponent implements OnInit {
   }
 
   cargarProductos() {
-    this.porcelanatosList = [];
-    this.ceramicosList = [];
-    this.pegamentosList = [];
-
     const v = new Date().getTime();
-    
     this.http.get<any[]>(`https://estimcenter.onrender.com/rest/producto/listar?v=${v}`).subscribe({
       next: (data) => {
         const activos = data.filter(p => p.estado !== 'INACTIVO');
         this.todosLosProductos = activos;
 
-        this.porcelanatosList = activos.filter(p => p.categoria?.nombre === 'Destacado Porcelanato' || (p.codigo && p.codigo.includes('POR'))).slice(0, 3);
-        this.ceramicosList = activos.filter(p => p.categoria?.nombre === 'Destacado Ceramico' || (p.codigo && p.codigo.includes('CER'))).slice(0, 3);
-        this.pegamentosList = activos.filter(p => p.categoria?.nombre === 'Destacado Pegamento' || (p.codigo && p.codigo.includes('PEG'))).slice(0, 3);
+        // 🔥 CARGAMOS TODAS LAS CATEGORÍAS (Máximo 3 productos de muestra para el Home) 🔥
+        this.decorados = activos.filter(p => p.codigo && p.codigo.includes('DEC') && !p.codigo.includes('ESPDEC')).slice(0, 3);
+        this.decoradosEspanoles = activos.filter(p => p.codigo && p.codigo.includes('ESPDEC')).slice(0, 3);
+        this.paredes = activos.filter(p => p.codigo && p.codigo.includes('PAR')).slice(0, 3);
+        this.fachaletas = activos.filter(p => p.codigo && p.codigo.includes('FACH')).slice(0, 3);
+        this.porcelanatos = activos.filter(p => p.codigo && p.codigo.includes('POR')).slice(0, 3);
+        this.planchas = activos.filter(p => p.codigo && p.codigo.includes('PLAN')).slice(0, 3);
+        this.ceramicos = activos.filter(p => p.codigo && p.codigo.includes('CER')).slice(0, 3);
+        this.lapices = activos.filter(p => p.codigo && p.codigo.includes('LAP')).slice(0, 3);
+        this.banos = activos.filter(p => p.codigo && (p.codigo.includes('BANO') || p.codigo.includes('OVA'))).slice(0, 3);
+        this.pegamentos = activos.filter(p => p.codigo && p.codigo.includes('PEG')).slice(0, 3);
 
         this.cdr.detectChanges(); 
       },
@@ -113,10 +133,7 @@ export class HomePublicComponent implements OnInit {
 
   buscarProductoPred() {
     const term = this.terminoBusqueda.toLowerCase().trim();
-    if (!term) {
-        this.productosBuscados = [];
-        return;
-    }
+    if (!term) { this.productosBuscados = []; return; }
 
     this.productosBuscados = this.todosLosProductos.filter(p => 
         (p.nombre && p.nombre.toLowerCase().includes(term)) ||
@@ -127,45 +144,15 @@ export class HomePublicComponent implements OnInit {
 
   seleccionarBusquedaPred(prod: any) {
     (window as any).$('#modalBienvenidaBuscador').modal('hide');
-    
     setTimeout(() => {
-        const elemento = document.getElementById('prod-' + prod.codigo);
-        
-        if (elemento) {
-            const accordionContent = elemento.closest('.panel-collapse');
-            if (accordionContent && !accordionContent.classList.contains('in')) {
-                (window as any).$(accordionContent).collapse('show');
-            }
-            
-            setTimeout(() => {
-                elemento.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                const tarjeta = elemento.querySelector('.thumbnail') as HTMLElement;
-                if (tarjeta) {
-                    const shadowOriginal = tarjeta.style.boxShadow || '';
-                    const transformOriginal = tarjeta.style.transform || '';
-                    
-                    tarjeta.style.transition = 'all 0.5s ease';
-                    tarjeta.style.boxShadow = '0 0 25px 5px rgba(255, 140, 0, 0.6)';
-                    tarjeta.style.transform = 'scale(1.03)';
-                    
-                    setTimeout(() => {
-                        tarjeta.style.boxShadow = shadowOriginal;
-                        tarjeta.style.transform = transformOriginal;
-                    }, 2000);
-                }
-            }, 300);
-        } else {
-            localStorage.setItem('producto_a_enfocar', prod.codigo);
-            this.router.navigate(['/catalogo']);
-        }
+        localStorage.setItem('producto_a_enfocar', prod.codigo);
+        this.router.navigate(['/catalogo']);
     }, 400); 
   }
 
   cargarCarrito() {
     const c = localStorage.getItem('carrito_temporal');
-    if (c) {
-        this.carritoCotizacion = JSON.parse(c);
-    }
+    if (c) { this.carritoCotizacion = JSON.parse(c); }
   }
 
   agregarAlCarrito() {
@@ -213,47 +200,28 @@ export class HomePublicComponent implements OnInit {
       return 'assets/' + imagen; 
   }
 
-  // 🔥 LÓGICA VISTA EN AMBIENTE CON FLECHAS 🔥
   verEnSala(prod: any) {
     this.prodVistaSala = prod;
     this.mostrandoSala = true; 
-    
     const rutaBase = prod.imagenSala ? prod.imagenSala : prod.imagen;
     this.imagenSala = this.getImagenUrl(rutaBase);
-    
     (window as any).$ && (window as any).$('#modalSala').modal('show');
   }
 
-  // 🔥 PARCHE ANTI-CONGELAMIENTO AL ABRIR CALCULADORA 🔥
-  // 🔥 PARCHE NIVEL DIOS: ANTI-PANTALLA NEGRA EN CELULARES 🔥
   abrirCalculadoraDesdeSala(prod: any) {
-    // 1. Cargamos la data del producto en la calculadora
-    this.prepararCalculadora(prod);
-    
-    // 2. 🔥 MAGIA PURA: Obligamos a Angular a dibujar la calculadora en el HTML 
-    // en este exacto milisegundo. Esto evita que Bootstrap abra un modal vacío (pantalla negra).
-    this.cdr.detectChanges(); 
-
-    // 3. Cerramos el modal de la foto suavemente
-    (window as any).$ && (window as any).$('#modalSala').modal('hide');
-    
-    // 4. Le damos 500ms a Bootstrap para que termine la animación de cierre, 
-    // limpiamos la basura y abrimos la calculadora de forma 100% segura.
-    setTimeout(() => {
-        // Matamos cualquier fondo oscuro que se haya quedado atascado
-        (window as any).$('.modal-backdrop').remove(); 
-        
-        // Abrimos la calculadora
-        (window as any).$ && (window as any).$('#calculadoraModal').modal('show');
-        
-        // Le devolvemos la barra de scroll a la página
-        document.body.classList.add('modal-open'); 
-    }, 500);
+    const modalSala = (window as any).$('#modalSala');
+    const modalCalc = (window as any).$('#calculadoraModal');
+    modalSala.modal('hide');
+    modalSala.on('hidden.bs.modal', () => {
+        this.prepararCalculadora(prod);
+        this.cdr.detectChanges();
+        modalCalc.modal('show');
+        document.body.classList.add('modal-open');
+        modalSala.off('hidden.bs.modal');
+    });
   }
 
-  cambiarVistaImagen() {
-    this.mostrandoSala = !this.mostrandoSala;
-  }
+  cambiarVistaImagen() { this.mostrandoSala = !this.mostrandoSala; }
 
   prepararCalculadora(prod: any) {
     this.prodSeleccionado = prod;
@@ -331,12 +299,10 @@ export class HomePublicComponent implements OnInit {
   
   toggleHotspot(idCard: string, event: Event) {
     event.stopPropagation();
-
     const cards = document.querySelectorAll('.hotspot-card');
     cards.forEach(c => {
        if(c.id !== 'card-' + idCard) (c as HTMLElement).style.display = 'none';
     });
-
     const card = document.getElementById('card-' + idCard);
     if (card) card.style.display = (card.style.display === 'block') ? 'none' : 'block';
   }
@@ -345,13 +311,11 @@ export class HomePublicComponent implements OnInit {
     localStorage.removeItem('clienteLogueado');
     localStorage.removeItem('clienteNombre');
     localStorage.removeItem('clienteDNI');
-    
     this.verificarSesion(); 
     this.cdr.detectChanges();
     alert("Has cerrado sesión exitosamente. Vuelve pronto.");
   }
 
-  // 🔥 MAGIA PARA ETIQUETAS DE PRECIO 🔥
   getUnidadMedida(codigo: string): string {
     const cod = (codigo || '').toUpperCase();
     if (cod.includes('PEG')) return 'x saco';
@@ -359,21 +323,18 @@ export class HomePublicComponent implements OnInit {
     return 'x m²';
   }
 
-  // 🔥 MAGIA ANTI-ERRORES PARA LA CATEGORÍA DE PEGAMENTOS 🔥
   getEtiquetaPegamento(categoriaNombre: string | undefined): any {
     const nom = (categoriaNombre || '').toLowerCase();
     if (nom.includes('blanco')) {
-        return { texto: 'Para Porcelanatos', clase: 'label-primary' }; // Azul
+        return { texto: 'Para Porcelanatos', clase: 'label-primary' }; 
     }
-    return { texto: 'Para Interiores', clase: 'label-default' }; // Gris
+    return { texto: 'Para Interiores', clase: 'label-default' }; 
   }
 
-  // 🔥 RESTRICCIÓN INTELIGENTE DEL CARRITO 🔥
   irACotizar() {
     if (this.carritoCotizacion.length === 0) {
       alert("🛒 Tu carrito está vacío. ¡Agrega algunos productos antes de ir a cotizar!");
     } else {
-      // Si hay productos, lo mandamos en primera clase a la proforma
       this.router.navigate(['/cotizar']);
     }
   }
