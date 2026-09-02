@@ -67,7 +67,6 @@
             <p style="color: #666; font-size: 1.1em; margin-bottom: 30px;">Descubre nuestros nuevos diseños. Haz clic en los puntos <span class="glyphicon glyphicon-plus-sign" style="color:#FF8C00"></span>.</p>
         </div>
 
-        <!-- BAÑOS -->
         <div class="row">
             <div class="col-md-4 col-sm-6" style="margin-bottom: 30px;">
                 <h4 class="text-center" style="color: #FF8C00;">Estilo Moderno Tarraco</h4>
@@ -314,27 +313,32 @@
         <article>
             <div class="panel-group" id="accordionDecor">
 
-                <!-- 1. DECORADOS -->
+                <!-- 1. DECORADOS (CON CARRUSEL) -->
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat1" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Decorados</a></h4>
                     </div>
                     <div id="cat1" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <div class="row fila-productos">
-                                <div *ngIf="decorados.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
-                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of decorados">
+                        <div class="panel-body slider-container">
+                            <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat1', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                            
+                            <div class="fila-productos-scroll" id="scroll-cat1">
+                                <div *ngIf="decorados.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                
+                                <div class="card-producto-scroll" *ngFor="let prod of decorados">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                                         <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
                                         <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
                                         <div class="caption text-center">
                                             <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                                             <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
-                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalle</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
+
+                            <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat1', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
                         </div>
                     </div>
                 </div>
@@ -345,21 +349,26 @@
                         <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat2" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Decorados Españoles</a></h4>
                     </div>
                     <div id="cat2" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="row fila-productos">
-                                <div *ngIf="decoradosEspanoles.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
-                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of decoradosEspanoles">
+                        <div class="panel-body slider-container">
+                            <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat2', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                            
+                            <div class="fila-productos-scroll" id="scroll-cat2">
+                                <div *ngIf="decoradosEspanoles.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                
+                                <div class="card-producto-scroll" *ngFor="let prod of decoradosEspanoles">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                                         <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
                                         <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
                                         <div class="caption text-center">
                                             <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                                             <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
-                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalle</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
+                            
+                            <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat2', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
                         </div>
                     </div>
                 </div>
@@ -370,21 +379,26 @@
                         <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat3" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Paredes 30x60</a></h4>
                     </div>
                     <div id="cat3" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="row fila-productos">
-                                <div *ngIf="paredes.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
-                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of paredes">
+                        <div class="panel-body slider-container">
+                            <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat3', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                            
+                            <div class="fila-productos-scroll" id="scroll-cat3">
+                                <div *ngIf="paredes.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                
+                                <div class="card-producto-scroll" *ngFor="let prod of paredes">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                                         <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
                                         <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
                                         <div class="caption text-center">
                                             <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                                             <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
-                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalle</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
+                            
+                            <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat3', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
                         </div>
                     </div>
                 </div>
@@ -395,21 +409,26 @@
                         <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat4" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Fachaletas</a></h4>
                     </div>
                     <div id="cat4" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="row fila-productos">
-                                <div *ngIf="fachaletas.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
-                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of fachaletas">
+                        <div class="panel-body slider-container">
+                            <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat4', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                            
+                            <div class="fila-productos-scroll" id="scroll-cat4">
+                                <div *ngIf="fachaletas.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                
+                                <div class="card-producto-scroll" *ngFor="let prod of fachaletas">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                                         <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
                                         <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
                                         <div class="caption text-center">
                                             <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                                             <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
-                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalle</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
+                            
+                            <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat4', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
                         </div>
                     </div>
                 </div>
@@ -420,21 +439,26 @@
                         <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat5" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Porcelanatos 60x60</a></h4>
                     </div>
                     <div id="cat5" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="row fila-productos">
-                                <div *ngIf="porcelanatos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
-                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of porcelanatos">
+                        <div class="panel-body slider-container">
+                            <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat5', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                            
+                            <div class="fila-productos-scroll" id="scroll-cat5">
+                                <div *ngIf="porcelanatos.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                
+                                <div class="card-producto-scroll" *ngFor="let prod of porcelanatos">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                                         <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
                                         <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
                                         <div class="caption text-center">
                                             <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                                             <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
-                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalle</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
+                            
+                            <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat5', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
                         </div>
                     </div>
                 </div>
@@ -445,21 +469,26 @@
                         <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat6" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Planchas 120x60</a></h4>
                     </div>
                     <div id="cat6" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="row fila-productos">
-                                <div *ngIf="planchas.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
-                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of planchas">
+                        <div class="panel-body slider-container">
+                            <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat6', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                            
+                            <div class="fila-productos-scroll" id="scroll-cat6">
+                                <div *ngIf="planchas.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                
+                                <div class="card-producto-scroll" *ngFor="let prod of planchas">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                                         <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
                                         <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
                                         <div class="caption text-center">
                                             <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                                             <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
-                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalle</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
+                            
+                            <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat6', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
                         </div>
                     </div>
                 </div>
@@ -470,21 +499,26 @@
                         <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat7" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Cerámicos 46x46 & 60x60</a></h4>
                     </div>
                     <div id="cat7" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="row fila-productos">
-                                <div *ngIf="ceramicos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
-                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of ceramicos">
+                        <div class="panel-body slider-container">
+                            <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat7', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                            
+                            <div class="fila-productos-scroll" id="scroll-cat7">
+                                <div *ngIf="ceramicos.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                
+                                <div class="card-producto-scroll" *ngFor="let prod of ceramicos">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                                         <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
                                         <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
                                         <div class="caption text-center">
                                             <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                                             <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
-                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalle</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
+                            
+                            <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat7', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
                         </div>
                     </div>
                 </div>
@@ -495,21 +529,26 @@
                         <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat8" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Lápices</a></h4>
                     </div>
                     <div id="cat8" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="row fila-productos">
-                                <div *ngIf="lapices.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
-                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of lapices">
+                        <div class="panel-body slider-container">
+                            <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat8', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                            
+                            <div class="fila-productos-scroll" id="scroll-cat8">
+                                <div *ngIf="lapices.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                
+                                <div class="card-producto-scroll" *ngFor="let prod of lapices">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                                         <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
                                         <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
                                         <div class="caption text-center">
                                             <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                                             <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
-                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalle</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
+                            
+                            <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat8', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
                         </div>
                     </div>
                 </div>
@@ -520,21 +559,26 @@
                         <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat9" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Baños & Ovalines</a></h4>
                     </div>
                     <div id="cat9" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="row fila-productos">
-                                <div *ngIf="banos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
-                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of banos">
+                        <div class="panel-body slider-container">
+                            <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat9', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                            
+                            <div class="fila-productos-scroll" id="scroll-cat9">
+                                <div *ngIf="banos.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                
+                                <div class="card-producto-scroll" *ngFor="let prod of banos">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                                         <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
                                         <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 200px; object-fit: contain;">
                                         <div class="caption text-center">
                                             <h4 style="font-weight: bold; color: #122A51; height: 45px; overflow: hidden;">{{ prod.nombre }}</h4>
                                             <p style="color: #FF8C00; font-weight: bold; font-size: 1.2em;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 14px;">{{ getUnidadMedida(prod.codigo) }}</small></p>
-                                            <button class="btn btn-primary btn-block" (click)="prepararCalculadora(prod)">Ver Detalle</button>
+                                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)">Ver Detalle</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
+                            
+                            <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat9', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
                         </div>
                     </div>
                 </div>
@@ -545,10 +589,13 @@
                         <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordionDecor" href="#cat10" class="titulo-parpadeante"><span class="glyphicon glyphicon-chevron-down"></span> Pegamentos</a></h4>
                     </div>
                     <div id="cat10" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="row fila-productos">
-                                <div *ngIf="pegamentos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
-                                <div class="col-md-4 col-sm-4 card-producto" *ngFor="let prod of pegamentos">
+                        <div class="panel-body slider-container">
+                            <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat10', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                            
+                            <div class="fila-productos-scroll" id="scroll-cat10">
+                                <div *ngIf="pegamentos.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+                                
+                                <div class="card-producto-scroll" *ngFor="let prod of pegamentos">
                                     <div class="thumbnail" style="position: relative; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                                         <button class="btn btn-default btn-xs btn-ojito" style="position: absolute; top: 20px; right: 20px; z-index: 10; border-radius: 50%; padding: 6px 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);" (click)="verEnSala(prod)"><span class="glyphicon glyphicon-eye-open" style="color: #122A51; font-size: 14px;"></span></button>
                                         <img [src]="getImagenUrl(prod.imagen)" class="img-responsive center-block" style="height: 220px; object-fit: contain;">
@@ -557,11 +604,13 @@
                                             <h4 style="font-weight: bold; color: #555; height: 30px; overflow: hidden;">{{ prod.nombre }}</h4>
                                             <p><span class="label" [ngClass]="getEtiquetaPegamento(prod.categoria?.nombre).clase">{{ getEtiquetaPegamento(prod.categoria?.nombre).texto }}</span></p>
                                             <h3 style="color: #122A51; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #122A51; font-size: 16px;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
-                                            <button class="btn btn-warning btn-block" (click)="prepararCalculadora(prod)" style="font-weight: bold;"><span class="glyphicon glyphicon-shopping-cart"></span> Calcular Sacos</button>
+                                            <button class="btn btn-warning btn-block" data-toggle="modal" data-target="#calculadoraModal" (click)="prepararCalculadora(prod)" style="font-weight: bold;"><span class="glyphicon glyphicon-shopping-cart"></span> Calcular Sacos</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
+                            
+                            <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat10', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
                         </div>
                     </div>
                 </div>

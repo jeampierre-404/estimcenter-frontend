@@ -15,7 +15,7 @@ export class HomePublicComponent implements OnInit {
 
   chatVisible: boolean = false;
   
-  // 🔥 LAS 10 CATEGORÍAS (Para el Home) 🔥
+  // 🔥 LAS 10 CATEGORÍAS COMPLETAS 🔥
   decorados: any[] = [];
   decoradosEspanoles: any[] = [];
   paredes: any[] = [];
@@ -81,7 +81,6 @@ export class HomePublicComponent implements OnInit {
     this.cargarProductos();
     this.cargarCarrito();
 
-    // Abrir menú automático en celulares
     setTimeout(() => {
         if (window.innerWidth <= 768) {
             const menu = (window as any).$('#menuPrincipal');
@@ -107,22 +106,31 @@ export class HomePublicComponent implements OnInit {
         const activos = data.filter(p => p.estado !== 'INACTIVO');
         this.todosLosProductos = activos;
 
-        // 🔥 CARGAMOS TODAS LAS CATEGORÍAS (Máximo 3 productos de muestra para el Home) 🔥
-        this.decorados = activos.filter(p => p.codigo && p.codigo.includes('DEC') && !p.codigo.includes('ESPDEC')).slice(0, 3);
-        this.decoradosEspanoles = activos.filter(p => p.codigo && p.codigo.includes('ESPDEC')).slice(0, 3);
-        this.paredes = activos.filter(p => p.codigo && p.codigo.includes('PAR')).slice(0, 3);
-        this.fachaletas = activos.filter(p => p.codigo && p.codigo.includes('FACH')).slice(0, 3);
-        this.porcelanatos = activos.filter(p => p.codigo && p.codigo.includes('POR')).slice(0, 3);
-        this.planchas = activos.filter(p => p.codigo && p.codigo.includes('PLAN')).slice(0, 3);
-        this.ceramicos = activos.filter(p => p.codigo && p.codigo.includes('CER')).slice(0, 3);
-        this.lapices = activos.filter(p => p.codigo && p.codigo.includes('LAP')).slice(0, 3);
-        this.banos = activos.filter(p => p.codigo && (p.codigo.includes('BANO') || p.codigo.includes('OVA'))).slice(0, 3);
-        this.pegamentos = activos.filter(p => p.codigo && p.codigo.includes('PEG')).slice(0, 3);
+        // 🔥 AHORA CARGAN TODOS LOS PRODUCTOS SIN LÍMITES 🔥
+        this.decorados = activos.filter(p => p.codigo && p.codigo.includes('DEC') && !p.codigo.includes('ESPDEC'));
+        this.decoradosEspanoles = activos.filter(p => p.codigo && p.codigo.includes('ESPDEC'));
+        this.paredes = activos.filter(p => p.codigo && p.codigo.includes('PAR'));
+        this.fachaletas = activos.filter(p => p.codigo && p.codigo.includes('FACH'));
+        this.porcelanatos = activos.filter(p => p.codigo && p.codigo.includes('POR'));
+        this.planchas = activos.filter(p => p.codigo && p.codigo.includes('PLAN'));
+        this.ceramicos = activos.filter(p => p.codigo && p.codigo.includes('CER'));
+        this.lapices = activos.filter(p => p.codigo && p.codigo.includes('LAP'));
+        this.banos = activos.filter(p => p.codigo && (p.codigo.includes('BANO') || p.codigo.includes('OVA')));
+        this.pegamentos = activos.filter(p => p.codigo && p.codigo.includes('PEG'));
 
         this.cdr.detectChanges(); 
       },
       error: (err) => console.error(err)
     });
+  }
+
+  // 🔥 MAGIA: Función para mover el carrusel con las flechas 🔥
+  scrollList(idContenedor: string, direccion: number) {
+    const contenedor = document.getElementById(idContenedor);
+    if (contenedor) {
+      const scrollAmount = 300; // Ancho aproximado de una tarjeta
+      contenedor.scrollBy({ left: scrollAmount * direccion, behavior: 'smooth' });
+    }
   }
 
   abrirBuscadorPred() {
