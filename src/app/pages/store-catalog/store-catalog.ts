@@ -50,6 +50,9 @@ export class StoreCatalogComponent implements OnInit {
   clienteLogueado: boolean = false;
   chatVisible: boolean = false;
 
+  // 🔥 VARIABLE PARA EL BOTÓN MULTIUSOS (FAB) 🔥
+  fabAbierto: boolean = false;
+
   // Búsqueda y Carrito
   todosLosProductos: Producto[] = [];
   productosBuscados: Producto[] = [];
@@ -76,17 +79,13 @@ export class StoreCatalogComponent implements OnInit {
     this.cargarCatalogo(); 
     this.cargarCarrito(); 
 
-    // 🔥 MAGIA: ABRIR EL MENÚ AUTOMÁTICAMENTE EN CELULARES 🔥
+    // Abrir el menú automáticamente en celulares
     setTimeout(() => {
-        // Detecta si es un dispositivo móvil (pantalla pequeña)
         if (window.innerWidth <= 768) {
             const menu = (window as any).$('#menuPrincipal');
-            // Si el menú está cerrado, lo forzamos a abrirse
-            if (!menu.hasClass('in')) {
-                menu.collapse('show');
-            }
+            if (!menu.hasClass('in')) { menu.collapse('show'); }
         }
-    }, 1000); // Le damos 1 segundito para que respire después de cargar
+    }, 1000);
   }
 
   verificarSesion() {
@@ -149,13 +148,25 @@ export class StoreCatalogComponent implements OnInit {
                 localStorage.removeItem('producto_a_enfocar'); 
             }, 600); 
         } else if (!this.modalBuscadorVisto) {
-            setTimeout(() => {
-                this.abrirBuscador();
-            }, 1000);
+            setTimeout(() => { this.abrirBuscador(); }, 1000);
             this.modalBuscadorVisto = true;
         }
       }
     });
+  }
+
+  // 🔥 MAGIA: Función para mover el carrusel con las flechas 🔥
+  scrollList(idContenedor: string, direccion: number) {
+    const contenedor = document.getElementById(idContenedor);
+    if (contenedor) {
+      const scrollAmount = 300; 
+      contenedor.scrollBy({ left: scrollAmount * direccion, behavior: 'smooth' });
+    }
+  }
+
+  // 🔥 ABRIR Y CERRAR EL BOTÓN MÁGICO 🔥
+  toggleFab() {
+    this.fabAbierto = !this.fabAbierto;
   }
 
   abrirBuscador() {
@@ -166,10 +177,7 @@ export class StoreCatalogComponent implements OnInit {
 
   buscarProducto() {
     const term = this.terminoBusqueda.toLowerCase().trim();
-    if (!term) {
-        this.productosBuscados = [];
-        return;
-    }
+    if (!term) { this.productosBuscados = []; return; }
     this.productosBuscados = this.todosLosProductos.filter(p => 
         (p.nombre && p.nombre.toLowerCase().includes(term)) ||
         (p.codigo && p.codigo.toLowerCase().includes(term)) ||
@@ -188,11 +196,7 @@ export class StoreCatalogComponent implements OnInit {
                 tarjeta.style.transition = 'all 0.5s ease';
                 tarjeta.style.boxShadow = '0 0 25px 5px rgba(255, 140, 0, 0.6)';
                 tarjeta.style.transform = 'scale(1.03)';
-                
-                setTimeout(() => {
-                    tarjeta.style.boxShadow = '';
-                    tarjeta.style.transform = '';
-                }, 2000);
+                setTimeout(() => { tarjeta.style.boxShadow = ''; tarjeta.style.transform = ''; }, 2000);
             }
         }
     }, 400); 
@@ -208,42 +212,23 @@ export class StoreCatalogComponent implements OnInit {
   verEnSala(prod: any) {
     this.prodVistaSala = prod;
     this.mostrandoSala = true; 
-    
     const rutaBase = prod.imagenSala ? prod.imagenSala : prod.imagen;
     this.imagenSala = this.getImagenUrl(rutaBase);
-    
     (window as any).$ && (window as any).$('#modalSala').modal('show');
   }
 
-  // 🔥 PARCHE NIVEL DIOS: ANTI-PANTALLA NEGRA EN CELULARES 🔥
   abrirCalculadoraDesdeSala(prod: any) {
-    // 1. Cargamos la data del producto en la calculadora
     this.prepararCalculadora(prod);
-    
-    // 2. 🔥 MAGIA PURA: Obligamos a Angular a dibujar la calculadora en el HTML 
-    // en este exacto milisegundo. Esto evita que Bootstrap abra un modal vacío (pantalla negra).
     this.cdr.detectChanges(); 
-
-    // 3. Cerramos el modal de la foto suavemente
     (window as any).$ && (window as any).$('#modalSala').modal('hide');
-    
-    // 4. Le damos 500ms a Bootstrap para que termine la animación de cierre, 
-    // limpiamos la basura y abrimos la calculadora de forma 100% segura.
     setTimeout(() => {
-        // Matamos cualquier fondo oscuro que se haya quedado atascado
         (window as any).$('.modal-backdrop').remove(); 
-        
-        // Abrimos la calculadora
         (window as any).$ && (window as any).$('#calculadoraModal').modal('show');
-        
-        // Le devolvemos la barra de scroll a la página
         document.body.classList.add('modal-open'); 
     }, 500);
   }
 
-  cambiarVistaImagen() {
-    this.mostrandoSala = !this.mostrandoSala;
-  }
+  cambiarVistaImagen() { this.mostrandoSala = !this.mostrandoSala; }
 
   toggleChat() { this.chatVisible = !this.chatVisible; }
   
@@ -262,7 +247,6 @@ export class StoreCatalogComponent implements OnInit {
     this.prodSeleccionado = prod;
     this.metrosSolicitados = null;
     this.costoTotal = ''; this.cajasLlevar = ''; this.metrosReales = ''; this.unidadesTotales = '';
-
     const cod = prod.codigo || '';
 
     if (cod.includes('PEG')) {
@@ -291,7 +275,6 @@ export class StoreCatalogComponent implements OnInit {
     
     const cod = this.prodSeleccionado.codigo || '';
     const precio = this.prodSeleccionado.precio || 0;
-    
     const isPeg = cod.includes('PEG');
     const isUnd = cod.includes('BANO') || cod.includes('OVA') || cod.includes('LAP') || cod.includes('DEC') || cod.includes('ESPDEC');
 
@@ -322,9 +305,7 @@ export class StoreCatalogComponent implements OnInit {
 
   cargarCarrito() {
     const c = localStorage.getItem('carrito_temporal');
-    if (c) {
-        this.carritoCotizacion = JSON.parse(c);
-    }
+    if (c) { this.carritoCotizacion = JSON.parse(c); }
   }
 
   agregarAlCarrito() {
@@ -365,7 +346,6 @@ export class StoreCatalogComponent implements OnInit {
     alert("✅ Producto agregado a tu carrito. Ve a 'Cotizar' para confirmar la compra.");
   }
 
-  // 🔥 MAGIA PARA ETIQUETAS DE PRECIO 🔥
   getUnidadMedida(codigo: string): string {
     const cod = (codigo || '').toUpperCase();
     if (cod.includes('PEG')) return 'x saco';
@@ -373,21 +353,19 @@ export class StoreCatalogComponent implements OnInit {
     return 'x m²';
   }
 
-  // 🔥 NUEVA MAGIA ANTI-ERRORES PARA LA CATEGORÍA DE PEGAMENTOS 🔥
   getEtiquetaPegamento(categoriaNombre: string | undefined): any {
     const nom = (categoriaNombre || '').toLowerCase();
     if (nom.includes('blanco')) {
-        return { texto: 'Para Porcelanatos', clase: 'label-primary' }; // Azul
+        return { texto: 'Para Porcelanatos', clase: 'label-primary' }; 
     }
-    return { texto: 'Para Interiores', clase: 'label-default' }; // Gris
+    return { texto: 'Para Interiores', clase: 'label-default' }; 
   }
 
-  // 🔥 RESTRICCIÓN INTELIGENTE DEL CARRITO 🔥
+  // 🔥 CANDADO DE CARRITO DESDE EL BOTÓN FAB 🔥
   irACotizar() {
     if (this.carritoCotizacion.length === 0) {
       alert("🛒 Tu carrito está vacío. ¡Agrega algunos productos antes de ir a cotizar!");
     } else {
-      // Si hay productos, lo mandamos en primera clase a la proforma
       this.router.navigate(['/cotizar']);
     }
   }

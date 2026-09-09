@@ -30,7 +30,6 @@
    </div>
   <div class="collapse navbar-collapse" id="menuPrincipal">
     
-    <!-- 🔥 ENLACES CENTRALES 🔥 -->
     <ul class="nav navbar-nav navbar-center"> 
       <li><a routerLink="/"><b>INICIO</b></a></li>
       <li class="active"><a routerLink="/catalogo"><b><span class="glyphicon glyphicon-book"></span> Catálogo</b></a></li>
@@ -38,12 +37,11 @@
       <li><a routerLink="/cotizar"><b><span class="glyphicon glyphicon-edit"></span> Cotizar</b></a></li>
     </ul>
 
-    <!-- 🔥 BOTONES DERECHOS 🔥 -->
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown" style="border-left: 1px solid #e7e7e7;">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #FF8C00; font-weight: bold;">
               <span class="glyphicon glyphicon-user"></span> 
-              <span>{{ nombreCliente || 'Cuenta' }}</span> 
+              <span>{{ clienteLogueado ? nombreCliente : 'Cuenta' }}</span> 
               <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
@@ -52,9 +50,11 @@
           </ul>
       </li>
 
-      <li style="border-left: 1px solid #e7e7e7; margin-right: 15px;">
-          <a (click)="abrirBuscador()" style="cursor: pointer; color: #122A51; font-weight: bold; background-color: #f8f9fa;">
-              <span class="glyphicon glyphicon-search"></span> Búsqueda Rápida
+      <!-- Mantenemos el acceso rápido al Carrito en el Menú con validación inteligente -->
+      <li style="float: right; border-left: 1px solid #e7e7e7; background-color: #fff8e1;">
+          <a (click)="irACotizar()" style="cursor: pointer; color: #FF8C00; font-weight: bold;">
+              <span class="glyphicon glyphicon-shopping-cart"></span> Mi Carrito 
+              <span class="badge" style="background-color: #122A51; margin-left: 5px;">{{ carritoCotizacion.length }}</span>
           </a>
       </li>
     </ul>
@@ -66,15 +66,18 @@
   <!-- 1. DECORADOS -->
   <div class="row" style="margin-top: 30px;"> 
     <div class="col-md-12">
-      <section>
+      <section class="slider-container">
         <div class="text-center">
             <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Catálogo de Decorados</h2>
             <p>Detalles que marcan la diferencia en tus ambientes.</p>
         </div>
         <hr class="divider-style" style="margin-bottom: 30px;">
-        <div class="row fila-productos">
-            <div *ngIf="decorados.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
-            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of decorados" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+        
+        <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat1', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+        
+        <div class="fila-productos-scroll" id="scroll-cat1">
+            <div *ngIf="decorados.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
+            <div class="card-producto-scroll" *ngFor="let prod of decorados" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -91,6 +94,8 @@
                 </div>
             </div>
         </div> 
+
+        <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat1', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
       </section>
     </div>
   </div> 
@@ -98,15 +103,18 @@
   <!-- 2. DECORADOS ESPAÑOLES -->
   <div class="row" style="margin-top: 50px;"> 
     <div class="col-md-12">
-      <section>
+      <section class="slider-container">
         <div class="text-center">
             <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Decorados Españoles</h2>
             <p>Exclusividad y elegancia con estilo europeo.</p>
         </div>
         <hr class="divider-style" style="margin-bottom: 30px;">
-        <div class="row fila-productos">
-            <div *ngIf="decoradosEspanoles.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
-            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of decoradosEspanoles" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+        
+        <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat2', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+
+        <div class="fila-productos-scroll" id="scroll-cat2">
+            <div *ngIf="decoradosEspanoles.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
+            <div class="card-producto-scroll" *ngFor="let prod of decoradosEspanoles" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -123,6 +131,8 @@
                 </div>
             </div>
         </div> 
+
+        <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat2', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
       </section>
     </div>
   </div>
@@ -130,15 +140,18 @@
   <!-- 3. PAREDES 30 X 60 -->
   <div class="row" style="margin-top: 50px;"> 
     <div class="col-md-12">
-      <section>
+      <section class="slider-container">
         <div class="text-center">
             <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Paredes 30 x 60</h2>
             <p>Revestimientos perfectos para baños y cocinas.</p>
         </div>
         <hr class="divider-style" style="margin-bottom: 30px;">
-        <div class="row fila-productos">
-            <div *ngIf="paredes.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
-            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of paredes" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+        
+        <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat3', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+
+        <div class="fila-productos-scroll" id="scroll-cat3">
+            <div *ngIf="paredes.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
+            <div class="card-producto-scroll" *ngFor="let prod of paredes" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -155,6 +168,8 @@
                 </div>
             </div>
         </div> 
+
+        <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat3', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
       </section>
     </div>
   </div>
@@ -162,15 +177,18 @@
   <!-- 4. FACHALETAS -->
   <div class="row" style="margin-top: 50px;"> 
     <div class="col-md-12">
-      <section>
+      <section class="slider-container">
         <div class="text-center">
             <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Fachaletas</h2>
             <p>Dale un toque rústico y moderno a tus exteriores e interiores.</p>
         </div>
         <hr class="divider-style" style="margin-bottom: 30px;">
-        <div class="row fila-productos">
-            <div *ngIf="fachaletas.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
-            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of fachaletas" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+        
+        <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat4', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+
+        <div class="fila-productos-scroll" id="scroll-cat4">
+            <div *ngIf="fachaletas.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
+            <div class="card-producto-scroll" *ngFor="let prod of fachaletas" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -187,6 +205,8 @@
                 </div>
             </div>
         </div> 
+
+        <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat4', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
       </section>
     </div>
   </div>
@@ -194,15 +214,18 @@
   <!-- 5. PORCELANATOS 60 X 60 -->
   <div class="row" style="margin-top: 50px;"> 
     <div class="col-md-12">
-      <section>
+      <section class="slider-container">
         <div class="text-center">
             <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Porcelanatos 60 x 60</h2>
             <p>Elegancia, brillo y durabilidad superior.</p>
         </div>
         <hr class="divider-style" style="margin-bottom: 30px;">
-        <div class="row fila-productos">
-            <div *ngIf="porcelanatos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
-            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of porcelanatos" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+        
+        <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat5', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+
+        <div class="fila-productos-scroll" id="scroll-cat5">
+            <div *ngIf="porcelanatos.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
+            <div class="card-producto-scroll" *ngFor="let prod of porcelanatos" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -219,6 +242,8 @@
                 </div>
             </div>
         </div> 
+
+        <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat5', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
       </section>
     </div>
   </div> 
@@ -226,15 +251,18 @@
   <!-- 6. PLANCHAS 120 X 60 -->
   <div class="row" style="margin-top: 50px;"> 
     <div class="col-md-12">
-      <section>
+      <section class="slider-container">
         <div class="text-center">
             <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Planchas 120 x 60</h2>
             <p>Formatos grandes para una sensación de mayor amplitud y lujo.</p>
         </div>
         <hr class="divider-style" style="margin-bottom: 30px;">
-        <div class="row fila-productos">
-            <div *ngIf="planchas.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
-            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of planchas" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+        
+        <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat6', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+
+        <div class="fila-productos-scroll" id="scroll-cat6">
+            <div *ngIf="planchas.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
+            <div class="card-producto-scroll" *ngFor="let prod of planchas" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -251,6 +279,8 @@
                 </div>
             </div>
         </div> 
+
+        <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat6', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
       </section>
     </div>
   </div>
@@ -258,15 +288,18 @@
   <!-- 7. CERÁMICOS 46 X 46 & 60 X 60 -->
   <div class="row" style="margin-top: 50px;"> 
     <div class="col-md-12">
-      <section>
+      <section class="slider-container">
         <div class="text-center">
             <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Cerámicos 46x46 & 60x60</h2>
             <p>Alta resistencia y diseños modernos para tu hogar.</p>
         </div>
         <hr class="divider-style" style="margin-bottom: 30px;">
-        <div class="row fila-productos">
-            <div *ngIf="ceramicos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
-            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of ceramicos" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+        
+        <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat7', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+
+        <div class="fila-productos-scroll" id="scroll-cat7">
+            <div *ngIf="ceramicos.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
+            <div class="card-producto-scroll" *ngFor="let prod of ceramicos" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -283,6 +316,8 @@
                 </div>
             </div>
         </div> 
+
+        <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat7', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
       </section>
     </div>
   </div> 
@@ -290,15 +325,18 @@
   <!-- 8. LÁPICES -->
   <div class="row" style="margin-top: 50px;"> 
     <div class="col-md-12">
-      <section>
+      <section class="slider-container">
         <div class="text-center">
             <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Lápices</h2>
             <p>Acabados finos para rematar tus diseños de pared.</p>
         </div>
         <hr class="divider-style" style="margin-bottom: 30px;">
-        <div class="row fila-productos">
-            <div *ngIf="lapices.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
-            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of lapices" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+        
+        <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat8', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+
+        <div class="fila-productos-scroll" id="scroll-cat8">
+            <div *ngIf="lapices.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
+            <div class="card-producto-scroll" *ngFor="let prod of lapices" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -315,6 +353,8 @@
                 </div>
             </div>
         </div> 
+
+        <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat8', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
       </section>
     </div>
   </div>
@@ -322,15 +362,18 @@
   <!-- 9. BAÑOS & OVALINES -->
   <div class="row" style="margin-top: 50px;"> 
     <div class="col-md-12">
-      <section>
+      <section class="slider-container">
         <div class="text-center">
             <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Baños & Ovalines</h2>
             <p>Sanitarios y lavatorios modernos para tu confort.</p>
         </div>
         <hr class="divider-style" style="margin-bottom: 30px;">
-        <div class="row fila-productos">
-            <div *ngIf="banos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
-            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of banos" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+        
+        <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat9', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+
+        <div class="fila-productos-scroll" id="scroll-cat9">
+            <div *ngIf="banos.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
+            <div class="card-producto-scroll" *ngFor="let prod of banos" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
@@ -347,6 +390,8 @@
                 </div>
             </div>
         </div> 
+
+        <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat9', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
       </section>
     </div>
   </div>
@@ -354,7 +399,7 @@
   <!-- 10. PEGAMENTOS -->
   <div class="row" style="margin-top: 50px;"> 
     <div class="col-md-12">
-      <section>
+      <section class="slider-container">
         <div class="text-center">
             <h2 style="color: #122A51; text-transform: uppercase; font-weight: bold;">Catálogo de Pegamentos</h2>
             <p>Asegura tu inversión con la mejor adherencia. <br><strong>Precios por saco de 25kg.</strong></p>
@@ -390,10 +435,12 @@
           </div>
         </div>
 
-        <div class="row fila-productos">
-            <div *ngIf="pegamentos.length === 0" class="text-center" style="padding: 20px;"><p style="color: gray;"><i>No hay productos disponibles en esta categoría por ahora.</i></p></div>
+        <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat10', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
+
+        <div class="fila-productos-scroll" id="scroll-cat10">
+            <div *ngIf="pegamentos.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
             
-            <div class="col-md-4 col-sm-6 card-producto" *ngFor="let prod of pegamentos" style="margin-bottom: 30px;" [id]="'prod-' + prod.codigo">
+            <div class="card-producto-scroll" *ngFor="let prod of pegamentos" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <!-- 🔥 OJITO PARA PEGAMENTOS 🔥 -->
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
@@ -420,8 +467,9 @@
                     </div>
                 </div>
             </div>
-
         </div> 
+
+        <button class="scroll-btn right hidden-xs" (click)="scrollList('scroll-cat10', 1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
       </section>
     </div>
   </div>
@@ -436,12 +484,6 @@
       </div>
   </section>
 </div>
-
-<!-- 🔥 CARRITO FLOTANTE INTELIGENTE 🔥 -->
-<div id="floating-cart" (click)="irACotizar()" title="Ir a mi carrito">
-    <span class="glyphicon glyphicon-shopping-cart" style="font-size: 24px; position: relative; top: 5px;"></span>
-    <span class="badge badge-flotante">{{ carritoCotizacion.length }}</span>
-</div> 
 
 <!-- MODAL DE BÚSQUEDA PREDICTIVA -->
 <div class="modal fade" id="modalBienvenidaBuscador" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
@@ -480,13 +522,13 @@
           </div>
       </div>   
       <div class="modal-footer" style="text-align: center; border-top: none; background-color: #f9f9f9; padding-bottom: 20px;">
-        <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 20px; padding: 8px 30px; font-weight: bold; color: #122A51;">Explorar Catálogo Manualmente</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 20px; padding: 8px 30px; font-weight: bold; color: #122A51;">Cerrar Buscador</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- 🔥 CALCULADORA INTELIGENTE 🔥 -->
+<!-- CALCULADORA MODAL -->
 <div class="modal fade" id="calculadoraModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content" *ngIf="prodSeleccionado">
@@ -510,7 +552,6 @@
                       <label>Precio Unitario:</label>
                       <input type="text" class="form-control" [ngClass]="{'text-center': lblRendimiento === 'Unidad:'}" [value]="'S/ ' + prodSeleccionado.precio" readonly>
                   </div>
-                  
                   <div class="col-md-6 col-xs-6" *ngIf="lblRendimiento !== 'Unidad:'">
                       <label>{{ lblRendimiento }}</label>
                       <input type="text" class="form-control" [value]="prodSeleccionado.codigo?.includes('PEG') ? '4 m² (aprox)' : (prodSeleccionado.rendimientoCaja ? (prodSeleccionado.rendimientoCaja + ' m²') : '-')" readonly>
@@ -529,7 +570,6 @@
                       </div>
                   </div>
                   <br>
-                  
                   <div class="row" *ngIf="lblRendimiento !== 'Unidad:' && metrosReales !== '-'">
                       <div class="col-md-6 col-xs-6">
                           <label style="color: #333;">METRAJE TOTAL:</label>
@@ -547,7 +587,6 @@
               </div>
           </form>
       </div>   
-      
       <div class="modal-footer" style="text-align: center; border-top: 1px solid #eee; padding: 15px;">
         <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 20px; padding: 8px 25px; margin-right: 10px;">Cerrar</button>
         <button type="button" class="btn" style="background-color: #122A51; color: white; padding: 8px 25px; border-radius: 20px; font-weight: bold;" (click)="calcularTotal()">¡Calcular Ahora!</button>
@@ -555,41 +594,23 @@
             <span class="glyphicon glyphicon-shopping-cart"></span> Agregar al Carrito
         </button>
       </div>
-      
     </div>
   </div>
 </div>
 
-<!-- 🔥 MODAL VISTA EN AMBIENTE MEJORADO 🔥 -->
+<!-- MODAL VISTA AMBIENTE -->
 <div class="modal fade" id="modalSala" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" *ngIf="prodVistaSala">
-            
             <div class="modal-header" style="background-color: #122A51; color: white; border-bottom: 3px solid #FF8C00;">
                 <button type="button" class="close" data-dismiss="modal" style="color: white; opacity: 1;">&times;</button>
-                <h4 class="modal-title" style="font-weight: bold;">
-                    <span class="glyphicon glyphicon-picture"></span> {{ prodVistaSala.nombre }}
-                </h4>
+                <h4 class="modal-title" style="font-weight: bold;"><span class="glyphicon glyphicon-picture"></span> {{ prodVistaSala.nombre }}</h4>
             </div>
-            
             <div class="modal-body text-center" style="padding: 0; position: relative; background-color: #f4f4f4;">
-                
-                <button class="btn btn-default" (click)="cambiarVistaImagen()" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); z-index: 10; border-radius: 50%; width: 45px; height: 45px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); border: none; background: rgba(255,255,255,0.8);">
-                    <span class="glyphicon glyphicon-chevron-left" style="color: #122A51; font-weight: bold; font-size: 18px;"></span>
-                </button>
-                
-                <button class="btn btn-default" (click)="cambiarVistaImagen()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); z-index: 10; border-radius: 50%; width: 45px; height: 45px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); border: none; background: rgba(255,255,255,0.8);">
-                    <span class="glyphicon glyphicon-chevron-right" style="color: #122A51; font-weight: bold; font-size: 18px;"></span>
-                </button>
-
+                <button class="btn btn-default" (click)="cambiarVistaImagen()" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); z-index: 10; border-radius: 50%; width: 45px; height: 45px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); border: none; background: rgba(255,255,255,0.8);"><span class="glyphicon glyphicon-chevron-left" style="color: #122A51; font-weight: bold; font-size: 18px;"></span></button>
+                <button class="btn btn-default" (click)="cambiarVistaImagen()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); z-index: 10; border-radius: 50%; width: 45px; height: 45px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); border: none; background: rgba(255,255,255,0.8);"><span class="glyphicon glyphicon-chevron-right" style="color: #122A51; font-weight: bold; font-size: 18px;"></span></button>
                 <img [src]="mostrandoSala ? imagenSala : getImagenUrl(prodVistaSala.imagen)" class="img-responsive center-block" style="max-height: 60vh; object-fit: contain; width: 100%; padding: 20px;">
-                
-                <span class="label" [ngClass]="mostrandoSala ? 'label-warning' : 'label-primary'" style="position: absolute; top: 15px; left: 15px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                    <span class="glyphicon" [ngClass]="mostrandoSala ? 'glyphicon-home' : 'glyphicon-stop'"></span> 
-                    {{ mostrandoSala ? 'Vista en Ambiente' : 'Vista de la Pieza' }}
-                </span>
             </div>
-            
             <div class="modal-footer" style="text-align: left; background: white;">
                 <div class="row">
                     <div class="col-xs-8">
@@ -597,14 +618,13 @@
                         <p style="margin: 5px 0 0 0; color: #666; font-size: 13px;">{{ prodVistaSala.descripcion || 'Detalles exclusivos de nuestro catálogo premium.' }}</p>
                     </div>
                     <div class="col-xs-4 text-right">
-                        <h3 style="margin: 0; color: #FF8C00; font-weight: bold;">S/ {{ prodVistaSala.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 16px;">{{ getUnidadMedida(prodVistaSala.codigo) }}</small></h3>
+                        <h3 style="margin: 0; color: #FF8C00; font-weight: bold;">S/ {{ prodVistaSala.precio | number:'1.2-2' }}</h3>
                         <button type="button" class="btn btn-success btn-sm" style="margin-top: 5px; font-weight: bold; border-radius: 20px;" (click)="abrirCalculadoraDesdeSala(prodVistaSala)">
                             <span class="glyphicon glyphicon-shopping-cart"></span> Cotizar
                         </button>
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
 </div>
@@ -631,16 +651,29 @@
   </div>
 </footer>
 
-<div id="chat-circle" class="btn btn-raised" (click)="toggleChat()">
-    <div id="chat-overlay"></div>
-    <span class="glyphicon glyphicon-comment" style="font-size: 24px; color: white; margin-top: 12px;"></span>
+<!-- 🔥 NUEVO MENÚ FLOTANTE MÁGICO (FAB) 🔥 -->
+<div id="fab-container" [class.open]="fabAbierto">
+    <div class="fab-options">
+        <button class="fab-option" (click)="abrirBuscador(); toggleFab()" title="Buscar Productos">
+            <span class="glyphicon glyphicon-search"></span>
+        </button>
+        <button class="fab-option" (click)="irACotizar(); toggleFab()" title="Mi Carrito">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+            <span class="badge badge-flotante-fab">{{ carritoCotizacion.length }}</span>
+        </button>
+        <button class="fab-option" (click)="toggleChat(); toggleFab()" title="Chat Soporte">
+            <span class="glyphicon glyphicon-comment"></span>
+        </button>
+    </div>
+    <!-- El botón principal con la animación de latido -->
+    <button class="fab-main btn-ojito" (click)="toggleFab()">
+        <span class="glyphicon" [ngClass]="fabAbierto ? 'glyphicon-remove' : 'glyphicon-plus'"></span>
+    </button>
 </div>
 
 <div class="chat-box" [class.chat-abierto]="chatVisible">
     <div class="chat-box-header">
-        <div class="chat-avatar">
-            <img src="assets/imagenes/logo_empresa.png" alt="Admin" style="background:white; padding:2px;">
-        </div>
+        <div class="chat-avatar"><img src="assets/imagenes/logo_empresa.png" alt="Admin" style="background:white; padding:2px;"></div>
         <div class="chat-info">
             <span class="chat-title">Soporte ESTIM CENTER FJ</span>
             <span class="chat-status"><span class="status-dot"></span> En línea</span>
@@ -650,10 +683,7 @@
     <div class="chat-box-body" id="chat-box-body">
         <div class="chat-logs">
             <div class="chat-msg user">
-                <div class="cm-msg-text">
-                    ¡Hola! 👋 Bienvenido a ESTIM CENTER FJ<br>
-                    Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?
-                </div>
+                <div class="cm-msg-text">¡Hola! 👋 Bienvenido a ESTIM CENTER FJ<br>Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?</div>
             </div>
             <div class="chat-msg user">
                 <div class="cm-msg-button-container">
@@ -667,9 +697,7 @@
     <div class="chat-input">
         <form (submit)="enviarMensajeEscrito($event)">
             <input type="text" id="chat-input" placeholder="Escribe tu consulta aquí..." />
-            <button type="submit" class="chat-submit" id="chat-submit">
-                <span class="glyphicon glyphicon-send"></span>
-            </button>
+            <button type="submit" class="chat-submit" id="chat-submit"><span class="glyphicon glyphicon-send"></span></button>
         </form>
     </div>
 </div>
