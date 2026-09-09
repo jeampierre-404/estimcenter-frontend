@@ -34,20 +34,26 @@ export class StoreCatalogComponent implements OnInit {
   metrosReales: string = '';
   unidadesTotales: string = '';
   
+  // Variables para la Vista en Ambiente Mejorada
   imagenSala: string = '';
   prodVistaSala: any = null;
   mostrandoSala: boolean = true;
 
+  // Etiquetas de UI
   lblPregunta: string = '¿Cuántos metros cuadrados (m²) necesitas?';
   lblRendimiento: string = 'Rendimiento:';
   lblResultadoEmpaque: string = 'CAJAS A LLEVAR:';
   mostrarPiezas: boolean = true;
 
+  // Usuario y Chat
   nombreCliente: string = '';
   clienteLogueado: boolean = false;
   chatVisible: boolean = false;
+
+  // 🔥 VARIABLE PARA EL BOTÓN MULTIUSOS (FAB) 🔥
   fabAbierto: boolean = false;
 
+  // Búsqueda y Carrito
   todosLosProductos: Producto[] = [];
   productosBuscados: Producto[] = [];
   terminoBusqueda: string = '';
@@ -73,6 +79,7 @@ export class StoreCatalogComponent implements OnInit {
     this.cargarCatalogo(); 
     this.cargarCarrito(); 
 
+    // Abrir el menú automáticamente en celulares
     setTimeout(() => {
         if (window.innerWidth <= 768) {
             const menu = (window as any).$('#menuPrincipal');
@@ -148,6 +155,7 @@ export class StoreCatalogComponent implements OnInit {
     });
   }
 
+  // 🔥 MAGIA: Función para mover el carrusel con las flechas 🔥
   scrollList(idContenedor: string, direccion: number) {
     const contenedor = document.getElementById(idContenedor);
     if (contenedor) {
@@ -156,6 +164,7 @@ export class StoreCatalogComponent implements OnInit {
     }
   }
 
+  // 🔥 ABRIR Y CERRAR EL BOTÓN MÁGICO 🔥
   toggleFab() {
     this.fabAbierto = !this.fabAbierto;
   }
@@ -166,17 +175,14 @@ export class StoreCatalogComponent implements OnInit {
     (window as any).$('#modalBienvenidaBuscador').modal('show');
   }
 
-  // 🔥 MAGIA: BUSCADOR SIN LÍMITES 🔥
   buscarProducto() {
     const term = this.terminoBusqueda.toLowerCase().trim();
     if (!term) { this.productosBuscados = []; return; }
-    
-    // Filtra todo lo que coincida, ya no cortamos con el .slice()
     this.productosBuscados = this.todosLosProductos.filter(p => 
         (p.nombre && p.nombre.toLowerCase().includes(term)) ||
         (p.codigo && p.codigo.toLowerCase().includes(term)) ||
         (p.descripcion && p.descripcion.toLowerCase().includes(term))
-    );
+    ).slice(0, 6);
   }
 
   seleccionarBusqueda(prod: any) {
@@ -355,6 +361,7 @@ export class StoreCatalogComponent implements OnInit {
     return { texto: 'Para Interiores', clase: 'label-default' }; 
   }
 
+  // 🔥 CANDADO DE CARRITO DESDE EL BOTÓN FAB 🔥
   irACotizar() {
     if (this.carritoCotizacion.length === 0) {
       alert("🛒 Tu carrito está vacío. ¡Agrega algunos productos antes de ir a cotizar!");

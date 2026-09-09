@@ -30,7 +30,6 @@
    </div>
   <div class="collapse navbar-collapse" id="menuPrincipal">
     
-    <!-- ENLACES CENTRALES -->
     <ul class="nav navbar-nav navbar-center"> 
       <li><a routerLink="/"><b>INICIO</b></a></li>
       <li class="active"><a routerLink="/catalogo"><b><span class="glyphicon glyphicon-book"></span> Catálogo</b></a></li>
@@ -38,7 +37,6 @@
       <li><a routerLink="/cotizar"><b><span class="glyphicon glyphicon-edit"></span> Cotizar</b></a></li>
     </ul>
 
-    <!-- USUARIO A LA DERECHA (ELIMINAMOS EL BOTÓN DE BÚSQUEDA Y CARRITO DE AQUÍ) -->
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown" style="border-left: 1px solid #e7e7e7;">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #FF8C00; font-weight: bold;">
@@ -50,6 +48,14 @@
               <li *ngIf="!clienteLogueado"><a routerLink="/login">Iniciar Sesión</a></li>
               <li *ngIf="clienteLogueado"><a style="cursor: pointer;" (click)="cerrarSesion()"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a></li>
           </ul>
+      </li>
+
+      <!-- Mantenemos el acceso rápido al Carrito en el Menú con validación inteligente -->
+      <li style="float: right; border-left: 1px solid #e7e7e7; background-color: #fff8e1;">
+          <a (click)="irACotizar()" style="cursor: pointer; color: #FF8C00; font-weight: bold;">
+              <span class="glyphicon glyphicon-shopping-cart"></span> Mi Carrito 
+              <span class="badge" style="background-color: #122A51; margin-left: 5px;">{{ carritoCotizacion.length }}</span>
+          </a>
       </li>
     </ul>
   </div>
@@ -70,7 +76,7 @@
         <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat1', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
         
         <div class="fila-productos-scroll" id="scroll-cat1">
-            <div *ngIf="decorados.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+            <div *ngIf="decorados.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
             <div class="card-producto-scroll" *ngFor="let prod of decorados" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
@@ -107,7 +113,7 @@
         <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat2', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
 
         <div class="fila-productos-scroll" id="scroll-cat2">
-            <div *ngIf="decoradosEspanoles.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+            <div *ngIf="decoradosEspanoles.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
             <div class="card-producto-scroll" *ngFor="let prod of decoradosEspanoles" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
@@ -144,7 +150,7 @@
         <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat3', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
 
         <div class="fila-productos-scroll" id="scroll-cat3">
-            <div *ngIf="paredes.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+            <div *ngIf="paredes.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
             <div class="card-producto-scroll" *ngFor="let prod of paredes" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
@@ -181,7 +187,7 @@
         <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat4', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
 
         <div class="fila-productos-scroll" id="scroll-cat4">
-            <div *ngIf="fachaletas.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+            <div *ngIf="fachaletas.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
             <div class="card-producto-scroll" *ngFor="let prod of fachaletas" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
@@ -218,7 +224,7 @@
         <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat5', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
 
         <div class="fila-productos-scroll" id="scroll-cat5">
-            <div *ngIf="porcelanatos.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+            <div *ngIf="porcelanatos.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
             <div class="card-producto-scroll" *ngFor="let prod of porcelanatos" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
@@ -255,7 +261,7 @@
         <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat6', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
 
         <div class="fila-productos-scroll" id="scroll-cat6">
-            <div *ngIf="planchas.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+            <div *ngIf="planchas.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
             <div class="card-producto-scroll" *ngFor="let prod of planchas" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
@@ -292,7 +298,7 @@
         <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat7', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
 
         <div class="fila-productos-scroll" id="scroll-cat7">
-            <div *ngIf="ceramicos.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+            <div *ngIf="ceramicos.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
             <div class="card-producto-scroll" *ngFor="let prod of ceramicos" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
@@ -329,7 +335,7 @@
         <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat8', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
 
         <div class="fila-productos-scroll" id="scroll-cat8">
-            <div *ngIf="lapices.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+            <div *ngIf="lapices.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
             <div class="card-producto-scroll" *ngFor="let prod of lapices" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
@@ -366,7 +372,7 @@
         <button class="scroll-btn left hidden-xs" (click)="scrollList('scroll-cat9', -1)"><span class="glyphicon glyphicon-chevron-left"></span></button>
 
         <div class="fila-productos-scroll" id="scroll-cat9">
-            <div *ngIf="banos.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>Cargando nuevos diseños...</i></p></div>
+            <div *ngIf="banos.length === 0" style="width: 100%; text-align: center;"><p style="color: gray;"><i>No hay productos disponibles por ahora.</i></p></div>
             <div class="card-producto-scroll" *ngFor="let prod of banos" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
@@ -474,30 +480,9 @@
       <div class="row">
           <div class="col-md-4"><img src="assets/imagenes/oferta1.png" class="img-responsive center-block" style="border-radius: 8px; margin-bottom: 15px;"></div>
           <div class="col-md-4"><img src="assets/imagenes/oferta2.png" class="img-responsive center-block" style="border-radius: 8px; margin-bottom: 15px;"></div>
-          <div class="col-md-4"><img src="assets/imagenes/oferta3.png" class="img-responsive center-block" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></div>
+          <div class="col-md-4"><img src="assets/imagenes/oferta3.png" class="img-responsive center-block" style="border-radius: 8px; margin-bottom: 15px;"></div>
       </div>
   </section>
-</div>
-
-<!-- 🔥 EL NUEVO MENÚ FLOTANTE MÁGICO (FAB) 🔥 -->
-<div id="fab-container" [class.open]="fabAbierto">
-    <div class="fab-options">
-        <button class="fab-option" (click)="abrirBuscador(); toggleFab()" title="Buscar Productos">
-            <span class="glyphicon glyphicon-search"></span>
-        </button>
-        <button class="fab-option" (click)="irACotizar(); toggleFab()" title="Mi Carrito">
-            <span class="glyphicon glyphicon-shopping-cart"></span>
-            <span class="badge badge-flotante-fab">{{ carritoCotizacion.length }}</span>
-        </button>
-        <button class="fab-option" (click)="toggleChat(); toggleFab()" title="Chat Soporte">
-            <span class="glyphicon glyphicon-comment"></span>
-        </button>
-    </div>
-    
-    <!-- El botón principal con la animación de latido -->
-    <button class="fab-main btn-ojito" (click)="toggleFab()">
-        <span class="glyphicon" [ngClass]="fabAbierto ? 'glyphicon-remove' : 'glyphicon-plus'"></span>
-    </button>
 </div>
 
 <!-- MODAL DE BÚSQUEDA PREDICTIVA -->
@@ -506,16 +491,18 @@
     <div class="modal-content" style="border-radius: 12px; border: none; box-shadow: 0 15px 30px rgba(0,0,0,0.2);">
       <div class="modal-header" style="background-color: #122A51; color: white; border-radius: 12px 12px 0 0; border-bottom: 3px solid #FF8C00;">
         <button type="button" class="close" data-dismiss="modal" style="color: white; opacity: 1; text-shadow: none;">&times;</button>
-        <h4 class="modal-title" style="font-weight: bold; font-size: 1.5em; text-align: center;"><span class="glyphicon glyphicon-search"></span> ¿Qué estás buscando hoy?</h4>
+        <h4 class="modal-title" style="font-weight: bold; font-size: 1.5em; text-align: center;">
+            <span class="glyphicon glyphicon-search"></span> ¿Qué estás buscando hoy?
+        </h4>
       </div>
       <div class="modal-body" style="background-color: #f9f9f9; padding: 25px;">
+          
           <div class="form-group" style="position: relative; margin-bottom: 20px;">
               <input type="text" [(ngModel)]="terminoBusqueda" (keyup)="buscarProducto()" name="busquedaPredictiva" class="form-control input-lg" placeholder="Ej: Porcelanato, Pegamento, Gris..." style="border-radius: 25px; padding-left: 20px; border: 2px solid #FF8C00; box-shadow: none;">
               <span class="glyphicon glyphicon-search" style="position: absolute; right: 20px; top: 15px; font-size: 18px; color: #888;"></span>
           </div>
           
-          <!-- 🔥 CAJA DE BÚSQUEDA AHORA TIENE SCROLL Y MUESTRA TODOS LOS RESULTADOS 🔥 -->
-          <div class="list-group" style="margin-bottom: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.05); max-height: 50vh; overflow-y: auto; -webkit-overflow-scrolling: touch; border-radius: 8px;">
+          <div class="list-group" style="margin-bottom: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
               <a *ngFor="let p of productosBuscados" class="list-group-item" (click)="seleccionarBusqueda(p)" style="cursor: pointer; border-left: 4px solid #FF8C00; transition: background 0.2s;">
                   <div style="display: flex; align-items: center;">
                       <img [src]="getImagenUrl(p.imagen)" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; margin-right: 15px; border: 1px solid #eee;">
@@ -529,7 +516,8 @@
                   </div>
               </a>
               <div *ngIf="terminoBusqueda && productosBuscados.length === 0" class="text-center" style="padding: 20px; background: white; border: 1px solid #ddd; border-radius: 8px;">
-                  <span class="glyphicon glyphicon-info-sign" style="font-size: 24px; color: #ccc; display: block; margin-bottom: 10px;"></span>No encontramos productos con "<b>{{ terminoBusqueda }}</b>".
+                  <span class="glyphicon glyphicon-info-sign" style="font-size: 24px; color: #ccc; display: block; margin-bottom: 10px;"></span>
+                  No encontramos productos con "<b>{{ terminoBusqueda }}</b>".
               </div>
           </div>
       </div>   
@@ -592,6 +580,10 @@
                           <input type="text" class="form-control" [value]="unidadesTotales" readonly style="font-weight: bold; color: #333;">
                       </div>
                   </div>
+                  
+                  <p class="help-block text-center" style="margin-top: 15px; font-size: 0.9em; color: #555;" *ngIf="mostrarPiezas || prodSeleccionado.codigo?.includes('PEG')">
+                      *El cálculo se redondea al empaque superior para asegurar cobertura.
+                  </p>
               </div>
           </form>
       </div>   
@@ -658,3 +650,54 @@
     </div>
   </div>
 </footer>
+
+<!-- 🔥 NUEVO MENÚ FLOTANTE MÁGICO (FAB) 🔥 -->
+<div id="fab-container" [class.open]="fabAbierto">
+    <div class="fab-options">
+        <button class="fab-option" (click)="abrirBuscador(); toggleFab()" title="Buscar Productos">
+            <span class="glyphicon glyphicon-search"></span>
+        </button>
+        <button class="fab-option" (click)="irACotizar(); toggleFab()" title="Mi Carrito">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+            <span class="badge badge-flotante-fab">{{ carritoCotizacion.length }}</span>
+        </button>
+        <button class="fab-option" (click)="toggleChat(); toggleFab()" title="Chat Soporte">
+            <span class="glyphicon glyphicon-comment"></span>
+        </button>
+    </div>
+    <!-- El botón principal con la animación de latido -->
+    <button class="fab-main btn-ojito" (click)="toggleFab()">
+        <span class="glyphicon" [ngClass]="fabAbierto ? 'glyphicon-remove' : 'glyphicon-plus'"></span>
+    </button>
+</div>
+
+<div class="chat-box" [class.chat-abierto]="chatVisible">
+    <div class="chat-box-header">
+        <div class="chat-avatar"><img src="assets/imagenes/logo_empresa.png" alt="Admin" style="background:white; padding:2px;"></div>
+        <div class="chat-info">
+            <span class="chat-title">Soporte ESTIM CENTER FJ</span>
+            <span class="chat-status"><span class="status-dot"></span> En línea</span>
+        </div>
+        <span class="chat-box-toggle" (click)="toggleChat()"><span class="glyphicon glyphicon-remove"></span></span>
+    </div>
+    <div class="chat-box-body" id="chat-box-body">
+        <div class="chat-logs">
+            <div class="chat-msg user">
+                <div class="cm-msg-text">¡Hola! 👋 Bienvenido a ESTIM CENTER FJ<br>Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?</div>
+            </div>
+            <div class="chat-msg user">
+                <div class="cm-msg-button-container">
+                    <button class="btn-quick-reply" (click)="enviarWhatsApp('Quiero cotizar porcelanatos')">Cotizar Porcelanatos</button>
+                    <button class="btn-quick-reply" (click)="enviarWhatsApp('¿Dónde están ubicados?')">Ubicación de tienda</button>
+                    <button class="btn-quick-reply" (click)="enviarWhatsApp('Quiero hablar con un asesor')">Hablar con un humano</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chat-input">
+        <form (submit)="enviarMensajeEscrito($event)">
+            <input type="text" id="chat-input" placeholder="Escribe tu consulta aquí..." />
+            <button type="submit" class="chat-submit" id="chat-submit"><span class="glyphicon glyphicon-send"></span></button>
+        </form>
+    </div>
+</div>
