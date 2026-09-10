@@ -14,8 +14,9 @@ import { FormsModule } from '@angular/forms';
 export class HomePublicComponent implements OnInit {
 
   chatVisible: boolean = false;
+  fabAbierto: boolean = false; // 🔥 NUEVO ESTADO PARA EL BOTÓN FAB
   
-  // 🔥 LAS 10 CATEGORÍAS COMPLETAS 🔥
+  // Categorías
   decorados: any[] = [];
   decoradosEspanoles: any[] = [];
   paredes: any[] = [];
@@ -106,7 +107,6 @@ export class HomePublicComponent implements OnInit {
         const activos = data.filter(p => p.estado !== 'INACTIVO');
         this.todosLosProductos = activos;
 
-        // 🔥 AHORA CARGAN TODOS LOS PRODUCTOS SIN LÍMITES 🔥
         this.decorados = activos.filter(p => p.codigo && p.codigo.includes('DEC') && !p.codigo.includes('ESPDEC'));
         this.decoradosEspanoles = activos.filter(p => p.codigo && p.codigo.includes('ESPDEC'));
         this.paredes = activos.filter(p => p.codigo && p.codigo.includes('PAR'));
@@ -124,13 +124,17 @@ export class HomePublicComponent implements OnInit {
     });
   }
 
-  // 🔥 MAGIA: Función para mover el carrusel con las flechas 🔥
   scrollList(idContenedor: string, direccion: number) {
     const contenedor = document.getElementById(idContenedor);
     if (contenedor) {
-      const scrollAmount = 300; // Ancho aproximado de una tarjeta
+      const scrollAmount = 300; 
       contenedor.scrollBy({ left: scrollAmount * direccion, behavior: 'smooth' });
     }
+  }
+
+  // 🔥 NUEVO: ABRIR/CERRAR BOTÓN FAB
+  toggleFab() {
+    this.fabAbierto = !this.fabAbierto;
   }
 
   abrirBuscadorPred() {
@@ -139,6 +143,7 @@ export class HomePublicComponent implements OnInit {
     (window as any).$('#modalBienvenidaBuscador').modal('show');
   }
 
+  // 🔥 MAGIA: BUSCADOR INFINITO (Sin límite .slice) 🔥
   buscarProductoPred() {
     const term = this.terminoBusqueda.toLowerCase().trim();
     if (!term) { this.productosBuscados = []; return; }
@@ -147,7 +152,7 @@ export class HomePublicComponent implements OnInit {
         (p.nombre && p.nombre.toLowerCase().includes(term)) ||
         (p.codigo && p.codigo.toLowerCase().includes(term)) ||
         (p.descripcion && p.descripcion.toLowerCase().includes(term))
-    ).slice(0, 6);
+    );
   }
 
   seleccionarBusquedaPred(prod: any) {
