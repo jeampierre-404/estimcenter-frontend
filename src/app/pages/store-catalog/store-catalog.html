@@ -49,14 +49,6 @@
               <li *ngIf="clienteLogueado"><a style="cursor: pointer;" (click)="cerrarSesion()"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a></li>
           </ul>
       </li>
-
-      <!-- Mantenemos el acceso rápido al Carrito en el Menú con validación inteligente -->
-      <li style="float: right; border-left: 1px solid #e7e7e7; background-color: #fff8e1;">
-          <a (click)="irACotizar()" style="cursor: pointer; color: #FF8C00; font-weight: bold;">
-              <span class="glyphicon glyphicon-shopping-cart"></span> Mi Carrito 
-              <span class="badge" style="background-color: #122A51; margin-left: 5px;">{{ carritoCotizacion.length }}</span>
-          </a>
-      </li>
     </ul>
   </div>
 </nav>
@@ -442,25 +434,17 @@
             
             <div class="card-producto-scroll" *ngFor="let prod of pegamentos" [id]="'prod-' + prod.codigo">
                 <div class="thumbnail" style="padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
-                    <!-- 🔥 OJITO PARA PEGAMENTOS 🔥 -->
                     <button class="btn-ojito" (click)="verEnSala(prod)" style="position: absolute; right: 15px; top: 15px; border:none; background: rgba(255,255,255,0.9); border-radius: 50%; padding: 5px 8px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <span class="glyphicon glyphicon-eye-open" style="font-size: 20px; color: #122A51;"></span>
                     </button>
-
                     <div style="width: 100%; margin-bottom: 15px; padding-top: 10px; text-align: center;">
                         <img [src]="getImagenUrl(prod.imagen)" [alt]="prod.nombre" style="width: 100%; height: 210px; object-fit: contain; margin: 0 auto; display: block;">
                     </div>
                     <div class="caption text-center">
                         <h4 style="font-weight: bold; color: #555; height: 30px; overflow: hidden;">{{ prod.nombre }}</h4>
-                        
-                        <p>
-                            <span class="label" [ngClass]="getEtiquetaPegamento(prod.categoria?.nombre).clase">
-                                {{ getEtiquetaPegamento(prod.categoria?.nombre).texto }}
-                            </span>
-                        </p>
-
+                        <p><span class="label" [ngClass]="getEtiquetaPegamento(prod.categoria?.nombre).clase">{{ getEtiquetaPegamento(prod.categoria?.nombre).texto }}</span></p>
                         <p style="color: #666; height: 35px; overflow: hidden; font-size: 0.9em; margin-top: 10px;">{{ prod.descripcion }}</p>
-                        <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 16px;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
+                        <h3 style="color: #FF8C00; font-weight: bold;">S/ {{ prod.precio | number:'1.2-2' }} <small style="color: #122A51; font-size: 16px;">{{ getUnidadMedida(prod.codigo) }}</small></h3>
                         <button type="button" class="btn btn-warning btn-block" (click)="prepararCalculadora(prod)" data-toggle="modal" data-target="#calculadoraModal" style="font-weight: bold;">
                             <span class="glyphicon glyphicon-shopping-cart"></span> Calcular Sacos
                         </button>
@@ -480,29 +464,46 @@
       <div class="row">
           <div class="col-md-4"><img src="assets/imagenes/oferta1.png" class="img-responsive center-block" style="border-radius: 8px; margin-bottom: 15px;"></div>
           <div class="col-md-4"><img src="assets/imagenes/oferta2.png" class="img-responsive center-block" style="border-radius: 8px; margin-bottom: 15px;"></div>
-          <div class="col-md-4"><img src="assets/imagenes/oferta3.png" class="img-responsive center-block" style="border-radius: 8px; margin-bottom: 15px;"></div>
+          <div class="col-md-4"><img src="assets/imagenes/oferta3.png" class="img-responsive center-block" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></div>
       </div>
   </section>
 </div>
 
-<!-- MODAL DE BÚSQUEDA PREDICTIVA -->
+<!-- 🔥 EL NUEVO MENÚ FLOTANTE MÁGICO (FAB) PEQUEÑO 🔥 -->
+<div id="fab-container" [class.open]="fabAbierto">
+    <div class="fab-options">
+        <button class="fab-option" (click)="abrirBuscador(); toggleFab()" title="Buscar Productos">
+            <span class="glyphicon glyphicon-search"></span>
+        </button>
+        <button class="fab-option" (click)="irACotizar(); toggleFab()" title="Mi Carrito">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+            <span class="badge badge-flotante-fab">{{ carritoCotizacion.length }}</span>
+        </button>
+        <button class="fab-option" (click)="toggleChat(); toggleFab()" title="Chat Soporte">
+            <span class="glyphicon glyphicon-comment"></span>
+        </button>
+    </div>
+    
+    <button class="fab-main btn-ojito" (click)="toggleFab()">
+        <span class="glyphicon" [ngClass]="fabAbierto ? 'glyphicon-remove' : 'glyphicon-plus'"></span>
+    </button>
+</div>
+
+<!-- 🔥 CAJA DE BÚSQUEDA 🔥 -->
 <div class="modal fade" id="modalBienvenidaBuscador" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog" role="document" style="margin-top: 10vh;">
     <div class="modal-content" style="border-radius: 12px; border: none; box-shadow: 0 15px 30px rgba(0,0,0,0.2);">
       <div class="modal-header" style="background-color: #122A51; color: white; border-radius: 12px 12px 0 0; border-bottom: 3px solid #FF8C00;">
         <button type="button" class="close" data-dismiss="modal" style="color: white; opacity: 1; text-shadow: none;">&times;</button>
-        <h4 class="modal-title" style="font-weight: bold; font-size: 1.5em; text-align: center;">
-            <span class="glyphicon glyphicon-search"></span> ¿Qué estás buscando hoy?
-        </h4>
+        <h4 class="modal-title" style="font-weight: bold; font-size: 1.5em; text-align: center;"><span class="glyphicon glyphicon-search"></span> ¿Qué estás buscando hoy?</h4>
       </div>
       <div class="modal-body" style="background-color: #f9f9f9; padding: 25px;">
-          
           <div class="form-group" style="position: relative; margin-bottom: 20px;">
               <input type="text" [(ngModel)]="terminoBusqueda" (keyup)="buscarProducto()" name="busquedaPredictiva" class="form-control input-lg" placeholder="Ej: Porcelanato, Pegamento, Gris..." style="border-radius: 25px; padding-left: 20px; border: 2px solid #FF8C00; box-shadow: none;">
               <span class="glyphicon glyphicon-search" style="position: absolute; right: 20px; top: 15px; font-size: 18px; color: #888;"></span>
           </div>
           
-          <div class="list-group" style="margin-bottom: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
+          <div class="list-group" style="margin-bottom: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.05); max-height: 50vh; overflow-y: auto; -webkit-overflow-scrolling: touch; border-radius: 8px;">
               <a *ngFor="let p of productosBuscados" class="list-group-item" (click)="seleccionarBusqueda(p)" style="cursor: pointer; border-left: 4px solid #FF8C00; transition: background 0.2s;">
                   <div style="display: flex; align-items: center;">
                       <img [src]="getImagenUrl(p.imagen)" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; margin-right: 15px; border: 1px solid #eee;">
@@ -516,8 +517,7 @@
                   </div>
               </a>
               <div *ngIf="terminoBusqueda && productosBuscados.length === 0" class="text-center" style="padding: 20px; background: white; border: 1px solid #ddd; border-radius: 8px;">
-                  <span class="glyphicon glyphicon-info-sign" style="font-size: 24px; color: #ccc; display: block; margin-bottom: 10px;"></span>
-                  No encontramos productos con "<b>{{ terminoBusqueda }}</b>".
+                  <span class="glyphicon glyphicon-info-sign" style="font-size: 24px; color: #ccc; display: block; margin-bottom: 10px;"></span>No encontramos productos con "<b>{{ terminoBusqueda }}</b>".
               </div>
           </div>
       </div>   
@@ -580,10 +580,6 @@
                           <input type="text" class="form-control" [value]="unidadesTotales" readonly style="font-weight: bold; color: #333;">
                       </div>
                   </div>
-                  
-                  <p class="help-block text-center" style="margin-top: 15px; font-size: 0.9em; color: #555;" *ngIf="mostrarPiezas || prodSeleccionado.codigo?.includes('PEG')">
-                      *El cálculo se redondea al empaque superior para asegurar cobertura.
-                  </p>
               </div>
           </form>
       </div>   
@@ -627,48 +623,6 @@
             </div>
         </div>
     </div>
-</div>
-
-<footer>
-  <div class="container-fluid footer-content">
-    <div class="col-md-4">
-      <h4>Contacto</h4>
-      <p>
-        <span class="glyphicon glyphicon-map-marker"></span> Visitanos en Av. Alfonso Ugarte 1244 - 1135<br>
-        <span class="glyphicon glyphicon-earphone"></span> (+51) 978-875-748<br>
-        <span class="glyphicon glyphicon-envelope"></span> estimcenterfj1005@gmail.com
-      </p>
-    </div>
-    <div class="col-md-4 text-center">
-      <p>&copy; 2026 ESTIM CENTER FJ <br> Todos los derechos reservados.</p>
-    </div>
-    <div class="col-md-4 text-right">
-      <p>Síguenos en Redes:</p>
-      <span class="glyphicon glyphicon-thumbs-up"></span> Facebook <br>
-      <span class="glyphicon glyphicon-camera" style="margin-top: 5px;"></span> Instagram <br>
-      <span class="glyphicon glyphicon-music" style="margin-top: 5px;"></span> TikTok
-    </div>
-  </div>
-</footer>
-
-<!-- 🔥 NUEVO MENÚ FLOTANTE MÁGICO (FAB) 🔥 -->
-<div id="fab-container" [class.open]="fabAbierto">
-    <div class="fab-options">
-        <button class="fab-option" (click)="abrirBuscador(); toggleFab()" title="Buscar Productos">
-            <span class="glyphicon glyphicon-search"></span>
-        </button>
-        <button class="fab-option" (click)="irACotizar(); toggleFab()" title="Mi Carrito">
-            <span class="glyphicon glyphicon-shopping-cart"></span>
-            <span class="badge badge-flotante-fab">{{ carritoCotizacion.length }}</span>
-        </button>
-        <button class="fab-option" (click)="toggleChat(); toggleFab()" title="Chat Soporte">
-            <span class="glyphicon glyphicon-comment"></span>
-        </button>
-    </div>
-    <!-- El botón principal con la animación de latido -->
-    <button class="fab-main btn-ojito" (click)="toggleFab()">
-        <span class="glyphicon" [ngClass]="fabAbierto ? 'glyphicon-remove' : 'glyphicon-plus'"></span>
-    </button>
 </div>
 
 <div class="chat-box" [class.chat-abierto]="chatVisible">

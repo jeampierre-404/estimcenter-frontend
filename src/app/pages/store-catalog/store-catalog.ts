@@ -34,26 +34,22 @@ export class StoreCatalogComponent implements OnInit {
   metrosReales: string = '';
   unidadesTotales: string = '';
   
-  // Variables para la Vista en Ambiente Mejorada
   imagenSala: string = '';
   prodVistaSala: any = null;
   mostrandoSala: boolean = true;
 
-  // Etiquetas de UI
   lblPregunta: string = '¿Cuántos metros cuadrados (m²) necesitas?';
   lblRendimiento: string = 'Rendimiento:';
   lblResultadoEmpaque: string = 'CAJAS A LLEVAR:';
   mostrarPiezas: boolean = true;
 
-  // Usuario y Chat
   nombreCliente: string = '';
   clienteLogueado: boolean = false;
   chatVisible: boolean = false;
-
-  // 🔥 VARIABLE PARA EL BOTÓN MULTIUSOS (FAB) 🔥
+  
+  // 🔥 VARIABLE PARA EL BOTÓN FAB 🔥
   fabAbierto: boolean = false;
 
-  // Búsqueda y Carrito
   todosLosProductos: Producto[] = [];
   productosBuscados: Producto[] = [];
   terminoBusqueda: string = '';
@@ -79,7 +75,6 @@ export class StoreCatalogComponent implements OnInit {
     this.cargarCatalogo(); 
     this.cargarCarrito(); 
 
-    // Abrir el menú automáticamente en celulares
     setTimeout(() => {
         if (window.innerWidth <= 768) {
             const menu = (window as any).$('#menuPrincipal');
@@ -138,11 +133,7 @@ export class StoreCatalogComponent implements OnInit {
                         tarjeta.style.transition = 'all 0.5s ease';
                         tarjeta.style.boxShadow = '0 0 25px 5px rgba(255, 140, 0, 0.8)';
                         tarjeta.style.transform = 'scale(1.03)';
-                        
-                        setTimeout(() => {
-                            tarjeta.style.boxShadow = '';
-                            tarjeta.style.transform = '';
-                        }, 2500);
+                        setTimeout(() => { tarjeta.style.boxShadow = ''; tarjeta.style.transform = ''; }, 2500);
                     }
                 }
                 localStorage.removeItem('producto_a_enfocar'); 
@@ -164,7 +155,7 @@ export class StoreCatalogComponent implements OnInit {
     }
   }
 
-  // 🔥 ABRIR Y CERRAR EL BOTÓN MÁGICO 🔥
+  // 🔥 ABRIR Y CERRAR EL BOTÓN FAB 🔥
   toggleFab() {
     this.fabAbierto = !this.fabAbierto;
   }
@@ -175,14 +166,16 @@ export class StoreCatalogComponent implements OnInit {
     (window as any).$('#modalBienvenidaBuscador').modal('show');
   }
 
+  // 🔥 MAGIA: BUSCADOR INFINITO SIN .slice() 🔥
   buscarProducto() {
     const term = this.terminoBusqueda.toLowerCase().trim();
     if (!term) { this.productosBuscados = []; return; }
+    
     this.productosBuscados = this.todosLosProductos.filter(p => 
         (p.nombre && p.nombre.toLowerCase().includes(term)) ||
         (p.codigo && p.codigo.toLowerCase().includes(term)) ||
         (p.descripcion && p.descripcion.toLowerCase().includes(term))
-    ).slice(0, 6);
+    );
   }
 
   seleccionarBusqueda(prod: any) {
