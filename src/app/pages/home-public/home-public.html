@@ -49,11 +49,6 @@
               <li *ngIf="clienteLogueado"><a style="cursor: pointer;" (click)="cerrarSesion()"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a></li>
           </ul>
       </li>
-      <li style="border-left: 1px solid #e7e7e7; margin-right: 15px;">
-          <a (click)="abrirBuscadorPred()" style="cursor: pointer; color: #122A51; font-weight: bold; background-color: #f8f9fa;">
-              <span class="glyphicon glyphicon-search"></span> Búsqueda Rápida
-          </a>
-      </li>
     </ul>
   </div>
 </nav>
@@ -814,9 +809,63 @@
   </div>
 </footer>
 
-<div id="chat-circle" class="btn btn-raised" (click)="toggleChat()">
-    <div id="chat-overlay"></div>
-    <span class="glyphicon glyphicon-comment" style="font-size: 24px; color: white; margin-top: 12px;"></span>
+<!-- 🔥 EL NUEVO MENÚ FLOTANTE MÁGICO (FAB) PEQUEÑO 🔥 -->
+<div id="fab-container" [class.open]="fabAbierto">
+    <div class="fab-options">
+        <button class="fab-option" (click)="abrirBuscadorPred(); toggleFab()" title="Buscar Productos">
+            <span class="glyphicon glyphicon-search"></span>
+        </button>
+        <button class="fab-option" (click)="irACotizar(); toggleFab()" title="Mi Carrito">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+            <span class="badge badge-flotante-fab">{{ carritoCotizacion.length }}</span>
+        </button>
+        <button class="fab-option" (click)="toggleChat(); toggleFab()" title="Chat Soporte">
+            <span class="glyphicon glyphicon-comment"></span>
+        </button>
+    </div>
+    
+    <button class="fab-main btn-ojito" (click)="toggleFab()">
+        <span class="glyphicon" [ngClass]="fabAbierto ? 'glyphicon-remove' : 'glyphicon-plus'"></span>
+    </button>
+</div>
+
+<!-- 🔥 CAJA DE BÚSQUEDA AHORA TIENE SCROLL Y MUESTRA TODOS LOS RESULTADOS 🔥 -->
+<div class="modal fade" id="modalBienvenidaBuscador" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document" style="margin-top: 10vh;">
+    <div class="modal-content" style="border-radius: 12px; border: none; box-shadow: 0 15px 30px rgba(0,0,0,0.2);">
+      <div class="modal-header" style="background-color: #122A51; color: white; border-radius: 12px 12px 0 0; border-bottom: 3px solid #FF8C00;">
+        <button type="button" class="close" data-dismiss="modal" style="color: white; opacity: 1; text-shadow: none;">&times;</button>
+        <h4 class="modal-title" style="font-weight: bold; font-size: 1.5em; text-align: center;"><span class="glyphicon glyphicon-search"></span> ¿Qué estás buscando hoy?</h4>
+      </div>
+      <div class="modal-body" style="background-color: #f9f9f9; padding: 25px;">
+          <div class="form-group" style="position: relative; margin-bottom: 20px;">
+              <input type="text" [(ngModel)]="terminoBusqueda" (keyup)="buscarProductoPred()" name="busquedaPredictiva" class="form-control input-lg" placeholder="Ej: Porcelanato, Pegamento, Gris..." style="border-radius: 25px; padding-left: 20px; border: 2px solid #FF8C00; box-shadow: none;">
+              <span class="glyphicon glyphicon-search" style="position: absolute; right: 20px; top: 15px; font-size: 18px; color: #888;"></span>
+          </div>
+          
+          <div class="list-group" style="margin-bottom: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.05); max-height: 50vh; overflow-y: auto; -webkit-overflow-scrolling: touch; border-radius: 8px;">
+              <a *ngFor="let p of productosBuscados" class="list-group-item" (click)="seleccionarBusquedaPred(p)" style="cursor: pointer; border-left: 4px solid #FF8C00; transition: background 0.2s;">
+                  <div style="display: flex; align-items: center;">
+                      <img [src]="getImagenUrl(p.imagen)" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; margin-right: 15px; border: 1px solid #eee;">
+                      <div style="flex-grow: 1;">
+                          <h5 style="margin: 0 0 5px 0; font-weight: bold; color: #122A51;">{{ p.nombre }}</h5>
+                          <p style="margin: 0; font-size: 0.85em; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;">{{ p.descripcion }}</p>
+                      </div>
+                      <div style="text-align: right;">
+                          <strong style="color: #FF8C00; font-size: 1.1em;">S/ {{ p.precio | number:'1.2-2' }} <small style="color: #FF8C00; font-size: 12px;">{{ getUnidadMedida(p.codigo) }}</small></strong>
+                      </div>
+                  </div>
+              </a>
+              <div *ngIf="terminoBusqueda && productosBuscados.length === 0" class="text-center" style="padding: 20px; background: white; border: 1px solid #ddd; border-radius: 8px;">
+                  <span class="glyphicon glyphicon-info-sign" style="font-size: 24px; color: #ccc; display: block; margin-bottom: 10px;"></span>No encontramos productos con "<b>{{ terminoBusqueda }}</b>".
+              </div>
+          </div>
+      </div>   
+      <div class="modal-footer" style="text-align: center; border-top: none; background-color: #f9f9f9; padding-bottom: 20px;">
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="border-radius: 20px; padding: 8px 30px; font-weight: bold; color: #122A51;">Cerrar Buscador</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="chat-box" [class.chat-abierto]="chatVisible">
